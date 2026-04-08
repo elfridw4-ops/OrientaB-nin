@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   GraduationCap, Search, Building2, Calculator, BookOpen, 
   Info, X, AlertTriangle, CheckCircle2, BarChart3, ChevronRight, 
-  ArrowLeft, Star, TrendingUp, Compass, User, Home, MapPin, ArrowRight, Settings, HelpCircle, Target, Zap, Lock, LogOut, Users, ShieldAlert, Shield, ShieldCheck
+  ArrowLeft, Star, TrendingUp, Compass, User, Home, MapPin, ArrowRight, Settings, HelpCircle, Target, Zap, Lock, LogOut, Users, ShieldAlert, Shield, ShieldCheck, ArrowUpRight, Mail
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { getAllFilieres, getAppData } from './utils';
@@ -19,6 +19,17 @@ import Admin from './Admin';
 import { auth, loginWithGoogle, logout } from './firebase';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { getUserProfile, createUserProfile, updateUserProfile, subscribeToFilieres, updateFiliereChoices } from './services/firestoreService';
+
+// Custom Logo Component
+const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <rect width="100" height="100" rx="24" fill="#4f46e5" />
+    <path d="M20 45L50 28L80 45L50 62L20 45Z" fill="white" />
+    <path d="M32 52V68C32 68 42 78 50 78C58 78 68 68 68 68V52" stroke="white" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+    <circle cx="80" cy="58" r="5" fill="#f59e0b" />
+    <path d="M80 45V58" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round" />
+  </svg>
+);
 
 const COLORS = ['#4f46e5', '#7c3aed', '#2563eb', '#059669', '#d97706'];
 
@@ -37,6 +48,7 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedUniversity, setSelectedUniversity] = useState<string>('');
   const [selectedFiliere, setSelectedFiliere] = useState<FlattenedFiliere | null>(null);
+  const [showInfo, setShowInfo] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const [grades, setGrades] = useState<Record<string, number>>({
     Maths: 0, SVT: 0, PCT: 0, Français: 0, Anglais: 0
@@ -253,7 +265,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen text-slate-800 font-sans selection:bg-indigo-200 pb-24">
+    <div className="min-h-screen text-slate-800 font-sans selection:bg-indigo-200">
       <AnimatePresence mode="wait">
         {view === 'admin' ? (
           <motion.div key="admin-view" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
@@ -261,13 +273,22 @@ export default function App() {
           </motion.div>
         ) : (
           <motion.div key="main-app" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
+            {/* Warning Banner (Full Width Top) */}
+            <div className="fixed top-0 left-0 right-0 z-50 bg-[#ff8a00] text-white px-4 py-2 flex flex-col sm:flex-row items-center justify-center text-xs sm:text-sm font-medium shadow-md gap-2 sm:gap-4">
+              <div className="flex items-center text-center">
+                <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 shrink-0 text-yellow-300" />
+                <span>Ce site propose des recommandations IA — ce n'est pas le site officiel.</span>
+              </div>
+              <a href="https://apresmonbac.bj/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-[#ff8a00] bg-white hover:bg-slate-50 px-3 py-1 rounded-full font-bold transition-colors shadow-sm whitespace-nowrap">
+                Site officiel <ArrowUpRight className="w-4 h-4 ml-1" />
+              </a>
+            </div>
+
             {/* Top Header */}
-            <header className="fixed top-0 left-0 right-0 z-40 p-4">
+            <header className="fixed top-16 sm:top-12 left-0 right-0 z-40 p-4">
               <div className="max-w-3xl mx-auto bg-white/70 backdrop-blur-xl border border-white/50 shadow-sm rounded-3xl px-5 py-3 flex justify-between items-center">
                 <div className="flex items-center space-x-2">
-                  <div className="bg-gradient-to-tr from-indigo-500 to-violet-500 p-1.5 rounded-xl shadow-md shadow-indigo-200">
-                    <GraduationCap className="w-5 h-5 text-white" />
-                  </div>
+                  <Logo className="w-8 h-8 drop-shadow-md" />
                   <span className="font-display font-bold text-lg text-slate-900">OrientaBénin</span>
                 </div>
                 <div className="flex space-x-2 items-center">
@@ -275,6 +296,7 @@ export default function App() {
                     <button onClick={() => setView('admin')} className="p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><Settings className="w-5 h-5"/></button>
                   )}
                   <button onClick={() => setShowStats(true)} className="p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><BarChart3 className="w-5 h-5"/></button>
+                  <button onClick={() => setShowInfo(true)} className="p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><Info className="w-5 h-5"/></button>
                   {authUser ? (
                     <button onClick={logout} className="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition-colors"><LogOut className="w-5 h-5"/></button>
                   ) : (
@@ -282,31 +304,20 @@ export default function App() {
                   )}
                 </div>
               </div>
-              
-              {/* Warning Banner */}
-              <div className="max-w-3xl mx-auto mt-2 bg-indigo-50 border border-indigo-100 text-indigo-800 px-4 py-2.5 rounded-2xl flex flex-col sm:flex-row items-center justify-center text-xs font-medium shadow-sm gap-2 text-center">
-                <div className="flex items-center">
-                  <AlertTriangle className="w-4 h-4 mr-2 shrink-0 text-indigo-600" />
-                  <span>Ce site est un outil d'aide à l'orientation indépendant.</span>
-                </div>
-                <a href="https://apresmonbac.bj/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-indigo-600 hover:text-indigo-800 underline font-bold bg-white/50 px-2 py-1 rounded-lg transition-colors">
-                  Aller sur le site officiel (apresmonbac.bj) <ArrowRight className="w-3 h-3 ml-1" />
-                </a>
-              </div>
             </header>
 
       {/* Main Content */}
-      <main className="max-w-3xl mx-auto px-4 pt-36">
+      <main className="pt-36 w-full">
         <AnimatePresence mode="wait">
           
           {/* HOME VIEW (LANDING PAGE) */}
           {view === 'home' && (
-            <motion.div key="home" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="flex flex-col items-center mt-4 pb-12">
+            <motion.div key="home" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="flex flex-col items-center mt-4">
               
               {/* Hero Section */}
-              <div className="text-center mb-12">
-                <div className="w-24 h-24 bg-gradient-to-tr from-indigo-500 to-violet-500 rounded-[2rem] shadow-2xl shadow-indigo-200 flex items-center justify-center mx-auto mb-8 rotate-3">
-                  <GraduationCap className="w-12 h-12 text-white -rotate-3" />
+              <div className="text-center mb-12 w-full">
+                <div className="w-24 h-24 mx-auto mb-8 flex items-center justify-center">
+                  <Logo className="w-24 h-24 drop-shadow-2xl" />
                 </div>
                 <h2 className="text-4xl sm:text-5xl font-display font-black text-slate-900 mb-6 tracking-tight leading-tight">
                   Trouvez votre voie <br/>
@@ -395,18 +406,54 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Footer Links */}
-              <div className="w-full max-w-2xl border-t border-slate-200 pt-8 mt-4 flex flex-wrap justify-center gap-6">
-                <button onClick={() => setView('about')} className="text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">À propos</button>
-                <button onClick={() => setView('faq')} className="text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">FAQ</button>
-                <button onClick={() => setView('blog')} className="text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">Blog</button>
+              {/* Dark Footer (Full Width) */}
+              <div className="w-full bg-[#0f172a] text-slate-400 py-12 px-4 sm:px-8 mt-12 pb-32">
+                <div className="max-w-5xl mx-auto">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
+                    <div className="col-span-1 md:col-span-2">
+                      <div className="flex items-center space-x-2 mb-4">
+                        <Logo className="w-8 h-8" />
+                        <span className="font-display font-bold text-xl text-white">OrientaBénin</span>
+                      </div>
+                      <p className="text-sm leading-relaxed mb-6 max-w-sm text-slate-400">
+                        Votre assistant d'orientation universitaire au Bénin. Basé sur l'algorithme de classement et les données officielles du Ministère.
+                      </p>
+                      <button onClick={() => setView('profile')} className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-colors flex items-center w-fit shadow-lg shadow-indigo-500/20">
+                        Commencer gratuitement <ArrowRight className="w-4 h-4 ml-2" />
+                      </button>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-white font-bold text-xs tracking-widest uppercase mb-5">Navigation</h4>
+                      <ul className="space-y-3 text-sm">
+                        <li><button onClick={() => setView('home')} className="hover:text-indigo-400 transition-colors">Accueil</button></li>
+                        <li><button onClick={() => setView('profile')} className="hover:text-indigo-400 transition-colors">Simulation</button></li>
+                        <li><button onClick={() => setView('guide')} className="hover:text-indigo-400 transition-colors">Guide</button></li>
+                        <li><button onClick={() => setView('blog')} className="hover:text-indigo-400 transition-colors">Blog</button></li>
+                        <li><button onClick={() => setView('faq')} className="hover:text-indigo-400 transition-colors">FAQ</button></li>
+                        <li><button onClick={() => setView('about')} className="hover:text-indigo-400 transition-colors">À propos</button></li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="text-white font-bold text-xs tracking-widest uppercase mb-5">Contact</h4>
+                      <ul className="space-y-4 text-sm">
+                        <li className="flex items-center"><Mail className="w-4 h-4 mr-3 text-slate-500" /> support@orientabenin.bj</li>
+                        <li className="flex items-center"><MapPin className="w-4 h-4 mr-3 text-slate-500" /> Cotonou, Bénin</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center text-xs">
+                    <p>© 2026 OrientaBénin — Tous droits réservés.</p>
+                  </div>
+                </div>
               </div>
             </motion.div>
           )}
 
           {/* PROFILE VIEW */}
           {view === 'profile' && (
-            <motion.div key="profile" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}}>
+            <motion.div key="profile" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="max-w-3xl mx-auto px-4 w-full pb-32">
               {!authUser ? (
                 <GlassCard className="p-8 text-center mb-6">
                   <User className="w-12 h-12 text-indigo-400 mx-auto mb-4" />
@@ -501,7 +548,7 @@ export default function App() {
 
           {/* RESULTS VIEW */}
           {view === 'results' && (
-            <motion.div key="results" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}}>
+            <motion.div key="results" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="max-w-3xl mx-auto px-4 w-full pb-32">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-display font-bold text-slate-900">Recommandations</h2>
                 <span className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-bold">{recommendations.length}</span>
@@ -611,7 +658,7 @@ export default function App() {
 
           {/* EXPLORE VIEW */}
           {view === 'explore' && (
-            <motion.div key="explore" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}}>
+            <motion.div key="explore" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="max-w-3xl mx-auto px-4 w-full pb-32">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-3xl font-display font-bold text-slate-900">Explorer</h2>
                 <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-xl text-xs font-black uppercase tracking-wider border border-indigo-200">Guide 2025-2026</span>
@@ -695,7 +742,7 @@ export default function App() {
 
           {/* DETAILS VIEW */}
           {view === 'details' && selectedFiliere && (
-            <motion.div key="details" initial={{opacity:0, x:20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:-20}}>
+            <motion.div key="details" initial={{opacity:0, x:20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:-20}} className="max-w-3xl mx-auto px-4 w-full pb-32">
               <button onClick={() => setView('explore')} className="mb-6 flex items-center text-slate-500 hover:text-slate-900 transition-colors font-medium">
                 <ArrowLeft className="w-4 h-4 mr-1" /> Retour
               </button>
@@ -787,7 +834,7 @@ export default function App() {
 
           {/* GUIDE VIEW */}
           {view === 'guide' && (
-            <motion.div key="guide" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-12">
+            <motion.div key="guide" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
               <div className="mb-8">
                 <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold mb-4 inline-block">Guide complet 2025-2026</span>
                 <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
@@ -943,7 +990,7 @@ export default function App() {
 
           {/* ABOUT VIEW */}
           {view === 'about' && (
-            <motion.div key="about" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-12">
+            <motion.div key="about" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
               <div className="mb-8">
                 <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
                   À propos d'OrientaBénin
@@ -985,7 +1032,7 @@ export default function App() {
 
           {/* FAQ VIEW */}
           {view === 'faq' && (
-            <motion.div key="faq" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-12">
+            <motion.div key="faq" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
               <div className="mb-8">
                 <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
                   Foire Aux Questions
@@ -1029,7 +1076,7 @@ export default function App() {
 
           {/* BLOG VIEW */}
           {view === 'blog' && (
-            <motion.div key="blog" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-12">
+            <motion.div key="blog" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
               <div className="mb-8">
                 <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
                   Blog & Actualités
@@ -1131,6 +1178,126 @@ export default function App() {
 
       {/* Modals */}
       <AnimatePresence>
+        {showInfo && (
+          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+            <motion.div initial={{scale:0.95, opacity:0}} animate={{scale:1, opacity:1}} exit={{scale:0.95, opacity:0}} className="bg-white/90 backdrop-blur-2xl rounded-[2rem] shadow-2xl max-w-2xl w-full max-h-[85vh] flex flex-col overflow-hidden border border-white/50">
+              <div className="p-6 flex justify-between items-center border-b border-slate-100">
+                <h2 className="text-xl font-display font-bold flex items-center text-slate-900"><Info className="h-6 w-6 mr-2 text-indigo-600" /> Guide & Règles</h2>
+                <button onClick={() => setShowInfo(false)} className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors text-slate-600"><X className="h-5 w-5" /></button>
+              </div>
+              <div className="p-6 overflow-y-auto space-y-6 custom-scrollbar">
+                
+                <div className="bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100/50">
+                  <h3 className="font-bold text-indigo-800 mb-2 flex items-center"><Info className="w-5 h-5 mr-2"/> Qu'est-ce qu'une allocation ?</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Une <strong>allocation</strong> désigne soit une <strong>Bourse</strong>, soit un <strong>Secours</strong> universitaire. Un étudiant allocataire bénéficie de l'un de ces deux statuts. <br/>
+                    <span className="inline-block mt-2 font-medium text-rose-600">❌ Attention : On ne peut pas être allocataire dans deux filières à la fois !</span>
+                  </p>
+                </div>
+
+                <section>
+                  <h3 className="font-bold text-slate-800 mb-3 flex items-center"><CheckCircle2 className="h-5 w-5 mr-2 text-emerald-500" /> Les Bourses (Écoles & Facultés)</h3>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    <div className="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100/50">
+                      <h4 className="font-bold text-emerald-800 mb-1">Bourse en École</h4>
+                      <p className="text-sm text-slate-600 font-medium text-emerald-600 mb-2">420 000 FCFA / an</p>
+                      <p className="text-xs text-slate-600">Scolarité gratuite. Valable 3 ans (parfois 4 ans selon la filière).</p>
+                    </div>
+                    <div className="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100/50">
+                      <h4 className="font-bold text-emerald-800 mb-1">Bourse en Faculté</h4>
+                      <p className="text-sm text-slate-600 font-medium text-emerald-600 mb-2">365 000 FCFA / an</p>
+                      <p className="text-xs text-slate-600">Valable pendant les 3 ans du cycle de Licence.</p>
+                    </div>
+                  </div>
+                </section>
+
+                <section>
+                  <h3 className="font-bold text-slate-800 mb-3 flex items-center"><HelpCircle className="h-5 w-5 mr-2 text-blue-500" /> Secours et Titre Partiellement Payant</h3>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    <div className="bg-blue-50/50 p-4 rounded-2xl border border-blue-100/50">
+                      <h4 className="font-bold text-blue-800 mb-1">Secours (Facultés)</h4>
+                      <p className="text-sm text-slate-600 font-medium text-blue-600 mb-2">132 000 FCFA / an</p>
+                      <p className="text-xs text-slate-600">Attribué uniquement dans les facultés classiques pour 3 ans.</p>
+                    </div>
+                    <div className="bg-blue-50/50 p-4 rounded-2xl border border-blue-100/50">
+                      <h4 className="font-bold text-blue-800 mb-1">Titre Partiellement Payant</h4>
+                      <p className="text-sm text-slate-600 font-medium text-blue-600 mb-2">Paiement d'un tiers (1/3)</p>
+                      <p className="text-xs text-slate-600">L'équivalent du secours en école. L'étudiant ne reçoit pas d'argent, mais l'État paie les 2/3 de sa scolarité (qui coûte souvent +400 000F).</p>
+                    </div>
+                  </div>
+                </section>
+
+                <section>
+                  <h3 className="font-bold text-slate-800 mb-3 flex items-center"><Target className="h-5 w-5 mr-2 text-indigo-500" /> Répartition des 545 Filières (Guide 2025-2026)</h3>
+                  <div className="space-y-4">
+                    <div className="bg-slate-50/80 p-4 rounded-2xl border border-slate-100">
+                      <div className="flex justify-between items-center mb-2">
+                        <p className="text-sm font-bold text-slate-700">1. Établissements Publics</p>
+                        <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded text-[10px] font-bold">250 filières</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-slate-600 mb-2">
+                        <p>• UAC : 97</p>
+                        <p>• Parakou : 42</p>
+                        <p>• UNSTIM : 45</p>
+                        <p>• UNA : 46</p>
+                        <p>• Inter-États : 19</p>
+                        <p>• IUEP : 1</p>
+                      </div>
+                      <p className="text-[10px] text-slate-400 italic">Source : Pages 16-68 du guide officiel.</p>
+                    </div>
+
+                    <div className="bg-emerald-50/30 p-4 rounded-2xl border border-emerald-100/50">
+                      <div className="flex justify-between items-center mb-2">
+                        <p className="text-sm font-bold text-emerald-900">2. Établissements Privés (Agréés)</p>
+                        <span className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-bold">185 filières</span>
+                      </div>
+                      <p className="text-xs text-slate-600 mb-2"><strong>Exemples :</strong> Licence en Banque-Finance (ESGIS, ISEG), Génie Civil (ESGC), Journalisme (HEGI, ISMA).</p>
+                      <p className="text-[10px] text-emerald-500 italic">Source : Pages 73-81 (Section IX).</p>
+                    </div>
+
+                    <div className="bg-amber-50/30 p-4 rounded-2xl border border-amber-100/50">
+                      <div className="flex justify-between items-center mb-2">
+                        <p className="text-sm font-bold text-amber-900">3. Établissements Privés (Régime Ouverture)</p>
+                        <span className="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-[10px] font-bold">110 filières</span>
+                      </div>
+                      <p className="text-xs text-slate-600 mb-2"><strong>Exemples :</strong> Licence en Tourisme (CET AAT-IPAAM), Intelligence Artificielle (ESEP LE BERGER), Agroalimentaire (ESCAE).</p>
+                      <p className="text-[10px] text-amber-500 italic">Source : Pages 82-85 (Section X).</p>
+                    </div>
+
+                    <div className="bg-indigo-50/30 p-4 rounded-2xl border border-indigo-100/50">
+                      <p className="text-sm font-bold text-indigo-900 mb-2">Allocations (12 548 places)</p>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs text-indigo-700">Bourses</span>
+                        <span className="text-sm font-black text-indigo-900">2 283</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-indigo-100 rounded-full overflow-hidden mb-3">
+                        <div className="h-full bg-indigo-600" style={{width: '18.2%'}}></div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs text-indigo-700">Aides / FPP</span>
+                        <span className="text-sm font-black text-indigo-900">10 265</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-indigo-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-indigo-400" style={{width: '81.8%'}}></div>
+                      </div>
+                      <p className="text-[10px] text-indigo-500 mt-3 text-center italic">Pour 57 349 admis au BAC cette année.</p>
+                    </div>
+                  </div>
+                </section>
+
+                <section>
+                  <h3 className="font-bold text-slate-800 mb-3 flex items-center"><AlertTriangle className="h-5 w-5 mr-2 text-amber-500" /> Le Mythe des Mentions (Très Important)</h3>
+                  <div className="space-y-3 text-sm text-slate-600 bg-amber-50/50 p-4 rounded-2xl border border-amber-100/50">
+                    <p><strong>Mention Bien ≠ Bourse garantie :</strong> Si vous choisissez une filière qui exige de fortes notes dans des matières où vous avez été faible, vous risquez de ne pas être classé, malgré votre mention Bien.</p>
+                    <p><strong>Mentions Passable / Assez Bien / Oral :</strong> Ne vous découragez pas ! Vous avez toutes vos chances d'obtenir une bourse ou un secours si vous faites des <strong>choix stratégiques</strong> alignés avec vos meilleures notes.</p>
+                    <p className="font-medium text-amber-800 mt-2">💡 Tout dépend du CHOIX que vous opérez sur la plateforme. C'est le but de cette application : vous aider à faire le bon choix !</p>
+                  </div>
+                </section>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
         {showStats && (
           <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
             <motion.div initial={{scale:0.95, opacity:0}} animate={{scale:1, opacity:1}} exit={{scale:0.95, opacity:0}} className="bg-white/90 backdrop-blur-2xl rounded-[2rem] shadow-2xl max-w-4xl w-full max-h-[85vh] flex flex-col overflow-hidden border border-white/50">

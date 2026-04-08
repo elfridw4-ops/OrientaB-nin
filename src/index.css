@@ -14,6 +14,7 @@ body {
     radial-gradient(at 100% 0%, hsla(339,49%,30%,0.04) 0, transparent 50%);
   background-attachment: fixed;
   -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
