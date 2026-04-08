@@ -1,0 +1,52 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Represents a student or admin in the OrientaBenin system.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "matricule": { "type": "string", "description": "Student matricule or full name" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["student", "admin", "super_admin"] },
+        "isLocked": { "type": "boolean", "description": "True if the student has validated their choices" },
+        "isDeleted": { "type": "boolean", "description": "True if the account was deleted (prevents recreation)" },
+        "serie": { "type": "string" },
+        "grades": { "type": "object", "description": "Map of subjects to grades" },
+        "choices": { "type": "array", "items": { "type": "string" }, "description": "Array of chosen Filiere IDs" },
+        "allocationStatus": { "type": "string", "enum": ["boursier", "secouru", "fpp", "none", "pending"] }
+      },
+      "required": ["uid", "role"]
+    },
+    "Filiere": {
+      "title": "Filiere",
+      "description": "Represents a university program.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nom_filiere": { "type": "string" },
+        "sigle": { "type": "string" },
+        "universite": { "type": "string" },
+        "localisation": { "type": "string" },
+        "bourses": { "type": "number" },
+        "aides": { "type": "number" },
+        "admisOfficiels": { "type": "number", "description": "Total official capacity from ministry" },
+        "candidatsCount": { "type": "number", "description": "Number of students who chose this filiere" },
+        "matieres_cles": { "type": "array", "items": { "type": "string" } },
+        "baccalaureats_recommandes": { "type": "array", "items": { "type": "string" } },
+        "debouches": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["id", "nom_filiere", "universite", "bourses", "aides", "candidatsCount"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Stores user profiles and choices."
+    },
+    "/filieres/{filiereId}": {
+      "schema": { "$ref": "#/entities/Filiere" },
+      "description": "Stores university programs and their real-time candidate counts."
+    }
+  }
+}

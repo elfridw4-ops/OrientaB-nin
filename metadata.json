@@ -1,0 +1,5 @@
+{
+  "name": "OrientaBénin",
+  "description": "Application d'orientation universitaire pour les bacheliers du Bénin. Simulateur de classement, filtrage par série BAC et quotas.",
+  "requestFramePermissions": []
+}

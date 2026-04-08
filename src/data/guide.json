@@ -1,0 +1,179 @@
+{
+  "metadata": {
+    "titre_document": "Guide d'orientation universitaire",
+    "annee_academique": "2024-2025",
+    "pays": "Bénin"
+  },
+  "universites": [
+    {
+      "nom_universite": "Université d'Abomey-Calavi",
+      "type": "Publique",
+      "etablissements": [
+        {
+          "nom_etablissement": "Faculté des Sciences de la Santé",
+          "sigle": "FSS",
+          "localisation": "Cotonou",
+          "filieres": [
+            {
+              "nom_filiere": "Médecine Générale",
+              "quotas": {
+                "bourses": 150,
+                "aides_partiellement_payant": 0
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["C", "D"],
+              "matieres_cles": ["SVT", "PCT", "Maths"],
+              "debouches": [
+                "Médecin généraliste",
+                "Spécialisations en sciences de la santé"
+              ]
+            },
+            {
+              "nom_filiere": "Pharmacie",
+              "quotas": {
+                "bourses": 16,
+                "aides_partiellement_payant": 0
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["C", "D"],
+              "matieres_cles": ["SVT", "PCT", "Maths"],
+              "debouches": [
+                "Pharmacien",
+                "Spécialisations en sciences de la santé, option pharmacie"
+              ]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Ecole Nationale d'Economie Appliquée et de Management",
+          "sigle": "ENEAM",
+          "localisation": "Cotonou",
+          "filieres": [
+            {
+              "nom_filiere": "Administration des Réseaux informatiques",
+              "quotas": {
+                "bourses": 50,
+                "aides_partiellement_payant": 0
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["C", "D", "DT/IMI"],
+              "matieres_cles": ["Maths", "Français", "Anglais"],
+              "debouches": [
+                "Technicien en réseaux informatiques",
+                "Technicien en maintenance informatique",
+                "Développeur d'applications"
+              ]
+            },
+            {
+              "nom_filiere": "Marketing",
+              "quotas": {
+                "bourses": 8,
+                "aides_partiellement_payant": 0
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["B", "C", "D", "G2", "G3", "DT/CoM"],
+              "matieres_cles": ["Economie", "Maths", "Etude de Cas", "Français", "Anglais"],
+              "debouches": [
+                "Consultant search marketing",
+                "Community manager",
+                "Chef de produit",
+                "Responsable de la marque en ligne"
+              ]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Institut de Mathématiques et de Sciences Physiques",
+          "sigle": "IMSP",
+          "localisation": "Dangbo",
+          "filieres": [
+            {
+              "nom_filiere": "Classes préparatoires Mathématiques, Physiques et Science de l'Ingénieur (MPSI)",
+              "quotas": {
+                "bourses": 81,
+                "aides_partiellement_payant": 0
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["C", "D", "E", "F"],
+              "matieres_cles": ["Maths", "PCT", "Français"],
+              "debouches": [
+                "Entrée dans les grandes écoles d'ingénieurs",
+                "Entrée dans les Masters de Mathématiques, de Physique et Informatique"
+              ]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Faculté des Lettres, Arts et Sciences Humaines",
+          "sigle": "FLASH-Adjarra",
+          "localisation": "Adjarra",
+          "filieres": [
+            {
+              "nom_filiere": "Géographie et Aménagement du Territoire",
+              "quotas": {
+                "bourses": 60,
+                "aides_partiellement_payant": 340
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["A1", "A2", "B", "C", "D", "DEAT", "DT/STI"],
+              "matieres_cles": ["Français", "Hist-Géo", "Maths", "Anglais"],
+              "debouches": [
+                "Enseignement",
+                "Laboratoires et institutions de recherche",
+                "Assainissement"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nom_universite": "Université de Parakou",
+      "type": "Publique",
+      "etablissements": [
+        {
+          "nom_etablissement": "Faculté de Médecine",
+          "sigle": "FM",
+          "localisation": "Parakou",
+          "filieres": [
+            {
+              "nom_filiere": "Médecine Humaine",
+              "quotas": {
+                "bourses": 117,
+                "aides_partiellement_payant": 0
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["C", "D"],
+              "matieres_cles": ["Maths", "SPCT", "SVT"],
+              "debouches": [
+                "Médecin généraliste dans les hôpitaux et centre de santé"
+              ]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Faculté d'Agronomie",
+          "sigle": "FA",
+          "localisation": "Parakou",
+          "filieres": [
+            {
+              "nom_filiere": "Sciences et Techniques de Production Végétale",
+              "quotas": {
+                "bourses": 22,
+                "aides_partiellement_payant": 0
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["C", "D", "DEAT"],
+              "matieres_cles": ["Maths", "SPCT", "SVT"],
+              "debouches": [
+                "Entrepreneur Agricole",
+                "Conseiller Agricole",
+                "Technicien/Encadreur en production végétale"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

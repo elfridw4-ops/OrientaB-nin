@@ -1,0 +1,109 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    // Collection: users
+    // Document ID: {userId}
+    // Fields:
+    //   - uid: string (required)
+    //   - matricule: string
+    //   - email: string
+    //   - role: string ('student', 'admin', 'super_admin')
+    //   - isLocked: boolean
+    //   - isDeleted: boolean
+    //   - serie: string
+    //   - grades: map
+    //   - choices: list of strings
+    //   - allocationStatus: string
+    //
+    // Collection: filieres
+    // Document ID: {filiereId}
+    // Fields:
+    //   - id: string
+    //   - nom_filiere: string
+    //   - sigle: string
+    //   - universite: string
+    //   - localisation: string
+    //   - bourses: number
+    //   - aides: number
+    //   - candidatsCount: number
+    //   - matieres_cles: list
+    //   - baccalaureats_recommandes: list
+    //   - debouches: list
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        (getUserData().role == 'admin' || getUserData().role == 'super_admin' || 
+        (request.auth.token.email == "elfridw4@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isSuperAdmin() {
+      return isAuthenticated() && 
+        (getUserData().role == 'super_admin' || 
+        (request.auth.token.email == "elfridw4@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'role']) &&
+             data.uid is string &&
+             data.role in ['student', 'admin', 'super_admin'];
+    }
+
+    function isValidFiliere(data) {
+      return data.keys().hasAll(['id', 'nom_filiere', 'universite', 'quotas', 'candidatsCount']) &&
+             data.candidatsCount is number && data.candidatsCount >= 0;
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      
+      // Create: user can create their own profile as 'student'. Super admin can create any.
+      allow create: if isAuthenticated() && isValidUser(request.resource.data) && 
+                    ((isOwner(userId) && request.resource.data.role == 'student' && request.resource.data.uid == request.auth.uid) || isSuperAdmin());
+      
+      // Update: user can update their own profile if not locked. Admin can update any.
+      allow update: if isAuthenticated() && isValidUser(request.resource.data) &&
+                    (
+                      (isOwner(userId) && request.resource.data.uid == resource.data.uid && request.resource.data.role == resource.data.role && (!resource.data.isLocked || request.resource.data.allocationStatus != resource.data.allocationStatus)) || 
+                      isAdmin()
+                    );
+                    
+      allow delete: if isSuperAdmin();
+    }
+
+    // Filieres Collection
+    match /filieres/{filiereId} {
+      allow read: if true;
+      
+      allow create, delete: if isAdmin() && isValidFiliere(request.resource.data);
+      
+      // Update: Admin can update anything. Students can ONLY update candidatsCount by +1 or -1.
+      allow update: if isAuthenticated() && isValidFiliere(request.resource.data) &&
+                    (
+                      isAdmin() ||
+                      (
+                        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['candidatsCount']) &&
+                        math.abs(request.resource.data.candidatsCount - resource.data.candidatsCount) == 1
+                      )
+                    );
+    }
+  }
+}
