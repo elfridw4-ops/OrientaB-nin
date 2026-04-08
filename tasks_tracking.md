@@ -25,9 +25,12 @@
 - [x] Suivi en temps réel du nombre de candidats par filière.
 - [x] Intégration de la comparaison capacité officielle vs inscriptions plateforme.
 - [x] Calcul des chances de réussite et indicateur de saturation visuel.
-- [x] Intégration des statistiques consolidées du Guide 2025-2026 dans l'interface.
+- [x] Intégration des statistiques consolidées du Guide 2025-2026 (545 filières, répartition public/privé).
+- [x] Ajout des sources (pages du guide) et exemples de filières privées dans l'interface.
+- [x] Système de transparence sur l'utilisation des données (anonymisation et statistiques globales).
 - [x] Enrichissement massif de la base de données `guide.json` (250 filières représentatives).
 - [x] Ajout d'un Tableau de Bord National informatif dans la vue Explorer.
+- [x] Automatisation de l'accès administrateur sans inscription préalable.
 - [x] Mise à jour du panneau d'administration pour gérer les utilisateurs (verrouillage, blocage).
 
 ## Bogues corrigés

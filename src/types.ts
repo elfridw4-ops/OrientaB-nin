@@ -40,6 +40,23 @@ export interface GuideData {
       aides_fpp: number;
       admis_bac: number;
       repartition_universites: Record<string, number>;
+      repartition_secteur?: {
+        public: {
+          total: number;
+          details: Record<string, number>;
+          pages: string;
+        };
+        prive_agree: {
+          total: number;
+          exemples: string[];
+          pages: string;
+        };
+        prive_ouverture: {
+          total: number;
+          exemples: string[];
+          pages: string;
+        };
+      };
       repartition_mode: {
         classement: number;
         concours: number;
@@ -60,6 +77,15 @@ export interface FlattenedFiliere extends Filiere {
   admisOfficiels?: number;
   bourses: number;
   aides: number;
+  stats_anonymes?: {
+    moyenne_generale: number;
+    mentions: {
+      tres_bien: number;
+      bien: number;
+      assez_bien: number;
+      passable: number;
+    };
+  };
 }
 
 export interface UserProfile {

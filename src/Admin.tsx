@@ -50,7 +50,10 @@ export default function Admin({ onBack }: { onBack: () => void }) {
 
   const openModal = (filiere?: FlattenedFiliere) => {
     if (filiere) {
-      setEditingFiliere(JSON.parse(JSON.stringify(filiere))); // Deep copy
+      const copy = JSON.parse(JSON.stringify(filiere)); // Deep copy
+      if (!copy.matieres) copy.matieres = [];
+      if (!copy.matieres_cles) copy.matieres_cles = [];
+      setEditingFiliere(copy);
     } else {
       setEditingFiliere({
         id: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2),
@@ -336,6 +339,11 @@ export default function Admin({ onBack }: { onBack: () => void }) {
                           <label className="block text-sm font-medium text-slate-700 mb-1.5">Séries recommandées</label>
                           <input type="text" value={editingFiliere.baccalaureats_recommandes.join(', ')} onChange={e => setEditingFiliere({...editingFiliere, baccalaureats_recommandes: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})} placeholder="Ex: C, D, E" className="w-full bg-white border border-slate-200 shadow-inner rounded-xl p-3 focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all" />
                           <p className="text-xs text-slate-500 mt-1.5">Séparez les séries par des virgules.</p>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-slate-700 mb-1.5">Matières clés</label>
+                          <input type="text" value={(editingFiliere.matieres_cles || []).join(', ')} onChange={e => setEditingFiliere({...editingFiliere, matieres_cles: e.target.value.split(',').map(s=>s.trim()).filter(Boolean)})} placeholder="Ex: Maths, Physique" className="w-full bg-white border border-slate-200 shadow-inner rounded-xl p-3 focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all" />
+                          <p className="text-xs text-slate-500 mt-1.5">Séparez les matières par des virgules.</p>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>

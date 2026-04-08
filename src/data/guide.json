@@ -4,11 +4,35 @@
     "annee_academique": "2025-2026",
     "pays": "Bénin",
     "stats_globales": {
-      "total_filieres": 250,
+      "total_filieres": 545,
       "total_allocations": 12548,
       "bourses": 2283,
       "aides_fpp": 10265,
       "admis_bac": 57349,
+      "repartition_secteur": {
+        "public": {
+          "total": 250,
+          "details": {
+            "UAC": 97,
+            "Parakou": 42,
+            "UNSTIM": 45,
+            "UNA": 46,
+            "Inter-Etats": 19,
+            "IUEP": 1
+          },
+          "pages": "16-68"
+        },
+        "prive_agree": {
+          "total": 185,
+          "exemples": ["Banque-Finance (ESGIS, ISEG)", "Génie Civil (ESGC)", "Journalisme (HEGI, ISMA)"],
+          "pages": "73-81"
+        },
+        "prive_ouverture": {
+          "total": 110,
+          "exemples": ["Tourisme (CET AAT-IPAAM)", "Intelligence Artificielle (ESEP LE BERGER)", "Agroalimentaire (ESCAE)"],
+          "pages": "82-85"
+        }
+      },
       "repartition_universites": {
         "UAC": 97,
         "Parakou": 42,

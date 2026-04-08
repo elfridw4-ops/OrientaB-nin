@@ -83,17 +83,48 @@ export const updateFiliereChoices = async (userId: string, oldChoices: string[],
       const userData = userSnap.data() as UserProfile;
       if (userData.isLocked) throw new Error("Account is locked");
 
-      // 2. Calculate added and removed choices
+      // 2. Calculate user average and mention
+      const calculateUserAverage = (grades: Record<string, number> = {}) => {
+        const values = Object.values(grades);
+        if (values.length === 0) return 0;
+        return values.reduce((a, b) => a + b, 0) / values.length;
+      };
+
+      const getMention = (avg: number) => {
+        if (avg >= 16) return 'tres_bien';
+        if (avg >= 14) return 'bien';
+        if (avg >= 12) return 'assez_bien';
+        return 'passable';
+      };
+
+      const userAvg = calculateUserAverage(userData.grades);
+      const userMention = getMention(userAvg);
+
+      // 3. Calculate added and removed choices
       const added = newChoices.filter(c => !oldChoices.includes(c));
       const removed = oldChoices.filter(c => !newChoices.includes(c));
 
-      // 3. Update filieres candidatsCount
+      // 4. Update filieres candidatsCount and stats_anonymes
       for (const filiereId of added) {
         const filiereRef = doc(db, `filieres/${filiereId}`);
         const filiereSnap = await transaction.get(filiereRef);
         if (filiereSnap.exists()) {
-          const currentCount = filiereSnap.data().candidatsCount || 0;
-          transaction.update(filiereRef, { candidatsCount: currentCount + 1 });
+          const data = filiereSnap.data() as FlattenedFiliere;
+          const currentCount = data.candidatsCount || 0;
+          const currentStats = data.stats_anonymes || { moyenne_generale: 0, mentions: { tres_bien: 0, bien: 0, assez_bien: 0, passable: 0 } };
+          
+          const newCount = currentCount + 1;
+          const newMoyenne = ((currentStats.moyenne_generale * currentCount) + userAvg) / newCount;
+          const newMentions = { ...currentStats.mentions };
+          newMentions[userMention] = (newMentions[userMention] || 0) + 1;
+
+          transaction.update(filiereRef, { 
+            candidatsCount: newCount,
+            stats_anonymes: {
+              moyenne_generale: newMoyenne,
+              mentions: newMentions
+            }
+          });
         }
       }
 
@@ -101,12 +132,27 @@ export const updateFiliereChoices = async (userId: string, oldChoices: string[],
         const filiereRef = doc(db, `filieres/${filiereId}`);
         const filiereSnap = await transaction.get(filiereRef);
         if (filiereSnap.exists()) {
-          const currentCount = filiereSnap.data().candidatsCount || 0;
-          transaction.update(filiereRef, { candidatsCount: Math.max(0, currentCount - 1) });
+          const data = filiereSnap.data() as FlattenedFiliere;
+          const currentCount = data.candidatsCount || 0;
+          if (currentCount > 0) {
+            const currentStats = data.stats_anonymes || { moyenne_generale: 0, mentions: { tres_bien: 0, bien: 0, assez_bien: 0, passable: 0 } };
+            const newCount = currentCount - 1;
+            const newMoyenne = newCount === 0 ? 0 : ((currentStats.moyenne_generale * currentCount) - userAvg) / newCount;
+            const newMentions = { ...currentStats.mentions };
+            newMentions[userMention] = Math.max(0, (newMentions[userMention] || 0) - 1);
+
+            transaction.update(filiereRef, { 
+              candidatsCount: newCount,
+              stats_anonymes: {
+                moyenne_generale: newMoyenne,
+                mentions: newMentions
+              }
+            });
+          }
         }
       }
 
-      // 4. Update user choices
+      // 5. Update user choices
       transaction.update(userRef, { choices: newChoices });
     });
   } catch (error) {

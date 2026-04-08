@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   GraduationCap, Search, Building2, Calculator, BookOpen, 
   Info, X, AlertTriangle, CheckCircle2, BarChart3, ChevronRight, 
-  ArrowLeft, Star, TrendingUp, Compass, User, Home, MapPin, ArrowRight, Settings, HelpCircle, Target, Zap, Lock, LogOut, Users, ShieldAlert
+  ArrowLeft, Star, TrendingUp, Compass, User, Home, MapPin, ArrowRight, Settings, HelpCircle, Target, Zap, Lock, LogOut, Users, ShieldAlert, Shield
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { getAllFilieres, getAppData } from './utils';
@@ -55,7 +55,26 @@ export default function App() {
             setSelectedSerie(profile.serie || '');
             setGrades(profile.grades || { Maths: 0, SVT: 0, PCT: 0, Français: 0, Anglais: 0 });
           } else {
-            setShowAuthModal(true); // Need matricule to complete registration
+            // Check if this is the designated admin
+            if (user.email === 'elfridw4@gmail.com') {
+              const adminProfile: UserProfile = {
+                uid: user.uid,
+                matricule: 'ADMIN',
+                nomComplet: user.displayName || 'Admin',
+                email: user.email || '',
+                role: 'super_admin',
+                isLocked: false,
+                isDeleted: false,
+                serie: '',
+                grades: {},
+                choices: [],
+                allocationStatus: 'none'
+              };
+              await createUserProfile(adminProfile);
+              setUserProfile(adminProfile);
+            } else {
+              setShowAuthModal(true); // Need matricule to complete registration
+            }
           }
         } catch (error) {
           console.error("Error fetching user profile:", error);
@@ -105,7 +124,7 @@ export default function App() {
     try {
       const user = await loginWithGoogle();
       const profile = await getUserProfile(user.uid);
-      if (!profile) {
+      if (!profile && user.email !== 'elfridw4@gmail.com') {
         setShowAuthModal(true);
       }
     } catch (error) {
@@ -339,7 +358,7 @@ export default function App() {
                     </div>
                     <div>
                       <p className="text-sm font-bold text-slate-800">Guide d'orientation 2025-2026 disponible</p>
-                      <p className="text-xs text-slate-500 mt-1">Les données ont été mises à jour avec les 250 filières publiques et les nouveaux quotas d'allocations.</p>
+                      <p className="text-xs text-slate-500 mt-1">Les données ont été mises à jour avec les 545 filières (250 publiques, 185 privées agréées, 110 privées en régime ouverture).</p>
                     </div>
                   </div>
                   <div className="bg-white/40 border border-white/50 p-4 rounded-2xl flex gap-4 items-start">
@@ -416,9 +435,20 @@ export default function App() {
                   </GlassCard>
 
                   {!userProfile?.isLocked && (
-                    <button onClick={() => { handleSaveProfile(); setView('results'); }} disabled={!selectedSerie} className={`w-full rounded-2xl py-4 font-semibold shadow-xl transition-all flex justify-center items-center mb-4 ${selectedSerie ? 'bg-slate-900 text-white hover:bg-slate-800 hover:-translate-y-0.5 shadow-slate-200' : 'bg-slate-200 text-slate-400 cursor-not-allowed'}`}>
-                      Enregistrer et voir les recommandations <ArrowRight className="ml-2 w-5 h-5" />
-                    </button>
+                    <>
+                      <div className="bg-indigo-50/50 border border-indigo-100 p-4 rounded-2xl mb-4">
+                        <p className="text-sm text-indigo-800 font-medium flex items-start">
+                          <Shield className="w-5 h-5 mr-2 shrink-0 text-indigo-600 mt-0.5" />
+                          <span>
+                            Vos données sont utilisées pour calculer vos chances d’admission et améliorer les recommandations pour tous les bacheliers. Toutes les informations partagées sont <strong>anonymisées</strong>.
+                            <br/><span className="font-bold mt-1 inline-block text-indigo-900">🔥 Plus vous êtes nombreux, plus les recommandations sont précises.</span>
+                          </span>
+                        </p>
+                      </div>
+                      <button onClick={() => { handleSaveProfile(); setView('results'); }} disabled={!selectedSerie} className={`w-full rounded-2xl py-4 font-semibold shadow-xl transition-all flex justify-center items-center mb-4 ${selectedSerie ? 'bg-slate-900 text-white hover:bg-slate-800 hover:-translate-y-0.5 shadow-slate-200' : 'bg-slate-200 text-slate-400 cursor-not-allowed'}`}>
+                        Enregistrer et voir les recommandations <ArrowRight className="ml-2 w-5 h-5" />
+                      </button>
+                    </>
                   )}
 
                   {userProfile && userProfile.choices.length > 0 && !userProfile.isLocked && (
@@ -559,10 +589,10 @@ export default function App() {
               </div>
 
               {/* Tableau de Bord National */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
                 <div className="bg-white/60 backdrop-blur-xl border border-white/50 p-4 rounded-2xl shadow-sm">
-                  <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Filières</p>
-                  <p className="text-xl font-black text-slate-800">{stats?.total_filieres || 250}</p>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Total Filières</p>
+                  <p className="text-xl font-black text-slate-800">{stats?.total_filieres || 545}</p>
                 </div>
                 <div className="bg-white/60 backdrop-blur-xl border border-white/50 p-4 rounded-2xl shadow-sm">
                   <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Allocations</p>
@@ -575,6 +605,31 @@ export default function App() {
                 <div className="bg-white/60 backdrop-blur-xl border border-white/50 p-4 rounded-2xl shadow-sm">
                   <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Aides/FPP</p>
                   <p className="text-xl font-black text-blue-600">{stats?.aides_fpp?.toLocaleString() || '10 265'}</p>
+                </div>
+              </div>
+
+              {/* Répartition par Secteur */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+                <div className="bg-indigo-50/50 border border-indigo-100 p-4 rounded-2xl">
+                  <div className="flex justify-between items-center mb-1">
+                    <p className="text-[10px] font-bold text-indigo-400 uppercase">Secteur Public</p>
+                    <span className="text-[10px] font-black text-indigo-600 bg-indigo-100 px-1.5 py-0.5 rounded">250</span>
+                  </div>
+                  <p className="text-xs text-slate-500 leading-tight">UAC (97), Parakou (42), UNSTIM (45), UNA (46), Inter-États (19), IUEP (1)</p>
+                </div>
+                <div className="bg-emerald-50/50 border border-emerald-100 p-4 rounded-2xl">
+                  <div className="flex justify-between items-center mb-1">
+                    <p className="text-[10px] font-bold text-emerald-400 uppercase">Privé (Agréé)</p>
+                    <span className="text-[10px] font-black text-emerald-600 bg-emerald-100 px-1.5 py-0.5 rounded">185</span>
+                  </div>
+                  <p className="text-xs text-slate-500 leading-tight">Banque-Finance, Génie Civil, Journalisme, etc.</p>
+                </div>
+                <div className="bg-amber-50/50 border border-amber-100 p-4 rounded-2xl">
+                  <div className="flex justify-between items-center mb-1">
+                    <p className="text-[10px] font-bold text-amber-400 uppercase">Privé (Ouverture)</p>
+                    <span className="text-[10px] font-black text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded">110</span>
+                  </div>
+                  <p className="text-xs text-slate-500 leading-tight">Tourisme, Intelligence Artificielle, Agroalimentaire, etc.</p>
                 </div>
               </div>
               
@@ -641,6 +696,42 @@ export default function App() {
                   </GlassCard>
                 </div>
 
+                {/* Statistiques Anonymisées */}
+                <GlassCard className="p-6">
+                  <h3 className="font-bold text-slate-900 mb-4 flex items-center"><BarChart3 className="w-5 h-5 mr-2 text-indigo-500"/> Profil des Candidats (Anonymisé)</h3>
+                  {selectedFiliere.candidatsCount && selectedFiliere.candidatsCount > 0 ? (
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
+                        <span className="text-sm font-medium text-slate-600">Moyenne générale estimée</span>
+                        <span className="text-lg font-black text-indigo-600">{selectedFiliere.stats_anonymes?.moyenne_generale?.toFixed(1) || '--'}/20</span>
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Répartition des mentions</p>
+                        <div className="grid grid-cols-4 gap-2">
+                          <div className="text-center p-2 bg-emerald-50 rounded-lg border border-emerald-100">
+                            <span className="block text-xs font-bold text-emerald-700 mb-1">TB</span>
+                            <span className="text-sm font-black text-emerald-900">{selectedFiliere.stats_anonymes?.mentions?.tres_bien || 0}</span>
+                          </div>
+                          <div className="text-center p-2 bg-blue-50 rounded-lg border border-blue-100">
+                            <span className="block text-xs font-bold text-blue-700 mb-1">B</span>
+                            <span className="text-sm font-black text-blue-900">{selectedFiliere.stats_anonymes?.mentions?.bien || 0}</span>
+                          </div>
+                          <div className="text-center p-2 bg-indigo-50 rounded-lg border border-indigo-100">
+                            <span className="block text-xs font-bold text-indigo-700 mb-1">AB</span>
+                            <span className="text-sm font-black text-indigo-900">{selectedFiliere.stats_anonymes?.mentions?.assez_bien || 0}</span>
+                          </div>
+                          <div className="text-center p-2 bg-slate-50 rounded-lg border border-slate-200">
+                            <span className="block text-xs font-bold text-slate-600 mb-1">P</span>
+                            <span className="text-sm font-black text-slate-800">{selectedFiliere.stats_anonymes?.mentions?.passable || 0}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-slate-500 italic text-center py-4">Soyez le premier à choisir cette filière pour générer des statistiques !</p>
+                  )}
+                </GlassCard>
+
                 <GlassCard className="p-6">
                   <h3 className="font-bold text-slate-900 mb-4 flex items-center"><BookOpen className="w-5 h-5 mr-2 text-indigo-500"/> Matières Clés</h3>
                   <div className="flex flex-wrap gap-2">
@@ -688,7 +779,17 @@ export default function App() {
           <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
             <motion.div initial={{scale:0.95, opacity:0}} animate={{scale:1, opacity:1}} exit={{scale:0.95, opacity:0}} className="bg-white/90 backdrop-blur-2xl rounded-[2rem] shadow-2xl max-w-md w-full p-6 border border-white/50">
               <h2 className="text-2xl font-display font-bold text-slate-900 mb-2">Finaliser l'inscription</h2>
-              <p className="text-slate-600 mb-6 text-sm">Veuillez entrer votre matricule ou nom complet pour finaliser votre compte.</p>
+              <p className="text-slate-600 mb-4 text-sm">Veuillez entrer votre matricule ou nom complet pour finaliser votre compte.</p>
+              
+              <div className="bg-indigo-50/50 border border-indigo-100 p-3 rounded-xl mb-6">
+                <p className="text-xs text-indigo-800 font-medium flex items-start">
+                  <Shield className="w-4 h-4 mr-2 shrink-0 text-indigo-600 mt-0.5" />
+                  <span>
+                    Vos données sont utilisées pour calculer vos chances d’admission et améliorer les recommandations pour tous les bacheliers. Toutes les informations partagées sont <strong>anonymisées</strong>.
+                  </span>
+                </p>
+              </div>
+
               <input 
                 type="text" 
                 placeholder="Matricule ou Nom complet" 
@@ -760,22 +861,40 @@ export default function App() {
                 </section>
 
                 <section>
-                  <h3 className="font-bold text-slate-800 mb-3 flex items-center"><Target className="h-5 w-5 mr-2 text-indigo-500" /> Résumé du Guide 2025-2026</h3>
+                  <h3 className="font-bold text-slate-800 mb-3 flex items-center"><Target className="h-5 w-5 mr-2 text-indigo-500" /> Répartition des 545 Filières (Guide 2025-2026)</h3>
                   <div className="space-y-4">
                     <div className="bg-slate-50/80 p-4 rounded-2xl border border-slate-100">
-                      <p className="text-sm font-bold text-slate-700 mb-2">Filières Publiques (250 au total)</p>
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-slate-600">
+                      <div className="flex justify-between items-center mb-2">
+                        <p className="text-sm font-bold text-slate-700">1. Établissements Publics</p>
+                        <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded text-[10px] font-bold">250 filières</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-slate-600 mb-2">
                         <p>• UAC : 97</p>
                         <p>• Parakou : 42</p>
                         <p>• UNSTIM : 45</p>
                         <p>• UNA : 46</p>
-                        <p>• IUEP : 1</p>
                         <p>• Inter-États : 19</p>
+                        <p>• IUEP : 1</p>
                       </div>
-                      <div className="mt-3 pt-3 border-t border-slate-200 flex justify-between text-[10px] font-bold uppercase text-slate-400">
-                        <span>Classement: 197 (79%)</span>
-                        <span>Concours: 53 (21%)</span>
+                      <p className="text-[10px] text-slate-400 italic">Source : Pages 16-68 du guide officiel.</p>
+                    </div>
+
+                    <div className="bg-emerald-50/30 p-4 rounded-2xl border border-emerald-100/50">
+                      <div className="flex justify-between items-center mb-2">
+                        <p className="text-sm font-bold text-emerald-900">2. Établissements Privés (Agréés)</p>
+                        <span className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-bold">185 filières</span>
                       </div>
+                      <p className="text-xs text-slate-600 mb-2"><strong>Exemples :</strong> Licence en Banque-Finance (ESGIS, ISEG), Génie Civil (ESGC), Journalisme (HEGI, ISMA).</p>
+                      <p className="text-[10px] text-emerald-500 italic">Source : Pages 73-81 (Section IX).</p>
+                    </div>
+
+                    <div className="bg-amber-50/30 p-4 rounded-2xl border border-amber-100/50">
+                      <div className="flex justify-between items-center mb-2">
+                        <p className="text-sm font-bold text-amber-900">3. Établissements Privés (Régime Ouverture)</p>
+                        <span className="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-[10px] font-bold">110 filières</span>
+                      </div>
+                      <p className="text-xs text-slate-600 mb-2"><strong>Exemples :</strong> Licence en Tourisme (CET AAT-IPAAM), Intelligence Artificielle (ESEP LE BERGER), Agroalimentaire (ESCAE).</p>
+                      <p className="text-[10px] text-amber-500 italic">Source : Pages 82-85 (Section X).</p>
                     </div>
 
                     <div className="bg-indigo-50/30 p-4 rounded-2xl border border-indigo-100/50">
