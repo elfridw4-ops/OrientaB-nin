@@ -6,8 +6,8 @@ import {
   ArrowLeft, Star, TrendingUp, Compass, User, Home, MapPin, ArrowRight, Settings, HelpCircle, Target, Zap, Lock, LogOut, Users, ShieldAlert
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
-import { getAllFilieres } from './utils';
-import { FlattenedFiliere, UserProfile } from './types';
+import { getAllFilieres, getAppData } from './utils';
+import { FlattenedFiliere, UserProfile, GuideData } from './types';
 import { 
   calculerScore, 
   filtrerParSerie, 
@@ -73,6 +73,21 @@ export default function App() {
   // Firestore Filieres Listener
   useEffect(() => {
     if (isAuthReady) {
+      // Connection test
+      const testConnection = async () => {
+        try {
+          const { getDocFromServer, doc } = await import('firebase/firestore');
+          const { db } = await import('./firebase');
+          await getDocFromServer(doc(db, 'test', 'connection'));
+          console.log("Firestore connection successful");
+        } catch (error) {
+          if (error instanceof Error && error.message.includes('the client is offline')) {
+            console.error("Please check your Firebase configuration. The client is offline.");
+          }
+        }
+      };
+      testConnection();
+
       // Subscribe to real-time filieres updates
       const unsubscribe = subscribeToFilieres((filieres) => {
         if (filieres.length > 0) {
@@ -154,6 +169,9 @@ export default function App() {
     await updateUserProfile(userProfile.uid, { allocationStatus: status });
     setUserProfile({ ...userProfile, allocationStatus: status });
   };
+
+  const appData = useMemo(() => getAppData(), []);
+  const stats = appData.metadata.stats_globales;
 
   const allSeries = useMemo(() => Array.from(new Set(allFilieres.flatMap(f => f.baccalaureats_recommandes))).sort(), [allFilieres]);
   const allUniversities = useMemo(() => Array.from(new Set(allFilieres.map(f => f.universite))).sort(), [allFilieres]);
@@ -275,7 +293,7 @@ export default function App() {
               </div>
 
               {/* Features Section */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl mb-12">
                 <GlassCard className="p-6 text-left">
                   <div className="bg-indigo-100 w-12 h-12 rounded-xl flex items-center justify-center mb-4">
                     <Calculator className="w-6 h-6 text-indigo-600" />
@@ -307,6 +325,33 @@ export default function App() {
                   <h3 className="font-bold text-slate-900 mb-2">Validation sécurisée</h3>
                   <p className="text-sm text-slate-600">Verrouillez vos choix définitifs et déclarez votre statut post-sélection.</p>
                 </GlassCard>
+              </div>
+
+              {/* News Section */}
+              <div className="w-full max-w-2xl">
+                <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center">
+                  <Zap className="w-5 h-5 mr-2 text-amber-500" /> Dernières Actualités
+                </h3>
+                <div className="space-y-3">
+                  <div className="bg-white/40 border border-white/50 p-4 rounded-2xl flex gap-4 items-start">
+                    <div className="bg-indigo-100 p-2 rounded-lg shrink-0">
+                      <Info className="w-4 h-4 text-indigo-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-800">Guide d'orientation 2025-2026 disponible</p>
+                      <p className="text-xs text-slate-500 mt-1">Les données ont été mises à jour avec les 250 filières publiques et les nouveaux quotas d'allocations.</p>
+                    </div>
+                  </div>
+                  <div className="bg-white/40 border border-white/50 p-4 rounded-2xl flex gap-4 items-start">
+                    <div className="bg-emerald-100 p-2 rounded-lg shrink-0">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-800">Ouverture de la plateforme</p>
+                      <p className="text-xs text-slate-500 mt-1">Vous pouvez désormais simuler vos choix et consulter le taux de saturation en temps réel.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           )}
@@ -508,7 +553,30 @@ export default function App() {
           {/* EXPLORE VIEW */}
           {view === 'explore' && (
             <motion.div key="explore" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}}>
-              <h2 className="text-3xl font-display font-bold mb-6 text-slate-900">Explorer</h2>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-3xl font-display font-bold text-slate-900">Explorer</h2>
+                <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-xl text-xs font-black uppercase tracking-wider border border-indigo-200">Guide 2025-2026</span>
+              </div>
+
+              {/* Tableau de Bord National */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+                <div className="bg-white/60 backdrop-blur-xl border border-white/50 p-4 rounded-2xl shadow-sm">
+                  <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Filières</p>
+                  <p className="text-xl font-black text-slate-800">{stats?.total_filieres || 250}</p>
+                </div>
+                <div className="bg-white/60 backdrop-blur-xl border border-white/50 p-4 rounded-2xl shadow-sm">
+                  <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Allocations</p>
+                  <p className="text-xl font-black text-indigo-600">{stats?.total_allocations?.toLocaleString() || '12 548'}</p>
+                </div>
+                <div className="bg-white/60 backdrop-blur-xl border border-white/50 p-4 rounded-2xl shadow-sm">
+                  <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Bourses</p>
+                  <p className="text-xl font-black text-emerald-600">{stats?.bourses?.toLocaleString() || '2 283'}</p>
+                </div>
+                <div className="bg-white/60 backdrop-blur-xl border border-white/50 p-4 rounded-2xl shadow-sm">
+                  <p className="text-[10px] font-bold text-slate-400 uppercase mb-1">Aides/FPP</p>
+                  <p className="text-xl font-black text-blue-600">{stats?.aides_fpp?.toLocaleString() || '10 265'}</p>
+                </div>
+              </div>
               
               <div className="space-y-4 mb-8">
                 <div className="relative">

@@ -131,7 +131,12 @@ export const saveFilieresBatch = async (filieres: FlattenedFiliere[]) => {
     const batch = writeBatch(db);
     filieres.forEach(filiere => {
       const docRef = doc(db, path, filiere.id!);
-      batch.set(docRef, { ...filiere, candidatsCount: filiere.candidatsCount || 0 });
+      // Use set with merge: true to avoid overwriting fields like candidatsCount if not provided
+      // But here we want to ensure candidatsCount is at least 0 if it's a new filiere
+      batch.set(docRef, { 
+        ...filiere, 
+        candidatsCount: filiere.candidatsCount ?? 0 
+      }, { merge: true });
     });
     await batch.commit();
   } catch (error) {

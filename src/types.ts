@@ -33,6 +33,18 @@ export interface GuideData {
     titre_document: string;
     annee_academique: string;
     pays: string;
+    stats_globales?: {
+      total_filieres: number;
+      total_allocations: number;
+      bourses: number;
+      aides_fpp: number;
+      admis_bac: number;
+      repartition_universites: Record<string, number>;
+      repartition_mode: {
+        classement: number;
+        concours: number;
+      };
+    };
   };
   universites: Universite[];
 }
@@ -46,6 +58,8 @@ export interface FlattenedFiliere extends Filiere {
   matieres: MatierePonderee[];
   candidatsCount?: number;
   admisOfficiels?: number;
+  bourses: number;
+  aides: number;
 }
 
 export interface UserProfile {

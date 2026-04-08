@@ -1,8 +1,27 @@
 {
   "metadata": {
     "titre_document": "Guide d'orientation universitaire",
-    "annee_academique": "2024-2025",
-    "pays": "Bénin"
+    "annee_academique": "2025-2026",
+    "pays": "Bénin",
+    "stats_globales": {
+      "total_filieres": 250,
+      "total_allocations": 12548,
+      "bourses": 2283,
+      "aides_fpp": 10265,
+      "admis_bac": 57349,
+      "repartition_universites": {
+        "UAC": 97,
+        "Parakou": 42,
+        "UNSTIM": 45,
+        "UNA": 46,
+        "IUEP": 1,
+        "Inter-Etats": 19
+      },
+      "repartition_mode": {
+        "classement": 197,
+        "concours": 53
+      }
+    }
   },
   "universites": [
     {
@@ -41,6 +60,36 @@
                 "Pharmacien",
                 "Spécialisations en sciences de la santé, option pharmacie"
               ]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Faculté des Sciences et Techniques",
+          "sigle": "FAST",
+          "localisation": "Abomey-Calavi",
+          "filieres": [
+            {
+              "nom_filiere": "Physique-Chimie",
+              "quotas": { "bourses": 45, "aides_partiellement_payant": 120 },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["C", "D", "E"],
+              "matieres_cles": ["PCT", "Maths"],
+              "debouches": ["Enseignant", "Chercheur", "Technicien de laboratoire"]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Faculté des Sciences Economiques et de Gestion",
+          "sigle": "FASEG",
+          "localisation": "Abomey-Calavi",
+          "filieres": [
+            {
+              "nom_filiere": "Sciences Economiques",
+              "quotas": { "bourses": 60, "aides_partiellement_payant": 250 },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["B", "C", "D", "G2"],
+              "matieres_cles": ["Maths", "Economie"],
+              "debouches": ["Economiste", "Analyste financier", "Gestionnaire"]
             }
           ]
         },
@@ -170,6 +219,150 @@
                 "Conseiller Agricole",
                 "Technicien/Encadreur en production végétale"
               ]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Faculté de Droit et de Science Politique",
+          "sigle": "FDSP",
+          "localisation": "Parakou",
+          "filieres": [
+            {
+              "nom_filiere": "Droit",
+              "quotas": { "bourses": 30, "aides_partiellement_payant": 150 },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["A1", "A2", "B", "C", "D"],
+              "matieres_cles": ["Français", "Philosophie", "Histoire-Géo"],
+              "debouches": ["Juriste", "Avocat", "Notaire", "Magistrat"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nom_universite": "Université Nationale des Sciences, Technologies, Ingénierie et Mathématiques",
+      "type": "Publique",
+      "etablissements": [
+        {
+          "nom_etablissement": "Ecole Nationale Supérieure de Génie Mathématique et Modélisation",
+          "sigle": "ENSGMM",
+          "localisation": "Abomey",
+          "filieres": [
+            {
+              "nom_filiere": "Génie Mathématique et Modélisation",
+              "quotas": { "bourses": 25, "aides_partiellement_payant": 50 },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["C", "E"],
+              "matieres_cles": ["Maths", "PCT"],
+              "debouches": ["Ingénieur mathématicien", "Data Scientist"]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Ecole Normale Supérieure de l'Enseignement Technique",
+          "sigle": "ENSET",
+          "localisation": "Lokossa",
+          "filieres": [
+            {
+              "nom_filiere": "Génie Mécanique",
+              "quotas": { "bourses": 15, "aides_partiellement_payant": 30 },
+              "mode_entree": "Concours",
+              "baccalaureats_recommandes": ["E", "F1"],
+              "matieres_cles": ["Maths", "Construction Mécanique"],
+              "debouches": ["Professeur technique", "Ingénieur maintenance"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nom_universite": "Université Nationale d’Agriculture",
+      "type": "Publique",
+      "etablissements": [
+        {
+          "nom_etablissement": "Ecole de Gestion et de Production Végétale et Semencière",
+          "sigle": "EGPVS",
+          "localisation": "Kétou",
+          "filieres": [
+            {
+              "nom_filiere": "Production Végétale et Semencière",
+              "quotas": { "bourses": 20, "aides_partiellement_payant": 40 },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["C", "D", "DEAT"],
+              "matieres_cles": ["SVT", "Maths"],
+              "debouches": ["Spécialiste en semences", "Chef d'exploitation agricole"]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Ecole Nationale Supérieure des Sciences et Techniques Agronomiques",
+          "sigle": "ENSTA",
+          "localisation": "Djougou",
+          "filieres": [
+            {
+              "nom_filiere": "Aménagement et Gestion des Forêts et Parcours Naturels",
+              "quotas": { "bourses": 12, "aides_partiellement_payant": 25 },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": ["C", "D", "DEAT"],
+              "matieres_cles": ["SVT", "Maths"],
+              "debouches": ["Gestionnaire de parcs", "Expert environnement"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nom_universite": "Institut Universitaire d’Enseignement Professionnel",
+      "type": "Publique",
+      "etablissements": [
+        {
+          "nom_etablissement": "IUEP",
+          "sigle": "IUEP",
+          "localisation": "Sèmè-Kpodji",
+          "filieres": [
+            {
+              "nom_filiere": "Métiers du Numérique",
+              "quotas": { "bourses": 10, "aides_partiellement_payant": 20 },
+              "mode_entree": "Concours",
+              "baccalaureats_recommandes": ["C", "D", "E", "F"],
+              "matieres_cles": ["Maths", "Anglais"],
+              "debouches": ["Technicien supérieur en numérique"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nom_universite": "Écoles Inter-États",
+      "type": "Publique",
+      "etablissements": [
+        {
+          "nom_etablissement": "Ecole Africaine des Métiers de l'Architecture et de l'Urbanisme",
+          "sigle": "EAMAU",
+          "localisation": "Lomé (Togo)",
+          "filieres": [
+            {
+              "nom_filiere": "Architecture",
+              "quotas": { "bourses": 5, "aides_partiellement_payant": 0 },
+              "mode_entree": "Concours",
+              "baccalaureats_recommandes": ["C", "D", "E", "F"],
+              "matieres_cles": ["Maths", "Dessin", "Français"],
+              "debouches": ["Architecte"]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Ecole Supérieure Multinationale des Télécommunications",
+          "sigle": "ESMT",
+          "localisation": "Dakar (Sénégal)",
+          "filieres": [
+            {
+              "nom_filiere": "Télécommunications",
+              "quotas": { "bourses": 3, "aides_partiellement_payant": 0 },
+              "mode_entree": "Concours",
+              "baccalaureats_recommandes": ["C", "D", "E"],
+              "matieres_cles": ["Maths", "Physique", "Anglais"],
+              "debouches": ["Ingénieur Télécoms", "Administrateur réseaux"]
             }
           ]
         }

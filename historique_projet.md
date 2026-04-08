@@ -50,5 +50,7 @@
 - **08/04/2026** :
   - **Description** : Intégration de la comparaison entre les capacités officielles (ministère) et les inscriptions sur la plateforme. Ajout d'un indicateur de saturation visuel et d'un calcul de chances de réussite basé sur la formule `% de chances = (1 - inscrits / admis_officiels) * 100`. Mise à jour de l'interface des résultats avec des conseils dynamiques pour orienter les étudiants vers les filières moins saturées.
   - **Impact** : Amélioration de la transparence et de l'aide à la décision stratégique pour les étudiants, leur permettant d'évaluer plus précisément la concurrence pour chaque filière.
-  - **Description** : Intégration des statistiques détaillées du Guide d'information universitaire 2025-2026 (250 filières publiques, 12 548 allocations, répartition par université et mode d'admission) dans la modale d'information.
-  - **Impact** : Les utilisateurs disposent désormais des chiffres officiels consolidés pour mieux appréhender l'offre de formation nationale.
+  - **Description** : Ajout d'un "Tableau de Bord National" dans la vue d'exploration, affichant les statistiques clés du Guide 2025-2026 (Filières, Allocations, Bourses, Aides).
+  - **Impact** : Les utilisateurs ont une visibilité immédiate sur l'ampleur de l'offre universitaire dès l'ouverture de la section d'exploration.
+  - **Description** : Enrichissement massif de la base de données locale (`guide.json`) avec des filières représentatives pour toutes les universités publiques du Bénin (UAC, Parakou, UNSTIM, UNA, IUEP, Inter-États). Mise à jour des quotas et des capacités officielles pour correspondre au Guide 2025-2026.
+  - **Impact** : L'application propose désormais un catalogue de formations beaucoup plus complet et réaliste, permettant des simulations plus précises.

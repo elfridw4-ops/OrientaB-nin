@@ -65,6 +65,8 @@ export default function Admin({ onBack }: { onBack: () => void }) {
         matieres: [{ nom: 'Maths', coeff: 3 }],
         debouches: [],
         quotas: { bourses: 0, aides_partiellement_payant: 0 },
+        bourses: 0,
+        aides: 0,
         candidatsCount: 0
       });
     }
@@ -338,11 +340,17 @@ export default function Admin({ onBack }: { onBack: () => void }) {
                         <div className="grid grid-cols-2 gap-4">
                           <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1.5">Bourses</label>
-                            <input type="number" min="0" value={editingFiliere.quotas.bourses} onChange={e => setEditingFiliere({...editingFiliere, quotas: {...editingFiliere.quotas, bourses: parseInt(e.target.value)||0}})} className="w-full bg-white border border-slate-200 shadow-inner rounded-xl p-3 focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all" />
+                            <input type="number" min="0" value={editingFiliere.quotas.bourses} onChange={e => {
+                              const val = parseInt(e.target.value)||0;
+                              setEditingFiliere({...editingFiliere, bourses: val, quotas: {...editingFiliere.quotas, bourses: val}});
+                            }} className="w-full bg-white border border-slate-200 shadow-inner rounded-xl p-3 focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all" />
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1.5">Aides / FPP</label>
-                            <input type="number" min="0" value={editingFiliere.quotas.aides_partiellement_payant} onChange={e => setEditingFiliere({...editingFiliere, quotas: {...editingFiliere.quotas, aides_partiellement_payant: parseInt(e.target.value)||0}})} className="w-full bg-white border border-slate-200 shadow-inner rounded-xl p-3 focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all" />
+                            <input type="number" min="0" value={editingFiliere.quotas.aides_partiellement_payant} onChange={e => {
+                              const val = parseInt(e.target.value)||0;
+                              setEditingFiliere({...editingFiliere, aides: val, quotas: {...editingFiliere.quotas, aides_partiellement_payant: val}});
+                            }} className="w-full bg-white border border-slate-200 shadow-inner rounded-xl p-3 focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all" />
                           </div>
                           <div className="col-span-2">
                             <label className="block text-sm font-medium text-slate-700 mb-1.5">Capacité Officielle (Ministère)</label>

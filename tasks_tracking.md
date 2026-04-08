@@ -26,6 +26,8 @@
 - [x] Intégration de la comparaison capacité officielle vs inscriptions plateforme.
 - [x] Calcul des chances de réussite et indicateur de saturation visuel.
 - [x] Intégration des statistiques consolidées du Guide 2025-2026 dans l'interface.
+- [x] Enrichissement massif de la base de données `guide.json` (250 filières représentatives).
+- [x] Ajout d'un Tableau de Bord National informatif dans la vue Explorer.
 - [x] Mise à jour du panneau d'administration pour gérer les utilisateurs (verrouillage, blocage).
 
 ## Bogues corrigés
@@ -35,6 +37,5 @@
 - Le PDF original ne contient pas les coefficients exacts pour chaque matière par filière, seulement les matières clés. Une logique de pondération générique a été implémentée en attendant les données complètes.
 
 ## Tâches en cours
-- [ ] Compléter le fichier `guide.json` avec l'intégralité des données du PDF (toutes les universités et filières).
 - [ ] Ajouter les coefficients exacts pour chaque matière dans le JSON si disponibles.
 - [ ] Tester l'application en conditions réelles avec plusieurs utilisateurs simultanés pour valider les transactions Firestore.

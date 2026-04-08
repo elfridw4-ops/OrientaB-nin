@@ -9,6 +9,18 @@ export interface AppData {
     titre_document: string;
     annee_academique: string;
     pays: string;
+    stats_globales?: {
+      total_filieres: number;
+      total_allocations: number;
+      bourses: number;
+      aides_fpp: number;
+      admis_bac: number;
+      repartition_universites: Record<string, number>;
+      repartition_mode: {
+        classement: number;
+        concours: number;
+      };
+    };
   };
   filieres: FlattenedFiliere[];
 }
@@ -45,6 +57,10 @@ export const getAppData = (): AppData => {
           etablissement: etab.nom_etablissement,
           sigle: etab.sigle,
           localisation: etab.localisation,
+          bourses: fil.quotas.bourses,
+          aides: fil.quotas.aides_partiellement_payant,
+          admisOfficiels: fil.quotas.bourses + fil.quotas.aides_partiellement_payant,
+          candidatsCount: 0,
           matieres
         });
       });
