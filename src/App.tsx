@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   GraduationCap, Search, Building2, Calculator, BookOpen, 
   Info, X, AlertTriangle, CheckCircle2, BarChart3, ChevronRight, 
-  ArrowLeft, Star, TrendingUp, Compass, User, Home, MapPin, ArrowRight, Settings, HelpCircle, Target, Zap, Lock, LogOut, Users, ShieldAlert, Shield
+  ArrowLeft, Star, TrendingUp, Compass, User, Home, MapPin, ArrowRight, Settings, HelpCircle, Target, Zap, Lock, LogOut, Users, ShieldAlert, Shield, ShieldCheck
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { getAllFilieres, getAppData } from './utils';
@@ -23,7 +23,7 @@ import { getUserProfile, createUserProfile, updateUserProfile, subscribeToFilier
 const COLORS = ['#4f46e5', '#7c3aed', '#2563eb', '#059669', '#d97706'];
 
 export default function App() {
-  const [view, setView] = useState<'home' | 'profile' | 'results' | 'explore' | 'details' | 'admin'>('home');
+  const [view, setView] = useState<'home' | 'profile' | 'results' | 'explore' | 'details' | 'admin' | 'guide' | 'about' | 'faq' | 'blog'>('home');
   const [allFilieres, setAllFilieres] = useState<FlattenedFiliere[]>([]);
   
   // Auth State
@@ -37,7 +37,6 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedUniversity, setSelectedUniversity] = useState<string>('');
   const [selectedFiliere, setSelectedFiliere] = useState<FlattenedFiliere | null>(null);
-  const [showInfo, setShowInfo] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const [grades, setGrades] = useState<Record<string, number>>({
     Maths: 0, SVT: 0, PCT: 0, Français: 0, Anglais: 0
@@ -276,7 +275,6 @@ export default function App() {
                     <button onClick={() => setView('admin')} className="p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><Settings className="w-5 h-5"/></button>
                   )}
                   <button onClick={() => setShowStats(true)} className="p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><BarChart3 className="w-5 h-5"/></button>
-                  <button onClick={() => setShowInfo(true)} className="p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><Info className="w-5 h-5"/></button>
                   {authUser ? (
                     <button onClick={logout} className="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition-colors"><LogOut className="w-5 h-5"/></button>
                   ) : (
@@ -284,10 +282,21 @@ export default function App() {
                   )}
                 </div>
               </div>
+              
+              {/* Warning Banner */}
+              <div className="max-w-3xl mx-auto mt-2 bg-indigo-50 border border-indigo-100 text-indigo-800 px-4 py-2.5 rounded-2xl flex flex-col sm:flex-row items-center justify-center text-xs font-medium shadow-sm gap-2 text-center">
+                <div className="flex items-center">
+                  <AlertTriangle className="w-4 h-4 mr-2 shrink-0 text-indigo-600" />
+                  <span>Ce site est un outil d'aide à l'orientation indépendant.</span>
+                </div>
+                <a href="https://apresmonbac.bj/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-indigo-600 hover:text-indigo-800 underline font-bold bg-white/50 px-2 py-1 rounded-lg transition-colors">
+                  Aller sur le site officiel (apresmonbac.bj) <ArrowRight className="w-3 h-3 ml-1" />
+                </a>
+              </div>
             </header>
 
       {/* Main Content */}
-      <main className="max-w-3xl mx-auto px-4 pt-28">
+      <main className="max-w-3xl mx-auto px-4 pt-36">
         <AnimatePresence mode="wait">
           
           {/* HOME VIEW (LANDING PAGE) */}
@@ -309,6 +318,19 @@ export default function App() {
                 <button onClick={() => setView('profile')} className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xl shadow-indigo-200/50 hover:shadow-indigo-300/50 hover:-translate-y-1 transition-all rounded-2xl px-8 py-4 font-bold text-lg flex items-center mx-auto">
                   Démarrer l'orientation <ChevronRight className="ml-2 w-5 h-5" />
                 </button>
+
+                {/* Trust Badges */}
+                <div className="flex flex-wrap justify-center gap-4 mt-8 text-sm font-medium text-slate-600">
+                  <div className="flex items-center bg-white/50 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/60 shadow-sm">
+                    <Zap className="w-4 h-4 text-amber-500 mr-1.5" /> Résultats instantanés
+                  </div>
+                  <div className="flex items-center bg-white/50 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/60 shadow-sm">
+                    <ShieldCheck className="w-4 h-4 text-emerald-500 mr-1.5" /> Données officielles
+                  </div>
+                  <div className="flex items-center bg-white/50 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/60 shadow-sm">
+                    <CheckCircle2 className="w-4 h-4 text-indigo-500 mr-1.5" /> 100% Gratuit
+                  </div>
+                </div>
               </div>
 
               {/* Features Section */}
@@ -347,7 +369,7 @@ export default function App() {
               </div>
 
               {/* News Section */}
-              <div className="w-full max-w-2xl">
+              <div className="w-full max-w-2xl mb-12">
                 <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center">
                   <Zap className="w-5 h-5 mr-2 text-amber-500" /> Dernières Actualités
                 </h3>
@@ -371,6 +393,13 @@ export default function App() {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Footer Links */}
+              <div className="w-full max-w-2xl border-t border-slate-200 pt-8 mt-4 flex flex-wrap justify-center gap-6">
+                <button onClick={() => setView('about')} className="text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">À propos</button>
+                <button onClick={() => setView('faq')} className="text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">FAQ</button>
+                <button onClick={() => setView('blog')} className="text-sm font-medium text-slate-500 hover:text-indigo-600 transition-colors">Blog</button>
               </div>
             </motion.div>
           )}
@@ -756,6 +785,296 @@ export default function App() {
             </motion.div>
           )}
 
+          {/* GUIDE VIEW */}
+          {view === 'guide' && (
+            <motion.div key="guide" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-12">
+              <div className="mb-8">
+                <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold mb-4 inline-block">Guide complet 2025-2026</span>
+                <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
+                  Orientation universitaire au Bénin : le guide définitif
+                </h2>
+                <p className="text-slate-600 text-lg leading-relaxed">
+                  Tout ce que les bacheliers béninois doivent savoir pour choisir leur filière. Universités, séries, critères d'admission, bourses, inscription.
+                </p>
+              </div>
+
+              {/* Sommaire */}
+              <GlassCard className="p-6 mb-8">
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Sommaire</h3>
+                <div className="grid sm:grid-cols-2 gap-y-4 gap-x-8">
+                  <a href="#systeme" className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
+                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3">1</span>
+                    Le système universitaire béninois
+                  </a>
+                  <a href="#universites" className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
+                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3">2</span>
+                    Les universités publiques
+                  </a>
+                  <a href="#bourses" className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
+                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3">3</span>
+                    Bourse, Secours, FPP et FEP
+                  </a>
+                  <a href="#mentions" className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
+                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3">4</span>
+                    Le mythe des mentions
+                  </a>
+                  <a href="#choisir" className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
+                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3">5</span>
+                    Comment bien choisir sa filière
+                  </a>
+                </div>
+              </GlassCard>
+
+              {/* Contenu du Guide */}
+              <div className="space-y-12">
+                
+                <section id="systeme">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4 flex items-center"><Info className="w-6 h-6 mr-2 text-indigo-600"/> 1. Qu'est-ce qu'une allocation ?</h3>
+                  <div className="bg-indigo-50/50 p-5 rounded-2xl border border-indigo-100/50 mb-4">
+                    <p className="text-slate-700 leading-relaxed">
+                      Une <strong>allocation</strong> désigne soit une <strong>Bourse</strong>, soit un <strong>Secours</strong> universitaire. Un étudiant allocataire bénéficie de l'un de ces deux statuts. <br/>
+                      <span className="inline-block mt-3 font-medium text-rose-600 bg-rose-50 px-3 py-1 rounded-lg">❌ Attention : On ne peut pas être allocataire dans deux filières à la fois !</span>
+                    </p>
+                  </div>
+                </section>
+
+                <section id="universites">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4 flex items-center"><Target className="w-6 h-6 mr-2 text-indigo-600"/> 2. Répartition des 545 Filières (2025-2026)</h3>
+                  <div className="space-y-4">
+                    <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                      <div className="flex justify-between items-center mb-3">
+                        <p className="font-bold text-slate-800">Établissements Publics</p>
+                        <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold">250 filières</span>
+                      </div>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-slate-600 mb-3">
+                        <p>• UAC : 97</p>
+                        <p>• Parakou : 42</p>
+                        <p>• UNSTIM : 45</p>
+                        <p>• UNA : 46</p>
+                        <p>• Inter-États : 19</p>
+                        <p>• IUEP : 1</p>
+                      </div>
+                      <p className="text-xs text-slate-400 italic">Source : Pages 16-68 du guide officiel.</p>
+                    </div>
+
+                    <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                      <div className="flex justify-between items-center mb-3">
+                        <p className="font-bold text-slate-800">Établissements Privés Agréés</p>
+                        <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold">185 filières</span>
+                      </div>
+                      <p className="text-sm text-slate-600 mb-3">Exemples : Banque-Finance (ESGIS, ISEG), Génie Civil (ESGC), Journalisme (HEGI, ISMA).</p>
+                      <p className="text-xs text-slate-400 italic">Source : Pages 73-81 du guide officiel.</p>
+                    </div>
+
+                    <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                      <div className="flex justify-between items-center mb-3">
+                        <p className="font-bold text-slate-800">Établissements Privés (Régime Ouverture)</p>
+                        <span className="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-bold">110 filières</span>
+                      </div>
+                      <p className="text-sm text-slate-600 mb-3">Exemples : Tourisme (CET AAT-IPAAM), IA (ESEP LE BERGER), Agroalimentaire (ESCAE).</p>
+                      <p className="text-xs text-slate-400 italic">Source : Pages 82-85 du guide officiel.</p>
+                    </div>
+                  </div>
+                </section>
+
+                <section id="bourses">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4 flex items-center"><CheckCircle2 className="w-6 h-6 mr-2 text-emerald-500"/> 3. Bourses, Secours et FPP</h3>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="font-bold text-slate-800 mb-3">Les Bourses (Écoles & Facultés)</h4>
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div className="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-100/50">
+                          <h5 className="font-bold text-emerald-800 mb-1">Bourse en École</h5>
+                          <p className="text-lg font-black text-emerald-600 mb-2">420 000 FCFA / an</p>
+                          <p className="text-sm text-slate-600">Scolarité gratuite. Valable 3 ans (parfois 4 ans selon la filière).</p>
+                        </div>
+                        <div className="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-100/50">
+                          <h5 className="font-bold text-emerald-800 mb-1">Bourse en Faculté</h5>
+                          <p className="text-lg font-black text-emerald-600 mb-2">365 000 FCFA / an</p>
+                          <p className="text-sm text-slate-600">Valable pendant les 3 ans du cycle de Licence.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-bold text-slate-800 mb-3">Secours et Titre Partiellement Payant</h4>
+                      <div className="grid sm:grid-cols-2 gap-4">
+                        <div className="bg-blue-50/50 p-5 rounded-2xl border border-blue-100/50">
+                          <h5 className="font-bold text-blue-800 mb-1">Secours (Facultés)</h5>
+                          <p className="text-lg font-black text-blue-600 mb-2">132 000 FCFA / an</p>
+                          <p className="text-sm text-slate-600">Attribué uniquement dans les facultés classiques pour 3 ans.</p>
+                        </div>
+                        <div className="bg-blue-50/50 p-5 rounded-2xl border border-blue-100/50">
+                          <h5 className="font-bold text-blue-800 mb-1">Titre Partiellement Payant (FPP)</h5>
+                          <p className="text-lg font-black text-blue-600 mb-2">Paiement d'un tiers (1/3)</p>
+                          <p className="text-sm text-slate-600">L'équivalent du secours en école. L'étudiant ne reçoit pas d'argent, mais l'État paie les 2/3 de sa scolarité.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section id="mentions">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4 flex items-center"><AlertTriangle className="w-6 h-6 mr-2 text-rose-500"/> 4. Le Mythe des Mentions</h3>
+                  <div className="bg-rose-50/80 p-6 rounded-2xl border border-rose-100">
+                    <p className="text-slate-700 mb-4 leading-relaxed">
+                      Beaucoup d'étudiants pensent que la mention au BAC (Assez-Bien, Bien, Très-Bien) garantit automatiquement une bourse. <strong>C'est faux.</strong>
+                    </p>
+                    <ul className="space-y-3 mb-4">
+                      <li className="flex items-start text-sm text-slate-700">
+                        <span className="text-rose-500 mr-2 font-bold">1.</span>
+                        <span>L'attribution se fait par <strong>classement</strong> (moyenne pondérée) parmi les candidats qui ont choisi la filière, dans la limite des quotas.</span>
+                      </li>
+                      <li className="flex items-start text-sm text-slate-700">
+                        <span className="text-rose-500 mr-2 font-bold">2.</span>
+                        <span>Si une filière a 10 bourses et que 15 candidats avec mention "Très Bien" postulent, 5 d'entre eux n'auront pas la bourse.</span>
+                      </li>
+                    </ul>
+                    <div className="bg-white p-4 rounded-xl border border-rose-100 text-sm text-slate-600 italic">
+                      "Il vaut mieux choisir stratégiquement une filière moins demandée où ses notes fortes correspondent aux matières clés, plutôt que de viser aveuglément les filières saturées."
+                    </div>
+                  </div>
+                </section>
+
+              </div>
+            </motion.div>
+          )}
+
+          {/* ABOUT VIEW */}
+          {view === 'about' && (
+            <motion.div key="about" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-12">
+              <div className="mb-8">
+                <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
+                  À propos d'OrientaBénin
+                </h2>
+                <p className="text-slate-600 text-lg leading-relaxed">
+                  Notre mission est de démocratiser l'accès à l'information d'orientation pour tous les bacheliers béninois.
+                </p>
+              </div>
+
+              <div className="space-y-6">
+                <GlassCard className="p-6">
+                  <h3 className="text-xl font-bold text-slate-900 mb-3 flex items-center"><Target className="w-5 h-5 mr-2 text-indigo-600"/> Notre Vision</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    Chaque année, des milliers de bacheliers font des choix d'orientation par défaut ou par manque d'information, ce qui conduit à des échecs ou des réorientations tardives. OrientaBénin vise à résoudre ce problème en fournissant un outil intelligent, transparent et basé sur les données officielles du Ministère de l'Enseignement Supérieur et de la Recherche Scientifique (MESRS).
+                  </p>
+                </GlassCard>
+
+                <GlassCard className="p-6">
+                  <h3 className="text-xl font-bold text-slate-900 mb-3 flex items-center"><Zap className="w-5 h-5 mr-2 text-amber-500"/> Comment ça marche ?</h3>
+                  <p className="text-slate-600 leading-relaxed mb-4">
+                    Notre algorithme de recommandation utilise la formule officielle de calcul de la moyenne pondérée pour chaque filière. Il croise vos notes du BAC avec les exigences spécifiques (matières clés) et les quotas disponibles pour vous donner une estimation réaliste de vos chances d'obtenir une bourse ou un secours.
+                  </p>
+                  <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                    <p className="text-sm text-indigo-800 font-medium">
+                      <strong>Important :</strong> Nous ne sommes pas affiliés au gouvernement. Notre outil est une aide à la décision. Les résultats finaux dépendent du classement officiel national.
+                    </p>
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="p-6">
+                  <h3 className="text-xl font-bold text-slate-900 mb-3 flex items-center"><ShieldCheck className="w-5 h-5 mr-2 text-emerald-500"/> 100% Béninois</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    Conçu par et pour des Béninois, OrientaBénin comprend les réalités locales (Bourses, Secours, Titre Partiellement Payant) et s'adapte aux spécificités de notre système éducatif.
+                  </p>
+                </GlassCard>
+              </div>
+            </motion.div>
+          )}
+
+          {/* FAQ VIEW */}
+          {view === 'faq' && (
+            <motion.div key="faq" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-12">
+              <div className="mb-8">
+                <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
+                  Foire Aux Questions
+                </h2>
+                <p className="text-slate-600 text-lg leading-relaxed">
+                  Les réponses aux questions les plus fréquentes sur l'orientation et l'utilisation de la plateforme.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <GlassCard className="p-6">
+                  <h3 className="font-bold text-slate-900 mb-2">Comment est calculée ma moyenne pondérée ?</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">
+                    La moyenne pondérée est calculée en multipliant vos notes dans les matières clés par leurs coefficients respectifs, puis en divisant par la somme des coefficients. Notre algorithme simule ce calcul pour chaque filière.
+                  </p>
+                </GlassCard>
+
+                <GlassCard className="p-6">
+                  <h3 className="font-bold text-slate-900 mb-2">Une mention "Très Bien" garantit-elle une bourse ?</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">
+                    Non. L'attribution des bourses se fait par classement selon la moyenne pondérée dans la limite des quotas disponibles pour la filière choisie. Si vous choisissez une filière très demandée où vos notes dans les matières clés sont faibles, vous pouvez ne pas être classé malgré une bonne mention générale.
+                  </p>
+                </GlassCard>
+
+                <GlassCard className="p-6">
+                  <h3 className="font-bold text-slate-900 mb-2">Quelle est la différence entre Bourse et Secours ?</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">
+                    La Bourse (en école ou faculté) couvre entièrement la scolarité et offre une allocation mensuelle plus élevée. Le Secours (uniquement en faculté) offre une aide financière moindre. Le Titre Partiellement Payant (FPP) signifie que l'État paie une partie (généralement 2/3) de votre scolarité en école.
+                  </p>
+                </GlassCard>
+
+                <GlassCard className="p-6">
+                  <h3 className="font-bold text-slate-900 mb-2">Mes données sont-elles sécurisées ?</h3>
+                  <p className="text-slate-600 text-sm leading-relaxed">
+                    Oui. Vos notes et choix de filières sont utilisés uniquement pour générer vos recommandations et calculer des statistiques globales anonymisées (comme le nombre de candidats par filière). Aucune donnée personnelle n'est partagée publiquement.
+                  </p>
+                </GlassCard>
+              </div>
+            </motion.div>
+          )}
+
+          {/* BLOG VIEW */}
+          {view === 'blog' && (
+            <motion.div key="blog" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-12">
+              <div className="mb-8">
+                <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
+                  Blog & Actualités
+                </h2>
+                <p className="text-slate-600 text-lg leading-relaxed">
+                  Conseils, astuces et dernières nouvelles sur l'orientation universitaire au Bénin.
+                </p>
+              </div>
+
+              <div className="grid gap-6">
+                <GlassCard className="p-0 overflow-hidden flex flex-col sm:flex-row">
+                  <div className="sm:w-1/3 h-48 sm:h-auto bg-indigo-100 flex items-center justify-center shrink-0">
+                    <BookOpen className="w-12 h-12 text-indigo-300" />
+                  </div>
+                  <div className="p-6">
+                    <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2 block">Conseils</span>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">Comment bien choisir ses 3 filières ?</h3>
+                    <p className="text-slate-600 text-sm mb-4 line-clamp-2">
+                      Découvrez notre stratégie en 3 étapes pour maximiser vos chances d'obtenir une allocation de l'État tout en poursuivant vos passions.
+                    </p>
+                    <button className="text-indigo-600 font-medium text-sm flex items-center hover:text-indigo-800 transition-colors">
+                      Lire l'article <ArrowRight className="w-4 h-4 ml-1" />
+                    </button>
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="p-0 overflow-hidden flex flex-col sm:flex-row">
+                  <div className="sm:w-1/3 h-48 sm:h-auto bg-emerald-100 flex items-center justify-center shrink-0">
+                    <Building2 className="w-12 h-12 text-emerald-300" />
+                  </div>
+                  <div className="p-6">
+                    <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-2 block">Universités</span>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">Zoom sur les Écoles Inter-États</h3>
+                    <p className="text-slate-600 text-sm mb-4 line-clamp-2">
+                      EAMAU, EIER, ETSHER... Que valent ces écoles ? Comment y accéder et quels sont les avantages par rapport aux universités nationales ?
+                    </p>
+                    <button className="text-indigo-600 font-medium text-sm flex items-center hover:text-indigo-800 transition-colors">
+                      Lire l'article <ArrowRight className="w-4 h-4 ml-1" />
+                    </button>
+                  </div>
+                </GlassCard>
+              </div>
+            </motion.div>
+          )}
+
         </AnimatePresence>
       </main>
 
@@ -766,6 +1085,7 @@ export default function App() {
           <NavItem icon={<User className="w-5 h-5"/>} label="Profil" active={view==='profile'} onClick={()=>setView('profile')} />
           <NavItem icon={<TrendingUp className="w-5 h-5"/>} label="Résultats" active={view==='results'} onClick={()=>setView('results')} />
           <NavItem icon={<Search className="w-5 h-5"/>} label="Explorer" active={view==='explore'} onClick={()=>setView('explore')} />
+          <NavItem icon={<BookOpen className="w-5 h-5"/>} label="Guide" active={view==='guide'} onClick={()=>setView('guide')} />
         </div>
       </div>
 
@@ -811,126 +1131,6 @@ export default function App() {
 
       {/* Modals */}
       <AnimatePresence>
-        {showInfo && (
-          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
-            <motion.div initial={{scale:0.95, opacity:0}} animate={{scale:1, opacity:1}} exit={{scale:0.95, opacity:0}} className="bg-white/90 backdrop-blur-2xl rounded-[2rem] shadow-2xl max-w-2xl w-full max-h-[85vh] flex flex-col overflow-hidden border border-white/50">
-              <div className="p-6 flex justify-between items-center border-b border-slate-100">
-                <h2 className="text-xl font-display font-bold flex items-center text-slate-900"><Info className="h-6 w-6 mr-2 text-indigo-600" /> Guide & Règles</h2>
-                <button onClick={() => setShowInfo(false)} className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors text-slate-600"><X className="h-5 w-5" /></button>
-              </div>
-              <div className="p-6 overflow-y-auto space-y-6 custom-scrollbar">
-                
-                <div className="bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100/50">
-                  <h3 className="font-bold text-indigo-800 mb-2 flex items-center"><Info className="w-5 h-5 mr-2"/> Qu'est-ce qu'une allocation ?</h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    Une <strong>allocation</strong> désigne soit une <strong>Bourse</strong>, soit un <strong>Secours</strong> universitaire. Un étudiant allocataire bénéficie de l'un de ces deux statuts. <br/>
-                    <span className="inline-block mt-2 font-medium text-rose-600">❌ Attention : On ne peut pas être allocataire dans deux filières à la fois !</span>
-                  </p>
-                </div>
-
-                <section>
-                  <h3 className="font-bold text-slate-800 mb-3 flex items-center"><CheckCircle2 className="h-5 w-5 mr-2 text-emerald-500" /> Les Bourses (Écoles & Facultés)</h3>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    <div className="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100/50">
-                      <h4 className="font-bold text-emerald-800 mb-1">Bourse en École</h4>
-                      <p className="text-sm text-slate-600 font-medium text-emerald-600 mb-2">420 000 FCFA / an</p>
-                      <p className="text-xs text-slate-600">Scolarité gratuite. Valable 3 ans (parfois 4 ans selon la filière).</p>
-                    </div>
-                    <div className="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100/50">
-                      <h4 className="font-bold text-emerald-800 mb-1">Bourse en Faculté</h4>
-                      <p className="text-sm text-slate-600 font-medium text-emerald-600 mb-2">365 000 FCFA / an</p>
-                      <p className="text-xs text-slate-600">Valable pendant les 3 ans du cycle de Licence.</p>
-                    </div>
-                  </div>
-                </section>
-
-                <section>
-                  <h3 className="font-bold text-slate-800 mb-3 flex items-center"><HelpCircle className="h-5 w-5 mr-2 text-blue-500" /> Secours et Titre Partiellement Payant</h3>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    <div className="bg-blue-50/50 p-4 rounded-2xl border border-blue-100/50">
-                      <h4 className="font-bold text-blue-800 mb-1">Secours (Facultés)</h4>
-                      <p className="text-sm text-slate-600 font-medium text-blue-600 mb-2">132 000 FCFA / an</p>
-                      <p className="text-xs text-slate-600">Attribué uniquement dans les facultés classiques pour 3 ans.</p>
-                    </div>
-                    <div className="bg-blue-50/50 p-4 rounded-2xl border border-blue-100/50">
-                      <h4 className="font-bold text-blue-800 mb-1">Titre Partiellement Payant</h4>
-                      <p className="text-sm text-slate-600 font-medium text-blue-600 mb-2">Paiement d'un tiers (1/3)</p>
-                      <p className="text-xs text-slate-600">L'équivalent du secours en école. L'étudiant ne reçoit pas d'argent, mais l'État paie les 2/3 de sa scolarité (qui coûte souvent +400 000F).</p>
-                    </div>
-                  </div>
-                </section>
-
-                <section>
-                  <h3 className="font-bold text-slate-800 mb-3 flex items-center"><Target className="h-5 w-5 mr-2 text-indigo-500" /> Répartition des 545 Filières (Guide 2025-2026)</h3>
-                  <div className="space-y-4">
-                    <div className="bg-slate-50/80 p-4 rounded-2xl border border-slate-100">
-                      <div className="flex justify-between items-center mb-2">
-                        <p className="text-sm font-bold text-slate-700">1. Établissements Publics</p>
-                        <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded text-[10px] font-bold">250 filières</span>
-                      </div>
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-slate-600 mb-2">
-                        <p>• UAC : 97</p>
-                        <p>• Parakou : 42</p>
-                        <p>• UNSTIM : 45</p>
-                        <p>• UNA : 46</p>
-                        <p>• Inter-États : 19</p>
-                        <p>• IUEP : 1</p>
-                      </div>
-                      <p className="text-[10px] text-slate-400 italic">Source : Pages 16-68 du guide officiel.</p>
-                    </div>
-
-                    <div className="bg-emerald-50/30 p-4 rounded-2xl border border-emerald-100/50">
-                      <div className="flex justify-between items-center mb-2">
-                        <p className="text-sm font-bold text-emerald-900">2. Établissements Privés (Agréés)</p>
-                        <span className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-bold">185 filières</span>
-                      </div>
-                      <p className="text-xs text-slate-600 mb-2"><strong>Exemples :</strong> Licence en Banque-Finance (ESGIS, ISEG), Génie Civil (ESGC), Journalisme (HEGI, ISMA).</p>
-                      <p className="text-[10px] text-emerald-500 italic">Source : Pages 73-81 (Section IX).</p>
-                    </div>
-
-                    <div className="bg-amber-50/30 p-4 rounded-2xl border border-amber-100/50">
-                      <div className="flex justify-between items-center mb-2">
-                        <p className="text-sm font-bold text-amber-900">3. Établissements Privés (Régime Ouverture)</p>
-                        <span className="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-[10px] font-bold">110 filières</span>
-                      </div>
-                      <p className="text-xs text-slate-600 mb-2"><strong>Exemples :</strong> Licence en Tourisme (CET AAT-IPAAM), Intelligence Artificielle (ESEP LE BERGER), Agroalimentaire (ESCAE).</p>
-                      <p className="text-[10px] text-amber-500 italic">Source : Pages 82-85 (Section X).</p>
-                    </div>
-
-                    <div className="bg-indigo-50/30 p-4 rounded-2xl border border-indigo-100/50">
-                      <p className="text-sm font-bold text-indigo-900 mb-2">Allocations (12 548 places)</p>
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs text-indigo-700">Bourses</span>
-                        <span className="text-sm font-black text-indigo-900">2 283</span>
-                      </div>
-                      <div className="h-1.5 w-full bg-indigo-100 rounded-full overflow-hidden mb-3">
-                        <div className="h-full bg-indigo-600" style={{width: '18.2%'}}></div>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs text-indigo-700">Aides / FPP</span>
-                        <span className="text-sm font-black text-indigo-900">10 265</span>
-                      </div>
-                      <div className="h-1.5 w-full bg-indigo-100 rounded-full overflow-hidden">
-                        <div className="h-full bg-indigo-400" style={{width: '81.8%'}}></div>
-                      </div>
-                      <p className="text-[10px] text-indigo-500 mt-3 text-center italic">Pour 57 349 admis au BAC cette année.</p>
-                    </div>
-                  </div>
-                </section>
-
-                <section>
-                  <h3 className="font-bold text-slate-800 mb-3 flex items-center"><AlertTriangle className="h-5 w-5 mr-2 text-amber-500" /> Le Mythe des Mentions (Très Important)</h3>
-                  <div className="space-y-3 text-sm text-slate-600 bg-amber-50/50 p-4 rounded-2xl border border-amber-100/50">
-                    <p><strong>Mention Bien ≠ Bourse garantie :</strong> Si vous choisissez une filière qui exige de fortes notes dans des matières où vous avez été faible, vous risquez de ne pas être classé, malgré votre mention Bien.</p>
-                    <p><strong>Mentions Passable / Assez Bien / Oral :</strong> Ne vous découragez pas ! Vous avez toutes vos chances d'obtenir une bourse ou un secours si vous faites des <strong>choix stratégiques</strong> alignés avec vos meilleures notes.</p>
-                    <p className="font-medium text-amber-800 mt-2">💡 Tout dépend du CHOIX que vous opérez sur la plateforme. C'est le but de cette application : vous aider à faire le bon choix !</p>
-                  </div>
-                </section>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-
         {showStats && (
           <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
             <motion.div initial={{scale:0.95, opacity:0}} animate={{scale:1, opacity:1}} exit={{scale:0.95, opacity:0}} className="bg-white/90 backdrop-blur-2xl rounded-[2rem] shadow-2xl max-w-4xl w-full max-h-[85vh] flex flex-col overflow-hidden border border-white/50">

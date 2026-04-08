@@ -32,6 +32,9 @@
 - [x] Ajout d'un Tableau de Bord National informatif dans la vue Explorer.
 - [x] Automatisation de l'accès administrateur sans inscription préalable.
 - [x] Mise à jour du panneau d'administration pour gérer les utilisateurs (verrouillage, blocage).
+- [x] Ajout d'une bannière d'avertissement (Disclaimer) sur l'application.
+- [x] Ajout de badges de réassurance sur la Landing Page.
+- [x] Création d'une vue "Guide" dédiée remplaçant l'ancienne modale d'information.
 
 ## Bogues corrigés
 - Aucun pour le moment.
