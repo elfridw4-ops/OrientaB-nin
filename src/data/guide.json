@@ -24,12 +24,20 @@
         },
         "prive_agree": {
           "total": 185,
-          "exemples": ["Banque-Finance (ESGIS, ISEG)", "Génie Civil (ESGC)", "Journalisme (HEGI, ISMA)"],
+          "exemples": [
+            "Banque-Finance (ESGIS, ISEG)",
+            "Génie Civil (ESGC)",
+            "Journalisme (HEGI, ISMA)"
+          ],
           "pages": "73-81"
         },
         "prive_ouverture": {
           "total": 110,
-          "exemples": ["Tourisme (CET AAT-IPAAM)", "Intelligence Artificielle (ESEP LE BERGER)", "Agroalimentaire (ESCAE)"],
+          "exemples": [
+            "Tourisme (CET AAT-IPAAM)",
+            "Intelligence Artificielle (ESEP LE BERGER)",
+            "Agroalimentaire (ESCAE)"
+          ],
           "pages": "82-85"
         }
       },
@@ -64,8 +72,15 @@
                 "aides_partiellement_payant": 0
               },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["C", "D"],
-              "matieres_cles": ["SVT", "PCT", "Maths"],
+              "baccalaureats_recommandes": [
+                "C",
+                "D"
+              ],
+              "matieres_cles": [
+                "SVT",
+                "PCT",
+                "Maths"
+              ],
               "debouches": [
                 "Médecin généraliste",
                 "Spécialisations en sciences de la santé"
@@ -78,8 +93,15 @@
                 "aides_partiellement_payant": 0
               },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["C", "D"],
-              "matieres_cles": ["SVT", "PCT", "Maths"],
+              "baccalaureats_recommandes": [
+                "C",
+                "D"
+              ],
+              "matieres_cles": [
+                "SVT",
+                "PCT",
+                "Maths"
+              ],
               "debouches": [
                 "Pharmacien",
                 "Spécialisations en sciences de la santé, option pharmacie"
@@ -94,11 +116,25 @@
           "filieres": [
             {
               "nom_filiere": "Physique-Chimie",
-              "quotas": { "bourses": 45, "aides_partiellement_payant": 120 },
+              "quotas": {
+                "bourses": 45,
+                "aides_partiellement_payant": 120
+              },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["C", "D", "E"],
-              "matieres_cles": ["PCT", "Maths"],
-              "debouches": ["Enseignant", "Chercheur", "Technicien de laboratoire"]
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "E"
+              ],
+              "matieres_cles": [
+                "PCT",
+                "Maths"
+              ],
+              "debouches": [
+                "Enseignant",
+                "Chercheur",
+                "Technicien de laboratoire"
+              ]
             }
           ]
         },
@@ -109,11 +145,26 @@
           "filieres": [
             {
               "nom_filiere": "Sciences Economiques",
-              "quotas": { "bourses": 60, "aides_partiellement_payant": 250 },
+              "quotas": {
+                "bourses": 60,
+                "aides_partiellement_payant": 250
+              },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["B", "C", "D", "G2"],
-              "matieres_cles": ["Maths", "Economie"],
-              "debouches": ["Economiste", "Analyste financier", "Gestionnaire"]
+              "baccalaureats_recommandes": [
+                "B",
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Economie"
+              ],
+              "debouches": [
+                "Economiste",
+                "Analyste financier",
+                "Gestionnaire"
+              ]
             }
           ]
         },
@@ -129,8 +180,16 @@
                 "aides_partiellement_payant": 0
               },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["C", "D", "DT/IMI"],
-              "matieres_cles": ["Maths", "Français", "Anglais"],
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "DT/IMI"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français",
+                "Anglais"
+              ],
               "debouches": [
                 "Technicien en réseaux informatiques",
                 "Technicien en maintenance informatique",
@@ -144,8 +203,21 @@
                 "aides_partiellement_payant": 0
               },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["B", "C", "D", "G2", "G3", "DT/CoM"],
-              "matieres_cles": ["Economie", "Maths", "Etude de Cas", "Français", "Anglais"],
+              "baccalaureats_recommandes": [
+                "B",
+                "C",
+                "D",
+                "G2",
+                "G3",
+                "DT/CoM"
+              ],
+              "matieres_cles": [
+                "Economie",
+                "Maths",
+                "Etude de Cas",
+                "Français",
+                "Anglais"
+              ],
               "debouches": [
                 "Consultant search marketing",
                 "Community manager",
@@ -167,8 +239,17 @@
                 "aides_partiellement_payant": 0
               },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["C", "D", "E", "F"],
-              "matieres_cles": ["Maths", "PCT", "Français"],
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "E",
+                "F"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "PCT",
+                "Français"
+              ],
               "debouches": [
                 "Entrée dans les grandes écoles d'ingénieurs",
                 "Entrée dans les Masters de Mathématiques, de Physique et Informatique"
@@ -188,12 +269,932 @@
                 "aides_partiellement_payant": 340
               },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["A1", "A2", "B", "C", "D", "DEAT", "DT/STI"],
-              "matieres_cles": ["Français", "Hist-Géo", "Maths", "Anglais"],
+              "baccalaureats_recommandes": [
+                "A1",
+                "A2",
+                "B",
+                "C",
+                "D",
+                "DEAT",
+                "DT/STI"
+              ],
+              "matieres_cles": [
+                "Français",
+                "Hist-Géo",
+                "Maths",
+                "Anglais"
+              ],
               "debouches": [
                 "Enseignement",
                 "Laboratoires et institutions de recherche",
                 "Assainissement"
+              ]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Composante Générale",
+          "sigle": "CG",
+          "localisation": "Bénin",
+          "filieres": [
+            {
+              "nom_filiere": "Sciences Infirmières",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Sciences Infirmières"
+              ]
+            },
+            {
+              "nom_filiere": "Kinésithérapie",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Kinésithérapie"
+              ]
+            },
+            {
+              "nom_filiere": "Analyse Biomédicale",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Analyse Biomédicale"
+              ]
+            },
+            {
+              "nom_filiere": "Nutrition et Diététique",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Nutrition et Diététique"
+              ]
+            },
+            {
+              "nom_filiere": "Sciences et Techniques de Production Végétale",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Sciences et Techniques de Production Végétale"
+              ]
+            },
+            {
+              "nom_filiere": "Sciences et Techniques de Production Animale",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Sciences et Techniques de Production Animale"
+              ]
+            },
+            {
+              "nom_filiere": "Aménagement et Gestion des Forêts",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Aménagement et Gestion des Forêts"
+              ]
+            },
+            {
+              "nom_filiere": "Génie Rural, Mécanisation Agricole",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie Rural, Mécanisation Agricole"
+              ]
+            },
+            {
+              "nom_filiere": "Agroéconomie, Sociologie et Vulgarisation Rurales",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Agroéconomie, Sociologie et Vulgarisation Rurales"
+              ]
+            },
+            {
+              "nom_filiere": "Entreprenariat Agricole",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Entreprenariat Agricole"
+              ]
+            },
+            {
+              "nom_filiere": "Génie Civil",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie Civil"
+              ]
+            },
+            {
+              "nom_filiere": "Génie Electrique",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie Electrique"
+              ]
+            },
+            {
+              "nom_filiere": "Génie Mécanique et Energétique",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie Mécanique et Energétique"
+              ]
+            },
+            {
+              "nom_filiere": "Génie Informatique et Télécom",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie Informatique et Télécom"
+              ]
+            },
+            {
+              "nom_filiere": "Génie Chimique et Procédés",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie Chimique et Procédés"
+              ]
+            },
+            {
+              "nom_filiere": "Génie de l’Environnement",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie de l’Environnement"
+              ]
+            },
+            {
+              "nom_filiere": "Génie de Technologie Alimentaire",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie de Technologie Alimentaire"
+              ]
+            },
+            {
+              "nom_filiere": "Génie d’Imagerie Médicale",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie d’Imagerie Médicale"
+              ]
+            },
+            {
+              "nom_filiere": "Génie Biomédical",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie Biomédical"
+              ]
+            },
+            {
+              "nom_filiere": "Sécurité Informatique",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Sécurité Informatique"
+              ]
+            },
+            {
+              "nom_filiere": "Intelligence Artificielle",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Intelligence Artificielle"
+              ]
+            },
+            {
+              "nom_filiere": "Systèmes Embarqués et IoT",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Systèmes Embarqués et IoT"
+              ]
+            },
+            {
+              "nom_filiere": "Internet et Multimédia",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Internet et Multimédia"
+              ]
+            },
+            {
+              "nom_filiere": "Analyse Informatique et Programmation",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Analyse Informatique et Programmation"
+              ]
+            },
+            {
+              "nom_filiere": "Droit",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Droit"
+              ]
+            },
+            {
+              "nom_filiere": "Sciences Politiques",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Sciences Politiques"
+              ]
+            },
+            {
+              "nom_filiere": "Gestion des Ressources Humaines",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Gestion des Ressources Humaines"
+              ]
+            },
+            {
+              "nom_filiere": "Banque et Finance",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Banque et Finance"
+              ]
+            },
+            {
+              "nom_filiere": "Assurance",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Assurance"
+              ]
+            },
+            {
+              "nom_filiere": "Gestion des Transports et Logistique",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Gestion des Transports et Logistique"
+              ]
+            },
+            {
+              "nom_filiere": "Gestion Commerciale",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Gestion Commerciale"
+              ]
+            },
+            {
+              "nom_filiere": "Comptabilité et Gestion Financière",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Comptabilité et Gestion Financière"
+              ]
+            },
+            {
+              "nom_filiere": "Statistique Économique",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Statistique Économique"
+              ]
+            },
+            {
+              "nom_filiere": "Planification et Gestion de Projets",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Planification et Gestion de Projets"
+              ]
+            },
+            {
+              "nom_filiere": "Économie Agricole",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Économie Agricole"
+              ]
+            },
+            {
+              "nom_filiere": "Psychologie",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Psychologie"
+              ]
+            },
+            {
+              "nom_filiere": "Sociologie-Anthropologie",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Sociologie-Anthropologie"
+              ]
+            },
+            {
+              "nom_filiere": "Histoire et Archéologie",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Histoire et Archéologie"
+              ]
+            },
+            {
+              "nom_filiere": "Journalisme",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Journalisme"
+              ]
+            },
+            {
+              "nom_filiere": "Métiers de l’Audiovisuel et Multimédia",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Métiers de l’Audiovisuel et Multimédia"
+              ]
+            },
+            {
+              "nom_filiere": "Anglais",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Anglais"
+              ]
+            },
+            {
+              "nom_filiere": "Allemand",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Allemand"
+              ]
+            },
+            {
+              "nom_filiere": "Espagnol",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Espagnol"
+              ]
+            },
+            {
+              "nom_filiere": "Lettres Modernes",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Lettres Modernes"
+              ]
+            },
+            {
+              "nom_filiere": "Sciences du Langage et Communication",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Sciences du Langage et Communication"
               ]
             }
           ]
@@ -216,8 +1217,15 @@
                 "aides_partiellement_payant": 0
               },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["C", "D"],
-              "matieres_cles": ["Maths", "SPCT", "SVT"],
+              "baccalaureats_recommandes": [
+                "C",
+                "D"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "SPCT",
+                "SVT"
+              ],
               "debouches": [
                 "Médecin généraliste dans les hôpitaux et centre de santé"
               ]
@@ -236,8 +1244,16 @@
                 "aides_partiellement_payant": 0
               },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["C", "D", "DEAT"],
-              "matieres_cles": ["Maths", "SPCT", "SVT"],
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "DEAT"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "SPCT",
+                "SVT"
+              ],
               "debouches": [
                 "Entrepreneur Agricole",
                 "Conseiller Agricole",
@@ -253,11 +1269,296 @@
           "filieres": [
             {
               "nom_filiere": "Droit",
-              "quotas": { "bourses": 30, "aides_partiellement_payant": 150 },
+              "quotas": {
+                "bourses": 30,
+                "aides_partiellement_payant": 150
+              },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["A1", "A2", "B", "C", "D"],
-              "matieres_cles": ["Français", "Philosophie", "Histoire-Géo"],
-              "debouches": ["Juriste", "Avocat", "Notaire", "Magistrat"]
+              "baccalaureats_recommandes": [
+                "A1",
+                "A2",
+                "B",
+                "C",
+                "D"
+              ],
+              "matieres_cles": [
+                "Français",
+                "Philosophie",
+                "Histoire-Géo"
+              ],
+              "debouches": [
+                "Juriste",
+                "Avocat",
+                "Notaire",
+                "Magistrat"
+              ]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Composante Générale",
+          "sigle": "CG",
+          "localisation": "Bénin",
+          "filieres": [
+            {
+              "nom_filiere": "Santé Publique et Surveillance Épidémiologique",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Santé Publique et Surveillance Épidémiologique"
+              ]
+            },
+            {
+              "nom_filiere": "Sciences Infirmières",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Sciences Infirmières"
+              ]
+            },
+            {
+              "nom_filiere": "Sciences Obstétricales",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Sciences Obstétricales"
+              ]
+            },
+            {
+              "nom_filiere": "Production Animale et Halieutique",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Production Animale et Halieutique"
+              ]
+            },
+            {
+              "nom_filiere": "Agronomie",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Agronomie"
+              ]
+            },
+            {
+              "nom_filiere": "Statistique Appliquée",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Statistique Appliquée"
+              ]
+            },
+            {
+              "nom_filiere": "Planification et Évaluation",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Planification et Évaluation"
+              ]
+            },
+            {
+              "nom_filiere": "Analyse et Politique Économique",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Analyse et Politique Économique"
+              ]
+            },
+            {
+              "nom_filiere": "Finance et Comptabilité",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Finance et Comptabilité"
+              ]
+            },
+            {
+              "nom_filiere": "Marketing et Management",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Marketing et Management"
+              ]
+            },
+            {
+              "nom_filiere": "Droit Privé",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Droit Privé"
+              ]
+            },
+            {
+              "nom_filiere": "Droit Public",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Droit Public"
+              ]
+            },
+            {
+              "nom_filiere": "Sciences Politiques et Relations Internationales",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Sciences Politiques et Relations Internationales"
+              ]
             }
           ]
         }
@@ -274,11 +1575,23 @@
           "filieres": [
             {
               "nom_filiere": "Génie Mathématique et Modélisation",
-              "quotas": { "bourses": 25, "aides_partiellement_payant": 50 },
+              "quotas": {
+                "bourses": 25,
+                "aides_partiellement_payant": 50
+              },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["C", "E"],
-              "matieres_cles": ["Maths", "PCT"],
-              "debouches": ["Ingénieur mathématicien", "Data Scientist"]
+              "baccalaureats_recommandes": [
+                "C",
+                "E"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "PCT"
+              ],
+              "debouches": [
+                "Ingénieur mathématicien",
+                "Data Scientist"
+              ]
             }
           ]
         },
@@ -289,11 +1602,210 @@
           "filieres": [
             {
               "nom_filiere": "Génie Mécanique",
-              "quotas": { "bourses": 15, "aides_partiellement_payant": 30 },
+              "quotas": {
+                "bourses": 15,
+                "aides_partiellement_payant": 30
+              },
               "mode_entree": "Concours",
-              "baccalaureats_recommandes": ["E", "F1"],
-              "matieres_cles": ["Maths", "Construction Mécanique"],
-              "debouches": ["Professeur technique", "Ingénieur maintenance"]
+              "baccalaureats_recommandes": [
+                "E",
+                "F1"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Construction Mécanique"
+              ],
+              "debouches": [
+                "Professeur technique",
+                "Ingénieur maintenance"
+              ]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Composante Générale",
+          "sigle": "CG",
+          "localisation": "Bénin",
+          "filieres": [
+            {
+              "nom_filiere": "Génie Civil",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie Civil"
+              ]
+            },
+            {
+              "nom_filiere": "Génie Électrique et Énergies Renouvelables",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie Électrique et Énergies Renouvelables"
+              ]
+            },
+            {
+              "nom_filiere": "Génie Informatique et Télécoms",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie Informatique et Télécoms"
+              ]
+            },
+            {
+              "nom_filiere": "Froid et Climatisation",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Froid et Climatisation"
+              ]
+            },
+            {
+              "nom_filiere": "Maintenance Industrielle",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Maintenance Industrielle"
+              ]
+            },
+            {
+              "nom_filiere": "Maintenance Automobile",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Maintenance Automobile"
+              ]
+            },
+            {
+              "nom_filiere": "Biotechnologie Médicale",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Biotechnologie Médicale"
+              ]
+            },
+            {
+              "nom_filiere": "Génétique et Biotechnologie",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génétique et Biotechnologie"
+              ]
+            },
+            {
+              "nom_filiere": "Nutrition et Technologie Alimentaire",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Nutrition et Technologie Alimentaire"
+              ]
             }
           ]
         }
@@ -310,11 +1822,24 @@
           "filieres": [
             {
               "nom_filiere": "Production Végétale et Semencière",
-              "quotas": { "bourses": 20, "aides_partiellement_payant": 40 },
+              "quotas": {
+                "bourses": 20,
+                "aides_partiellement_payant": 40
+              },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["C", "D", "DEAT"],
-              "matieres_cles": ["SVT", "Maths"],
-              "debouches": ["Spécialiste en semences", "Chef d'exploitation agricole"]
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "DEAT"
+              ],
+              "matieres_cles": [
+                "SVT",
+                "Maths"
+              ],
+              "debouches": [
+                "Spécialiste en semences",
+                "Chef d'exploitation agricole"
+              ]
             }
           ]
         },
@@ -325,11 +1850,24 @@
           "filieres": [
             {
               "nom_filiere": "Aménagement et Gestion des Forêts et Parcours Naturels",
-              "quotas": { "bourses": 12, "aides_partiellement_payant": 25 },
+              "quotas": {
+                "bourses": 12,
+                "aides_partiellement_payant": 25
+              },
               "mode_entree": "Classement",
-              "baccalaureats_recommandes": ["C", "D", "DEAT"],
-              "matieres_cles": ["SVT", "Maths"],
-              "debouches": ["Gestionnaire de parcs", "Expert environnement"]
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "DEAT"
+              ],
+              "matieres_cles": [
+                "SVT",
+                "Maths"
+              ],
+              "debouches": [
+                "Gestionnaire de parcs",
+                "Expert environnement"
+              ]
             }
           ]
         }
@@ -346,11 +1884,24 @@
           "filieres": [
             {
               "nom_filiere": "Métiers du Numérique",
-              "quotas": { "bourses": 10, "aides_partiellement_payant": 20 },
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
               "mode_entree": "Concours",
-              "baccalaureats_recommandes": ["C", "D", "E", "F"],
-              "matieres_cles": ["Maths", "Anglais"],
-              "debouches": ["Technicien supérieur en numérique"]
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "E",
+                "F"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Anglais"
+              ],
+              "debouches": [
+                "Technicien supérieur en numérique"
+              ]
             }
           ]
         }
@@ -367,11 +1918,25 @@
           "filieres": [
             {
               "nom_filiere": "Architecture",
-              "quotas": { "bourses": 5, "aides_partiellement_payant": 0 },
+              "quotas": {
+                "bourses": 5,
+                "aides_partiellement_payant": 0
+              },
               "mode_entree": "Concours",
-              "baccalaureats_recommandes": ["C", "D", "E", "F"],
-              "matieres_cles": ["Maths", "Dessin", "Français"],
-              "debouches": ["Architecte"]
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "E",
+                "F"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Dessin",
+                "Français"
+              ],
+              "debouches": [
+                "Architecte"
+              ]
             }
           ]
         },
@@ -382,11 +1947,378 @@
           "filieres": [
             {
               "nom_filiere": "Télécommunications",
-              "quotas": { "bourses": 3, "aides_partiellement_payant": 0 },
+              "quotas": {
+                "bourses": 3,
+                "aides_partiellement_payant": 0
+              },
               "mode_entree": "Concours",
-              "baccalaureats_recommandes": ["C", "D", "E"],
-              "matieres_cles": ["Maths", "Physique", "Anglais"],
-              "debouches": ["Ingénieur Télécoms", "Administrateur réseaux"]
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "E"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Physique",
+                "Anglais"
+              ],
+              "debouches": [
+                "Ingénieur Télécoms",
+                "Administrateur réseaux"
+              ]
+            }
+          ]
+        },
+        {
+          "nom_etablissement": "Composante Générale",
+          "sigle": "CG",
+          "localisation": "Bénin",
+          "filieres": [
+            {
+              "nom_filiere": "Médecine Vétérinaire (EISMV)",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Médecine Vétérinaire (EISMV)"
+              ]
+            },
+            {
+              "nom_filiere": "Architecture (EAMAU)",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Architecture (EAMAU)"
+              ]
+            },
+            {
+              "nom_filiere": "Télécommunications (ESMT)",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Télécommunications (ESMT)"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nom_universite": "Université Nationale d'Agriculture",
+      "type": "Publique",
+      "etablissements": [
+        {
+          "nom_etablissement": "Composante Générale",
+          "sigle": "CG",
+          "localisation": "Bénin",
+          "filieres": [
+            {
+              "nom_filiere": "Aquaculture",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Aquaculture"
+              ]
+            },
+            {
+              "nom_filiere": "Horticulture et Aménagement des Espaces Verts",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Horticulture et Aménagement des Espaces Verts"
+              ]
+            },
+            {
+              "nom_filiere": "Gestion et Production Végétale",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Gestion et Production Végétale"
+              ]
+            },
+            {
+              "nom_filiere": "Industrie Agroalimentaire",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Industrie Agroalimentaire"
+              ]
+            },
+            {
+              "nom_filiere": "Génie Rural et Équipements Agricoles",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Génie Rural et Équipements Agricoles"
+              ]
+            },
+            {
+              "nom_filiere": "Économie Agricole",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Économie Agricole"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nom_universite": "Établissements Privés (Sélection)",
+      "type": "Privée",
+      "etablissements": [
+        {
+          "nom_etablissement": "Composante Générale",
+          "sigle": "CG",
+          "localisation": "Bénin",
+          "filieres": [
+            {
+              "nom_filiere": "Gestion des Entreprises",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Gestion des Entreprises"
+              ]
+            },
+            {
+              "nom_filiere": "Finance et Audit",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Finance et Audit"
+              ]
+            },
+            {
+              "nom_filiere": "Marketing Digital",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Marketing Digital"
+              ]
+            },
+            {
+              "nom_filiere": "Journalisme",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Journalisme"
+              ]
+            },
+            {
+              "nom_filiere": "Droit des Affaires",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Droit des Affaires"
+              ]
+            },
+            {
+              "nom_filiere": "Informatique de Gestion",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Informatique de Gestion"
+              ]
+            },
+            {
+              "nom_filiere": "Tourisme et Hôtellerie",
+              "quotas": {
+                "bourses": 10,
+                "aides_partiellement_payant": 20
+              },
+              "mode_entree": "Classement",
+              "baccalaureats_recommandes": [
+                "C",
+                "D",
+                "G2"
+              ],
+              "matieres_cles": [
+                "Maths",
+                "Français"
+              ],
+              "debouches": [
+                "Spécialiste en Tourisme et Hôtellerie"
+              ]
             }
           ]
         }
