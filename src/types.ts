@@ -2,7 +2,7 @@ import { MatierePonderee } from './engine';
 
 export interface Quotas {
   bourses: number;
-  aides_partiellement_payant: number;
+  aides_fpp: number;
 }
 
 export interface Filiere {
@@ -18,7 +18,7 @@ export interface Filiere {
 export interface Etablissement {
   nom_etablissement: string;
   sigle: string;
-  localisation: string;
+  localisation?: string;
   filieres: Filiere[];
 }
 
@@ -33,35 +33,9 @@ export interface GuideData {
     titre_document: string;
     annee_academique: string;
     pays: string;
-    stats_globales?: {
-      total_filieres: number;
-      total_allocations: number;
-      bourses: number;
-      aides_fpp: number;
-      admis_bac: number;
-      repartition_universites: Record<string, number>;
-      repartition_secteur?: {
-        public: {
-          total: number;
-          details: Record<string, number>;
-          pages: string;
-        };
-        prive_agree: {
-          total: number;
-          exemples: string[];
-          pages: string;
-        };
-        prive_ouverture: {
-          total: number;
-          exemples: string[];
-          pages: string;
-        };
-      };
-      repartition_mode: {
-        classement: number;
-        concours: number;
-      };
-    };
+    ministere?: string;
+    date_extraction?: string;
+    sigles?: Record<string, string>;
   };
   universites: Universite[];
 }
@@ -69,6 +43,7 @@ export interface GuideData {
 export interface FlattenedFiliere extends Filiere {
   id?: string;
   universite: string;
+  type_universite: string;
   etablissement: string;
   sigle: string;
   localisation: string;

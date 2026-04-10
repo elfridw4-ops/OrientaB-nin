@@ -1,20 +1,28 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 🎓 OrientaBénin
 
-# Run and deploy your AI Studio app
+**OrientaBénin** est une plateforme intelligente d'orientation universitaire dédiée aux bacheliers du Bénin. Elle utilise les données officielles du Ministère de l'Enseignement Supérieur (MESRS) pour fournir des recommandations personnalisées basées sur les scores de classement réels.
 
-This contains everything you need to run your app locally.
+## 🚀 Fonctionnalités
+- **Simulateur de Score** : Calcul précis selon la moyenne pondérée officielle.
+- **Recommandations IA** : Analyse des chances d'admission et de saturation.
+- **Guide Complet** : Accès aux quotas de bourses, aides et FPP pour plus de 500 filières.
+- **Suivi en Temps Réel** : Visualisation de la concurrence sur la plateforme.
 
-View your app in AI Studio: https://ai.studio/apps/e91e84d7-ef80-45a8-b6a4-4b09537de80a
+## 🛠️ Installation
+```bash
+npm install
+npm run dev
+```
 
-## Run Locally
+## ⚖️ Licence
 
-**Prerequisites:**  Node.js
+Ce projet est sous **Licence Propriétaire**. Tous droits réservés à **OrientaBénin**.
 
+- **Code Source** : Usage privé uniquement. La reproduction ou distribution non autorisée est strictement interdite.
+- **Données** : Les données contenues dans `guide.json` sont protégées et ne peuvent être extraites pour un usage tiers.
+- **Algorithme** : Le moteur de recommandation est la propriété intellectuelle exclusive du projet.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Pour toute demande de partenariat ou d'utilisation commerciale, veuillez contacter : [elfridw4@gmail.com](mailto:elfridw4@gmail.com).
+
+---
+© 2026 OrientaBénin.

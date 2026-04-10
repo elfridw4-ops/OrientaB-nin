@@ -174,17 +174,20 @@ export const subscribeToUsers = (callback: (users: UserProfile[]) => void) => {
 export const saveFilieresBatch = async (filieres: FlattenedFiliere[]) => {
   const path = 'filieres';
   try {
-    const batch = writeBatch(db);
-    filieres.forEach(filiere => {
-      const docRef = doc(db, path, filiere.id!);
-      // Use set with merge: true to avoid overwriting fields like candidatsCount if not provided
-      // But here we want to ensure candidatsCount is at least 0 if it's a new filiere
-      batch.set(docRef, { 
-        ...filiere, 
-        candidatsCount: filiere.candidatsCount ?? 0 
-      }, { merge: true });
-    });
-    await batch.commit();
+    // Firestore batch limit is 500
+    const chunkSize = 450;
+    for (let i = 0; i < filieres.length; i += chunkSize) {
+      const chunk = filieres.slice(i, i + chunkSize);
+      const batch = writeBatch(db);
+      chunk.forEach(filiere => {
+        const docRef = doc(db, path, filiere.id!);
+        batch.set(docRef, { 
+          ...filiere, 
+          candidatsCount: filiere.candidatsCount ?? 0 
+        }, { merge: true });
+      });
+      await batch.commit();
+    }
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, path);
   }

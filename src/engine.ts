@@ -137,7 +137,7 @@ export function genererRecommandations<T extends FiliereBase>(
     }
 
     const candidats = filiere.candidatsCount || 0;
-    const admisOfficiels = filiere.admisOfficiels || (filiere.quotas?.bourses + filiere.quotas?.aides_partiellement_payant) || 50; // Fallback
+    const admisOfficiels = filiere.admisOfficiels || (filiere.quotas?.bourses + filiere.quotas?.aides_fpp) || 50; // Fallback
     
     const chances = calculerChances(candidats, admisOfficiels);
     const saturation = calculerSaturation(candidats, admisOfficiels);

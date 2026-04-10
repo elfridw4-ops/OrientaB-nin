@@ -335,3 +335,10 @@ structure JSON intégrant données ministérielles et plateforme
 
 Assistant :
 J'ai intégré la comparaison entre les capacités officielles du ministère et les inscriptions en temps réel sur la plateforme. J'ai ajouté un champ `admisOfficiels` au modèle de données et implémenté le calcul du pourcentage de chances basé sur votre formule. L'interface des résultats affiche désormais une barre de saturation visuelle, les deux colonnes de données (Officiel vs Plateforme) et des conseils dynamiques pour orienter les étudiants vers les filières les moins saturées. Le panneau d'administration a également été mis à jour pour permettre la gestion de ces capacités officielles.
+
+[2026-04-10 14:13:55]
+Utilisateur :
+Crée un fichier Markdown documentant l’architecture complète du projet structuré comme un guide d'onboarding développeur... (Demande de documentation technique complète)
+
+Assistant :
+J'ai créé le fichier `DEVELOPER_ONBOARDING.md` qui contient une documentation exhaustive du projet. Ce guide couvre l'architecture globale (React + Firebase), le rôle détaillé de chaque dossier et fichier (pourquoi ils existent, ce qui casse s'ils disparaissent), les flux de données, les conventions de nommage, les dépendances clés et les points critiques du système. J'ai également mis à jour l'historique du projet, le journal des décisions et le suivi des tâches pour refléter ces changements et les récentes optimisations de responsivité et de SEO.

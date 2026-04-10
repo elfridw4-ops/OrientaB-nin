@@ -35,9 +35,15 @@
 - [x] Ajout d'une bannière d'avertissement (Disclaimer) sur l'application.
 - [x] Ajout de badges de réassurance sur la Landing Page.
 - [x] Création d'une vue "Guide" dédiée remplaçant l'ancienne modale d'information.
+- [x] Création d'un logo SVG personnalisé.
+- [x] Implémentation du référencement SEO (Meta tags, Open Graph, Twitter Cards).
+- [x] Correction de la responsivité du footer et du layout global.
+- [x] Création du guide d'onboarding développeur (`DEVELOPER_ONBOARDING.md`).
+- [x] Mise en place de la licence propriétaire (`LICENSE`) et du `README.md`.
 
 ## Bogues corrigés
-- Aucun pour le moment.
+- [x] Correction du scroll horizontal causé par le footer full-width.
+- [x] Correction de l'espace vide sous le footer sombre.
 
 ## Problèmes survenus
 - Le PDF original ne contient pas les coefficients exacts pour chaque matière par filière, seulement les matières clés. Une logique de pondération générique a été implémentée en attendant les données complètes.

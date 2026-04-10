@@ -18,7 +18,7 @@ import {
 import Admin from './Admin';
 import { auth, loginWithGoogle, logout } from './firebase';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
-import { getUserProfile, createUserProfile, updateUserProfile, subscribeToFilieres, updateFiliereChoices } from './services/firestoreService';
+import { getUserProfile, createUserProfile, updateUserProfile, updateFiliereChoices } from './services/firestoreService';
 
 // Custom Logo Component
 const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
@@ -50,9 +50,17 @@ export default function App() {
   const [selectedFiliere, setSelectedFiliere] = useState<FlattenedFiliere | null>(null);
   const [showInfo, setShowInfo] = useState(false);
   const [showStats, setShowStats] = useState(false);
-  const [grades, setGrades] = useState<Record<string, number>>({
-    Maths: 0, SVT: 0, PCT: 0, Français: 0, Anglais: 0
-  });
+  const [grades, setGrades] = useState<Record<string, number>>({});
+
+  const requiredSubjects = useMemo(() => {
+    if (!selectedSerie) return [];
+    const filieres = allFilieres.filter(f => f.baccalaureats_recommandes.includes(selectedSerie));
+    const subjects = new Set<string>();
+    filieres.forEach(f => {
+      f.matieres.forEach(m => subjects.add(m.nom));
+    });
+    return Array.from(subjects).sort();
+  }, [selectedSerie, allFilieres]);
 
   // Firebase Auth Listener
   useEffect(() => {
@@ -118,18 +126,10 @@ export default function App() {
       };
       testConnection();
 
-      // Subscribe to real-time filieres updates
-      const unsubscribe = subscribeToFilieres((filieres) => {
-        if (filieres.length > 0) {
-          setAllFilieres(filieres);
-        } else {
-          // Fallback to local if empty
-          setAllFilieres(getAllFilieres());
-        }
-      });
-      return () => unsubscribe();
+      // Load filieres from local storage / guide.json
+      setAllFilieres(getAllFilieres());
     }
-  }, [isAuthReady]);
+  }, [isAuthReady, view]);
 
   const handleLogin = async () => {
     try {
@@ -201,7 +201,22 @@ export default function App() {
   };
 
   const appData = useMemo(() => getAppData(), []);
-  const stats = appData.metadata.stats_globales;
+  const stats = useMemo(() => {
+    const total_filieres = allFilieres.length;
+    const bourses = allFilieres.reduce((sum, f) => sum + (f.bourses || f.quotas?.bourses || 0), 0);
+    const aides_fpp = allFilieres.reduce((sum, f) => sum + (f.aides || f.quotas?.aides_fpp || 0), 0);
+    const total_allocations = bourses + aides_fpp;
+    return { total_filieres, bourses, aides_fpp, total_allocations };
+  }, [allFilieres]);
+
+  const statsSecteurs = useMemo(() => {
+    const counts: Record<string, number> = {};
+    allFilieres.forEach(f => {
+      const type = f.type_universite || 'Inconnu';
+      counts[type] = (counts[type] || 0) + 1;
+    });
+    return Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  }, [allFilieres]);
 
   const allSeries = useMemo(() => Array.from(new Set(allFilieres.flatMap(f => f.baccalaureats_recommandes))).sort(), [allFilieres]);
   const allUniversities = useMemo(() => Array.from(new Set(allFilieres.map(f => f.universite))).sort(), [allFilieres]);
@@ -222,13 +237,13 @@ export default function App() {
 
   const universityStats = useMemo(() => allUniversities.map(uni => ({
     name: uni,
-    Bourses: allFilieres.filter(f => f.universite === uni).reduce((s, f) => s + f.quotas.bourses, 0),
-    Aides: allFilieres.filter(f => f.universite === uni).reduce((s, f) => s + f.quotas.aides_partiellement_payant, 0)
+    Bourses: allFilieres.filter(f => f.universite === uni).reduce((s, f) => s + (f.quotas?.bourses || 0), 0),
+    Aides: allFilieres.filter(f => f.universite === uni).reduce((s, f) => s + (f.quotas?.aides_fpp || 0), 0)
   })), [allUniversities, allFilieres]);
 
   const topFilieresBourses = useMemo(() => [...allFilieres]
-    .sort((a, b) => b.quotas.bourses - a.quotas.bourses).slice(0, 5)
-    .map(f => ({ name: f.sigle || f.nom_filiere.substring(0, 15) + '...', Bourses: f.quotas.bourses, full_name: f.nom_filiere })), [allFilieres]);
+    .sort((a, b) => (b.quotas?.bourses || 0) - (a.quotas?.bourses || 0)).slice(0, 5)
+    .map(f => ({ name: f.sigle || f.nom_filiere.substring(0, 15) + '...', Bourses: f.quotas?.bourses || 0, full_name: f.nom_filiere })), [allFilieres]);
 
   const topFilieresDemandees = useMemo(() => [...allFilieres]
     .sort((a, b) => (b.candidatsCount || 0) - (a.candidatsCount || 0)).slice(0, 5)
@@ -491,23 +506,48 @@ export default function App() {
                   )}
                   
                   <GlassCard className={`p-6 mb-6 ${userProfile?.isLocked ? 'opacity-75 pointer-events-none' : ''}`}>
-                    <label className="block text-sm font-medium text-slate-700 mb-3 flex items-center"><User className="w-4 h-4 mr-2 text-indigo-500"/> Série du BAC</label>
-                    <select value={selectedSerie} onChange={e => setSelectedSerie(e.target.value)} className="w-full bg-white/50 border border-slate-200 rounded-2xl p-4 focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-slate-700 font-medium appearance-none">
-                      <option value="">Sélectionnez votre série...</option>
-                      {allSeries.map(s => <option key={s} value={s}>Série {s}</option>)}
-                    </select>
+                    <label className="block text-sm font-bold text-slate-800 mb-3 flex items-center"><User className="w-5 h-5 mr-2 text-indigo-500"/> Votre Série du BAC</label>
+                    <div className="relative">
+                      <select value={selectedSerie} onChange={e => setSelectedSerie(e.target.value)} className="w-full bg-white border border-slate-200 rounded-xl p-4 focus:ring-2 focus:ring-indigo-500 outline-none transition-all text-slate-800 font-black appearance-none shadow-sm text-lg">
+                        <option value="" className="font-medium text-slate-500">Sélectionnez votre série...</option>
+                        {allSeries.map(s => <option key={s} value={s} className="font-bold">Série {s}</option>)}
+                      </select>
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                        <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                      </div>
+                    </div>
                   </GlassCard>
 
                   <GlassCard className={`p-6 mb-8 ${userProfile?.isLocked ? 'opacity-75 pointer-events-none' : ''}`}>
-                    <h3 className="font-semibold mb-4 flex items-center text-slate-800"><Calculator className="w-4 h-4 mr-2 text-violet-500"/> Vos Notes (sur 20)</h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                      {Object.keys(grades).map(subject => (
-                        <div key={subject}>
-                          <label className="block text-xs font-medium text-slate-500 mb-1.5">{subject}</label>
-                          <input type="number" min="0" max="20" value={grades[subject] || ''} onChange={e => setGrades({...grades, [subject]: parseFloat(e.target.value) || 0})} className="w-full bg-white/50 border border-slate-200 rounded-xl p-3 text-center focus:ring-2 focus:ring-indigo-500 outline-none transition-all font-medium text-slate-700" />
-                        </div>
-                      ))}
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="font-semibold flex items-center text-slate-800"><Calculator className="w-5 h-5 mr-2 text-violet-500"/> Bulletin de Notes</h3>
+                      <span className="bg-violet-100 text-violet-700 px-3 py-1 rounded-full text-xs font-bold">Sur 20</span>
                     </div>
+                    {selectedSerie ? (
+                      <div className="space-y-3">
+                        {requiredSubjects.map(subject => (
+                          <div key={subject} className="flex items-center justify-between bg-white/40 border border-slate-100 p-3 rounded-xl hover:bg-white/60 transition-colors">
+                            <label className="text-sm font-bold text-slate-700 flex-1">{subject}</label>
+                            <div className="w-24 relative">
+                              <input 
+                                type="number" 
+                                min="0" 
+                                max="20" 
+                                step="0.25"
+                                placeholder="--"
+                                value={grades[subject] || ''} 
+                                onChange={e => setGrades({...grades, [subject]: parseFloat(e.target.value) || 0})} 
+                                className="w-full bg-white border border-slate-200 rounded-lg py-2 px-3 text-center focus:ring-2 focus:ring-violet-500 outline-none transition-all font-black text-slate-800 shadow-inner" 
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="bg-slate-50 border border-slate-100 rounded-xl p-6 text-center">
+                        <p className="text-sm text-slate-500 font-medium">Sélectionnez d'abord votre série pour voir les matières requises.</p>
+                      </div>
+                    )}
                   </GlassCard>
 
                   {!userProfile?.isLocked && (
@@ -609,7 +649,7 @@ export default function App() {
                           <div className="grid grid-cols-2 gap-4">
                             <div className="text-center">
                               <p className="text-[10px] text-slate-400 uppercase font-bold">Admis Officiels</p>
-                              <p className="text-sm font-black text-slate-700">{f.admisOfficiels || (f.quotas.bourses + f.quotas.aides_partiellement_payant)}</p>
+                              <p className="text-sm font-black text-slate-700">{f.admisOfficiels || ((f.quotas?.bourses || 0) + (f.quotas?.aides_fpp || 0))}</p>
                             </div>
                             <div className="text-center border-l border-slate-200">
                               <p className="text-[10px] text-slate-400 uppercase font-bold">Inscrits Plateforme</p>
@@ -686,27 +726,26 @@ export default function App() {
 
               {/* Répartition par Secteur */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
-                <div className="bg-indigo-50/50 border border-indigo-100 p-4 rounded-2xl">
-                  <div className="flex justify-between items-center mb-1">
-                    <p className="text-[10px] font-bold text-indigo-400 uppercase">Secteur Public</p>
-                    <span className="text-[10px] font-black text-indigo-600 bg-indigo-100 px-1.5 py-0.5 rounded">250</span>
-                  </div>
-                  <p className="text-xs text-slate-500 leading-tight">UAC (97), Parakou (42), UNSTIM (45), UNA (46), Inter-États (19), IUEP (1)</p>
-                </div>
-                <div className="bg-emerald-50/50 border border-emerald-100 p-4 rounded-2xl">
-                  <div className="flex justify-between items-center mb-1">
-                    <p className="text-[10px] font-bold text-emerald-400 uppercase">Privé (Agréé)</p>
-                    <span className="text-[10px] font-black text-emerald-600 bg-emerald-100 px-1.5 py-0.5 rounded">185</span>
-                  </div>
-                  <p className="text-xs text-slate-500 leading-tight">Banque-Finance, Génie Civil, Journalisme, etc.</p>
-                </div>
-                <div className="bg-amber-50/50 border border-amber-100 p-4 rounded-2xl">
-                  <div className="flex justify-between items-center mb-1">
-                    <p className="text-[10px] font-bold text-amber-400 uppercase">Privé (Ouverture)</p>
-                    <span className="text-[10px] font-black text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded">110</span>
-                  </div>
-                  <p className="text-xs text-slate-500 leading-tight">Tourisme, Intelligence Artificielle, Agroalimentaire, etc.</p>
-                </div>
+                {statsSecteurs.map(([type, count], index) => {
+                  const colors = [
+                    'bg-indigo-50/50 border-indigo-100 text-indigo-400 text-indigo-600 bg-indigo-100',
+                    'bg-emerald-50/50 border-emerald-100 text-emerald-400 text-emerald-600 bg-emerald-100',
+                    'bg-amber-50/50 border-amber-100 text-amber-400 text-amber-600 bg-amber-100',
+                    'bg-rose-50/50 border-rose-100 text-rose-400 text-rose-600 bg-rose-100',
+                    'bg-blue-50/50 border-blue-100 text-blue-400 text-blue-600 bg-blue-100'
+                  ];
+                  const colorClass = colors[index % colors.length].split(' ');
+                  
+                  return (
+                    <div key={type} className={`${colorClass[0]} border ${colorClass[1]} p-4 rounded-2xl`}>
+                      <div className="flex justify-between items-center mb-1">
+                        <p className={`text-[10px] font-bold ${colorClass[2]} uppercase`}>{type}</p>
+                        <span className={`text-[10px] font-black ${colorClass[3]} ${colorClass[4]} px-1.5 py-0.5 rounded`}>{count}</span>
+                      </div>
+                      <p className="text-xs text-slate-500 leading-tight">Filières disponibles</p>
+                    </div>
+                  );
+                })}
               </div>
               
               <div className="space-y-4 mb-8">
@@ -722,17 +761,23 @@ export default function App() {
 
               <div className="space-y-4">
                 {exploredFilieres.map(f => (
-                  <GlassCard key={f.id} onClick={() => { setSelectedFiliere(f); setView('details'); }} className="p-5">
+                  <GlassCard key={f.id} onClick={() => { setSelectedFiliere(f); setView('details'); }} className="p-5 hover:border-indigo-300 hover:shadow-md transition-all cursor-pointer group">
                     <div className="flex justify-between items-start mb-3">
-                      <span className="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg text-xs font-bold">{f.sigle}</span>
-                      <div className="flex gap-1">
-                        {f.baccalaureats_recommandes.map(s => <span key={s} className="bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded text-[10px] font-bold">Série {s}</span>)}
+                      <div className="flex items-center gap-2">
+                        <span className="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg text-xs font-bold group-hover:bg-indigo-50 group-hover:text-indigo-700 transition-colors">{f.sigle}</span>
+                        <span className={`px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider ${f.type_universite === 'Public' ? 'bg-indigo-50 text-indigo-600' : 'bg-emerald-50 text-emerald-600'}`}>{f.type_universite}</span>
+                      </div>
+                      <div className="flex flex-wrap gap-1 justify-end max-w-[50%]">
+                        {f.baccalaureats_recommandes.map(s => <span key={s} className="bg-slate-50 border border-slate-200 text-slate-600 px-1.5 py-0.5 rounded text-[10px] font-bold">Série {s}</span>)}
                       </div>
                     </div>
-                    <h3 className="font-bold text-slate-900 leading-tight mb-2">{f.nom_filiere}</h3>
+                    <h3 className="font-bold text-slate-900 leading-tight mb-3 group-hover:text-indigo-600 transition-colors">{f.nom_filiere}</h3>
                     <div className="flex justify-between items-center text-sm text-slate-500">
-                      <span className="flex items-center"><Building2 className="w-3.5 h-3.5 mr-1.5"/> {f.universite}</span>
-                      <span className="flex items-center font-medium text-indigo-600"><Users className="w-3.5 h-3.5 mr-1.5"/> {f.candidatsCount || 0}</span>
+                      <span className="flex items-center"><Building2 className="w-4 h-4 mr-1.5 text-slate-400"/> {f.universite}</span>
+                      <div className="flex items-center gap-3">
+                        <span className="flex items-center font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg text-xs" title="Places Boursiers"><Star className="w-3.5 h-3.5 mr-1"/> {f.quotas?.bourses || 0}</span>
+                        <span className="flex items-center font-medium text-indigo-600 bg-indigo-50 px-2 py-1 rounded-lg text-xs" title="Candidats Actuels"><Users className="w-3.5 h-3.5 mr-1"/> {f.candidatsCount || 0}</span>
+                      </div>
                     </div>
                   </GlassCard>
                 ))}
@@ -763,11 +808,11 @@ export default function App() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <GlassCard className="p-5 text-center">
-                    <span className="block text-3xl font-display font-bold text-emerald-600 mb-1">{selectedFiliere.quotas.bourses}</span>
+                    <span className="block text-3xl font-display font-bold text-emerald-600 mb-1">{selectedFiliere.quotas?.bourses || 0}</span>
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Bourses</span>
                   </GlassCard>
                   <GlassCard className="p-5 text-center">
-                    <span className="block text-3xl font-display font-bold text-blue-600 mb-1">{selectedFiliere.quotas.aides_partiellement_payant}</span>
+                    <span className="block text-3xl font-display font-bold text-blue-600 mb-1">{selectedFiliere.quotas?.aides_fpp || 0}</span>
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Aides / FPP</span>
                   </GlassCard>
                 </div>
@@ -813,6 +858,15 @@ export default function App() {
                   <div className="flex flex-wrap gap-2">
                     {selectedFiliere.matieres_cles.map(m => (
                       <span key={m} className="bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-xl text-sm font-semibold border border-indigo-100">{m}</span>
+                    ))}
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="p-6">
+                  <h3 className="font-bold text-slate-900 mb-4 flex items-center"><GraduationCap className="w-5 h-5 mr-2 text-emerald-500"/> Bacs Recommandés</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedFiliere.baccalaureats_recommandes.map(b => (
+                      <span key={b} className="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-xl text-sm font-semibold border border-emerald-100">Série {b}</span>
                     ))}
                   </div>
                 </GlassCard>

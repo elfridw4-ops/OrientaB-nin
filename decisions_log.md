@@ -41,3 +41,10 @@
 - **Décision** : Ajout d'un champ `admisOfficiels` dans le modèle de données Firestore et calcul d'un taux de saturation et d'un pourcentage de chances estimées (`% de chances = (1 - inscrits / admis_officiels) * 100`). Affichage visuel via une barre de saturation colorée.
 - **Alternatives envisagées** : Afficher uniquement le nombre de candidats sans comparaison.
 - **Conséquences** : Offre une aide à la décision stratégique beaucoup plus puissante. Les étudiants peuvent identifier les filières "peu saturées" où ils ont statistiquement plus de chances d'être admis, même avec un score moyen.
+
+## Titre de la décision : Refonte du Layout pour la Responsivité
+- **Date** : 10/04/2026
+- **Contexte** : Le footer "full-width" causait des problèmes de scroll horizontal et d'espaces vides sur mobile et desktop.
+- **Décision** : Suppression de la marge globale (`pb-24`) sur le conteneur racine et passage du conteneur `<main>` en largeur totale (`w-full`). La largeur maximale (`max-w-3xl mx-auto`) est désormais appliquée individuellement à l'intérieur de chaque vue. Ajout de `overflow-x: hidden` sur le `body`.
+- **Alternatives envisagées** : Utilisation de marges négatives et `w-screen` (technique instable).
+- **Conséquences** : Le footer sombre s'étend désormais naturellement sur toute la largeur, le scroll horizontal est éliminé, et le contenu reste parfaitement centré et responsive sur tous les appareils.

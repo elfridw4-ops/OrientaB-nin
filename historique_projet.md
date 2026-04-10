@@ -60,3 +60,10 @@
   - **Impact** : Offre une vision globale, précise et sourcée de l'ensemble du paysage universitaire béninois (public et privé), renforçant le rôle de l'application comme outil d'information de référence et de transparence.
   - **Description** : Améliorations UX inspirées de la concurrence (apresbac.bj). Ajout d'une bannière d'avertissement (Disclaimer) en haut de l'application, de badges de réassurance (Instantané, Officiel, Gratuit) sur la page d'accueil, et transformation de la modale d'information en une véritable vue "Guide" structurée avec un sommaire.
   - **Impact** : Améliore la crédibilité de l'application, rassure les utilisateurs sur l'origine des données et facilite la navigation dans les informations d'orientation.
+- **10/04/2026** :
+  - **Description** : Optimisation UI/UX, Logo personnalisé et SEO. Création d'un logo SVG unique pour OrientaBénin. Mise en œuvre d'un référencement SEO complet (balises meta, Open Graph, Twitter Cards). Correction des problèmes de responsivité du footer (passage en `overflow-x: hidden` et refonte de la structure du layout). Retour aux couleurs Indigo/Violet pour l'identité visuelle.
+  - **Impact** : Identité visuelle plus forte, meilleure visibilité sur les moteurs de recherche et expérience utilisateur fluide sur tous les appareils.
+  - **Description** : Création d'une documentation technique complète (`DEVELOPER_ONBOARDING.md`).
+  - **Impact** : Facilite l'accueil de nouveaux développeurs sur le projet en documentant l'architecture, les flux et les conventions.
+  - **Description** : Mise en place de la stratégie de licence propriétaire et création des fichiers `LICENSE` et `README.md`.
+  - **Impact** : Sécurise la propriété intellectuelle du projet (algorithme et données) dans une perspective commerciale/startup.

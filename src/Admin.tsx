@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Save, Download, Upload, Plus, Trash2, Edit2, X, ArrowLeft, Settings, Database, FileJson, Search, Users, Lock, Unlock, ShieldAlert } from 'lucide-react';
 import { FlattenedFiliere, UserProfile } from './types';
-import { subscribeToFilieres, saveFilieresBatch, subscribeToUsers, updateUserProfile } from './services/firestoreService';
+import { subscribeToUsers, updateUserProfile } from './services/firestoreService';
+import { getAllFilieres, getAppData, saveAppData, resetAppData } from './utils';
 
 const GlassCard = ({ children, className = '' }: { children: React.ReactNode, className?: string }) => (
   <div className={`bg-white/60 backdrop-blur-xl border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-3xl ${className}`}>
@@ -19,18 +20,24 @@ export default function Admin({ onBack }: { onBack: () => void }) {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const unsubFilieres = subscribeToFilieres((data) => setFilieres(data));
+    setFilieres(getAllFilieres());
     const unsubUsers = subscribeToUsers((data) => setUsers(data));
     return () => {
-      unsubFilieres();
       unsubUsers();
     };
   }, []);
 
+  const saveFilieresLocal = (newFilieres: FlattenedFiliere[]) => {
+    const appData = getAppData();
+    appData.filieres = newFilieres;
+    saveAppData(appData);
+    setFilieres(newFilieres);
+  };
+
   const handleDeleteFiliere = async (id: string) => {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette filière ?')) {
       const newFilieres = filieres.filter(f => f.id !== id);
-      await saveFilieresBatch(newFilieres);
+      saveFilieresLocal(newFilieres);
     }
   };
 
@@ -59,6 +66,7 @@ export default function Admin({ onBack }: { onBack: () => void }) {
         id: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2),
         nom_filiere: '',
         universite: '',
+        type_universite: 'Public',
         etablissement: '',
         sigle: '',
         localisation: '',
@@ -67,7 +75,7 @@ export default function Admin({ onBack }: { onBack: () => void }) {
         matieres_cles: [],
         matieres: [{ nom: 'Maths', coeff: 3 }],
         debouches: [],
-        quotas: { bourses: 0, aides_partiellement_payant: 0 },
+        quotas: { bourses: 0, aides_fpp: 0 },
         bourses: 0,
         aides: 0,
         candidatsCount: 0
@@ -91,7 +99,7 @@ export default function Admin({ onBack }: { onBack: () => void }) {
       newFilieres = filieres.map(f => f.id === editingFiliere.id ? editingFiliere : f);
     }
 
-    await saveFilieresBatch(newFilieres);
+    saveFilieresLocal(newFilieres);
     setIsModalOpen(false);
   };
 
@@ -155,14 +163,14 @@ export default function Admin({ onBack }: { onBack: () => void }) {
               </div>
               {activeTab === 'filieres' && (
                 <>
-                  {filieres.length === 0 && (
-                    <button onClick={async () => {
-                      const { getAllFilieres } = await import('./utils');
-                      await saveFilieresBatch(getAllFilieres());
-                    }} className="flex items-center px-5 py-2.5 bg-amber-500 text-white rounded-xl shadow-md hover:bg-amber-600 font-medium text-sm transition-all whitespace-nowrap">
-                      <Download className="w-4 h-4 mr-2" /> Importer défaut
-                    </button>
-                  )}
+                  <button onClick={() => {
+                    if (confirm('Attention : Cela va écraser toutes vos modifications locales et recharger les données depuis le fichier guide.json. Continuer ?')) {
+                      const newData = resetAppData();
+                      setFilieres(newData.filieres);
+                    }
+                  }} className="flex items-center px-5 py-2.5 bg-amber-500 text-white rounded-xl shadow-md hover:bg-amber-600 font-medium text-sm transition-all whitespace-nowrap">
+                    <Download className="w-4 h-4 mr-2" /> Recharger guide.json
+                  </button>
                   <button onClick={() => openModal()} className="flex items-center px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-violet-500 text-white rounded-xl shadow-md shadow-indigo-200 hover:shadow-lg hover:shadow-indigo-300 hover:-translate-y-0.5 font-medium text-sm transition-all whitespace-nowrap">
                     <Plus className="w-4 h-4 mr-2" /> Ajouter
                   </button>
@@ -186,32 +194,38 @@ export default function Admin({ onBack }: { onBack: () => void }) {
                 </thead>
                 <tbody className="divide-y divide-white/40">
                   {filteredFilieres.map(f => (
-                    <tr key={f.id} className="hover:bg-white/40 transition-colors group">
+                    <tr key={f.id} className="hover:bg-white/60 transition-colors group border-b border-slate-100/50 last:border-0">
                       <td className="p-5">
-                        <div className="font-bold text-slate-800 mb-1">{f.nom_filiere}</div>
-                        <div className="flex items-center gap-2">
-                          <span className="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-md text-[10px] font-bold border border-indigo-100">{f.sigle}</span>
-                          <span className="text-xs text-slate-500">{f.etablissement}</span>
+                        <div className="font-bold text-slate-800 mb-1.5">{f.nom_filiere}</div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md text-[10px] font-bold border border-slate-200">{f.sigle}</span>
+                          <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold border ${f.type_universite === 'Public' ? 'bg-indigo-50 text-indigo-700 border-indigo-100' : 'bg-emerald-50 text-emerald-700 border-emerald-100'}`}>{f.type_universite}</span>
+                          <span className="text-xs text-slate-500 font-medium">{f.etablissement}</span>
                         </div>
                       </td>
-                      <td className="p-5 text-sm text-slate-600 font-medium">{f.universite}</td>
+                      <td className="p-5">
+                        <div className="text-sm text-slate-700 font-medium mb-1">{f.universite}</div>
+                        <div className="flex gap-1">
+                          {f.baccalaureats_recommandes?.map(s => <span key={s} className="bg-slate-50 text-slate-500 border border-slate-200 px-1.5 py-0.5 rounded text-[9px] font-bold">BAC {s}</span>)}
+                        </div>
+                      </td>
                       <td className="p-5 text-sm">
                         <div className="flex items-center gap-2">
-                          <span className="bg-emerald-50 text-emerald-700 px-2 py-1 rounded-lg font-bold text-xs border border-emerald-100" title="Bourses">{f.quotas.bourses}</span>
+                          <span className="bg-emerald-50 text-emerald-700 px-2 py-1 rounded-lg font-bold text-xs border border-emerald-100" title="Bourses">{f.quotas?.bourses || 0}</span>
                           <span className="text-slate-300">/</span>
-                          <span className="bg-blue-50 text-blue-700 px-2 py-1 rounded-lg font-bold text-xs border border-blue-100" title="Aides">{f.quotas.aides_partiellement_payant}</span>
+                          <span className="bg-blue-50 text-blue-700 px-2 py-1 rounded-lg font-bold text-xs border border-blue-100" title="Aides">{f.quotas?.aides_fpp || 0}</span>
                         </div>
                       </td>
-                      <td className="p-5 text-sm font-bold text-slate-700">
-                        {f.admisOfficiels || (f.quotas.bourses + f.quotas.aides_partiellement_payant) || 0}
+                      <td className="p-5 text-sm font-black text-slate-700">
+                        {f.admisOfficiels || ((f.quotas?.bourses || 0) + (f.quotas?.aides_fpp || 0))}
                       </td>
-                      <td className="p-5 text-sm font-bold text-indigo-600">
+                      <td className="p-5 text-sm font-black text-indigo-600">
                         {f.candidatsCount || 0}
                       </td>
                       <td className="p-5 text-right">
                         <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <button onClick={() => openModal(f)} className="p-2 text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"><Edit2 className="w-4 h-4" /></button>
-                          <button onClick={() => handleDeleteFiliere(f.id!)} className="p-2 text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-xl transition-colors"><Trash2 className="w-4 h-4" /></button>
+                          <button onClick={() => openModal(f)} className="p-2 text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors" title="Modifier"><Edit2 className="w-4 h-4" /></button>
+                          <button onClick={() => handleDeleteFiliere(f.id!)} className="p-2 text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-xl transition-colors" title="Supprimer"><Trash2 className="w-4 h-4" /></button>
                         </div>
                       </td>
                     </tr>
@@ -355,14 +369,14 @@ export default function Admin({ onBack }: { onBack: () => void }) {
                           </div>
                           <div>
                             <label className="block text-sm font-medium text-slate-700 mb-1.5">Aides / FPP</label>
-                            <input type="number" min="0" value={editingFiliere.quotas.aides_partiellement_payant} onChange={e => {
+                            <input type="number" min="0" value={editingFiliere.quotas.aides_fpp} onChange={e => {
                               const val = parseInt(e.target.value)||0;
-                              setEditingFiliere({...editingFiliere, aides: val, quotas: {...editingFiliere.quotas, aides_partiellement_payant: val}});
+                              setEditingFiliere({...editingFiliere, aides: val, quotas: {...editingFiliere.quotas, aides_fpp: val}});
                             }} className="w-full bg-white border border-slate-200 shadow-inner rounded-xl p-3 focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all" />
                           </div>
                           <div className="col-span-2">
                             <label className="block text-sm font-medium text-slate-700 mb-1.5">Capacité Officielle (Ministère)</label>
-                            <input type="number" min="0" value={editingFiliere.admisOfficiels || (editingFiliere.quotas.bourses + editingFiliere.quotas.aides_partiellement_payant)} onChange={e => setEditingFiliere({...editingFiliere, admisOfficiels: parseInt(e.target.value)||0})} className="w-full bg-white border border-slate-200 shadow-inner rounded-xl p-3 focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all" />
+                            <input type="number" min="0" value={editingFiliere.admisOfficiels || (editingFiliere.quotas.bourses + editingFiliere.quotas.aides_fpp)} onChange={e => setEditingFiliere({...editingFiliere, admisOfficiels: parseInt(e.target.value)||0})} className="w-full bg-white border border-slate-200 shadow-inner rounded-xl p-3 focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all" />
                             <p className="text-xs text-slate-500 mt-1.5">Nombre total d'admis prévus par le ministère.</p>
                           </div>
                         </div>

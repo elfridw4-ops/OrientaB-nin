@@ -1,0 +1,1325 @@
+39-            {
+40-              "nom_filiere": "Santé publique polyvalente",
+41:              "quotas": {
+42-                "bourses": 17,
+43-                "aides_fpp": 0
+--
+69-            {
+70-              "nom_filiere": "Géographie et Aménagement du Territoire",
+71:              "quotas": {
+72-                "bourses": 60,
+73-                "aides_fpp": 340
+--
+96-            {
+97-              "nom_filiere": "Socio-Anthropologie",
+98:              "quotas": {
+99-                "bourses": 63,
+100-                "aides_fpp": 323
+--
+123-            {
+124-              "nom_filiere": "Anglais",
+125:              "quotas": {
+126-                "bourses": 134,
+127-                "aides_fpp": 667
+--
+156-            {
+157-              "nom_filiere": "Classes préparatoires Mathématiques, Physiques et Science de l'Ingénieur (MPSI) et Physique-Chimie et Science de l'Ingénieur (PCSI)",
+158:              "quotas": {
+159-                "bourses": 81,
+160-                "aides_fpp": 0
+--
+185-            {
+186-              "nom_filiere": "Allemand",
+187:              "quotas": {
+188-                "bourses": 12,
+189-                "aides_fpp": 75
+--
+211-            {
+212-              "nom_filiere": "Anglais",
+213:              "quotas": {
+214-                "bourses": 82,
+215-                "aides_fpp": 640
+--
+239-            {
+240-              "nom_filiere": "Espagnol",
+241:              "quotas": {
+242-                "bourses": 12,
+243-                "aides_fpp": 69
+--
+264-            {
+265-              "nom_filiere": "Lettres Modernes",
+266:              "quotas": {
+267-                "bourses": 88,
+268-                "aides_fpp": 60
+--
+292-            {
+293-              "nom_filiere": "Sciences du Langage et de la Communication",
+294:              "quotas": {
+295-                "bourses": 82,
+296-                "aides_fpp": 311
+--
+322-            {
+323-              "nom_filiere": "Administration Culturelle",
+324:              "quotas": {
+325-                "bourses": 7,
+326-                "aides_fpp": 0
+--
+348-            {
+349-              "nom_filiere": "Arts dramatiques",
+350:              "quotas": {
+351-                "bourses": 7,
+352-                "aides_fpp": 0
+--
+381-            {
+382-              "nom_filiere": "Arts Plastiques",
+383:              "quotas": {
+384-                "bourses": 8,
+385-                "aides_fpp": 0
+--
+415-            {
+416-              "nom_filiere": "Musique et Musicologie",
+417:              "quotas": {
+418-                "bourses": 7,
+419-                "aides_fpp": 0
+--
+444-            {
+445-              "nom_filiere": "Cinéma et Audiovisuel",
+446:              "quotas": {
+447-                "bourses": 7,
+448-                "aides_fpp": 0
+--
+478-            {
+479-              "nom_filiere": "Environnement, Hygiène et Santé publique",
+480:              "quotas": {
+481-                "bourses": 8,
+482-                "aides_fpp": 0
+--
+508-            {
+509-              "nom_filiere": "Gestion du cadre de vie",
+510:              "quotas": {
+511-                "bourses": 56,
+512-                "aides_fpp": 0
+--
+532-            {
+533-              "nom_filiere": "Gestion des changements climatiques et des écosystèmes",
+534:              "quotas": {
+535-                "bourses": 9,
+536-                "aides_fpp": 0
+--
+554-            {
+555-              "nom_filiere": "Géomatique et Environnement",
+556:              "quotas": {
+557-                "bourses": 8,
+558-                "aides_fpp": 0
+--
+574-            {
+575-              "nom_filiere": "Planification et Gestion des espaces urbains et ruraux",
+576:              "quotas": {
+577-                "bourses": 32,
+578-                "aides_fpp": 0
+--
+603-            {
+604-              "nom_filiere": "Sciences Infirmières",
+605:              "quotas": {
+606-                "bourses": 35,
+607-                "aides_fpp": 0
+--
+622-            {
+623-              "nom_filiere": "Sciences Obstétricales",
+624:              "quotas": {
+625-                "bourses": 41,
+626-                "aides_fpp": 0
+--
+647-            {
+648-              "nom_filiere": "Hydrologie quantitative et Gestion intégrée des Ressources",
+649:              "quotas": {
+650-                "bourses": 34,
+651-                "aides_fpp": 0
+--
+670-            {
+671-              "nom_filiere": "Hydrogéologie et Gestion intégrée des Ressources",
+672:              "quotas": {
+673-                "bourses": 20,
+674-                "aides_fpp": 0
+--
+692-            {
+693-              "nom_filiere": "Ecohydrologie et Gestion intégrée des Ressources",
+694:              "quotas": {
+695-                "bourses": 12,
+696-                "aides_fpp": 0
+--
+713-            {
+714-              "nom_filiere": "Gestion des crises et risques liés à l'eau et au climat",
+715:              "quotas": {
+716-                "bourses": 27,
+717-                "aides_fpp": 0
+--
+737-            {
+738-              "nom_filiere": "Génie rural et Maîtrise de l'Eau",
+739:              "quotas": {
+740-                "bourses": 19,
+741-                "aides_fpp": 0
+--
+760-            {
+761-              "nom_filiere": "Hydraulique et Assainissement",
+762:              "quotas": {
+763-                "bourses": 55,
+764-                "aides_fpp": 0
+--
+782-            {
+783-              "nom_filiere": "Eau Hygiène et Assainissement (EHA)",
+784:              "quotas": {
+785-                "bourses": 54,
+786-                "aides_fpp": 0
+--
+811-            {
+812-              "nom_filiere": "Administration des Réseaux informatiques",
+813:              "quotas": {
+814-                "bourses": 50,
+815-                "aides_fpp": 0
+--
+834-            {
+835-              "nom_filiere": "Analyse Informatique et Programmation",
+836:              "quotas": {
+837-                "bourses": 34,
+838-                "aides_fpp": 0
+--
+857-            {
+858-              "nom_filiere": "Assurance",
+859:              "quotas": {
+860-                "bourses": 7,
+861-                "aides_fpp": 0
+--
+881-            {
+882-              "nom_filiere": "Banque et Finance de Marché",
+883:              "quotas": {
+884-                "bourses": 8,
+885-                "aides_fpp": 0
+--
+906-            {
+907-              "nom_filiere": "Banque et Institutions des Micro finances",
+908:              "quotas": {
+909-                "bourses": 12,
+910-                "aides_fpp": 0
+--
+931-            {
+932-              "nom_filiere": "Marketing",
+933:              "quotas": {
+934-                "bourses": 8,
+935-                "aides_fpp": 0
+--
+964-            {
+965-              "nom_filiere": "Gestion des Ressources Humaines",
+966:              "quotas": {
+967-                "bourses": 4,
+968-                "aides_fpp": 0
+--
+987-            {
+988-              "nom_filiere": "Gestion des Transports",
+989:              "quotas": {
+990-                "bourses": 7,
+991-                "aides_fpp": 0
+--
+1012-            {
+1013-              "nom_filiere": "Gestion de Logistique",
+1014:              "quotas": {
+1015-                "bourses": 11,
+1016-                "aides_fpp": 0
+--
+1036-            {
+1037-              "nom_filiere": "Statistique Economique et Sectorielle",
+1038:              "quotas": {
+1039-                "bourses": 22,
+1040-                "aides_fpp": 0
+--
+1056-            {
+1057-              "nom_filiere": "Statistique Démographique et Sociale",
+1058:              "quotas": {
+1059-                "bourses": 31,
+1060-                "aides_fpp": 0
+--
+1076-            {
+1077-              "nom_filiere": "Planification et Economie du Développement Durable",
+1078:              "quotas": {
+1079-                "bourses": 14,
+1080-                "aides_fpp": 0
+--
+1098-            {
+1099-              "nom_filiere": "Gestion des Projets",
+1100:              "quotas": {
+1101-                "bourses": 23,
+1102-                "aides_fpp": 0
+--
+1120-            {
+1121-              "nom_filiere": "Développement Local et Régional",
+1122:              "quotas": {
+1123-                "bourses": 5,
+1124-                "aides_fpp": 0
+--
+1141-            {
+1142-              "nom_filiere": "Gestion Financière et Comptable",
+1143:              "quotas": {
+1144-                "bourses": 20,
+1145-                "aides_fpp": 0
+--
+1171-            {
+1172-              "nom_filiere": "Gestion du patrimoine culturel",
+1173:              "quotas": {
+1174-                "bourses": 33,
+1175-                "aides_fpp": 0
+--
+1207-            {
+1208-              "nom_filiere": "Géographie et Aménagement du Territoire",
+1209:              "quotas": {
+1210-                "bourses": 82,
+1211-                "aides_fpp": 667
+--
+1233-            {
+1234-              "nom_filiere": "Psychologie",
+1235:              "quotas": {
+1236-                "bourses": 44,
+1237-                "aides_fpp": 252
+--
+1255-            {
+1256-              "nom_filiere": "Sciences de l'Education et de la Formation",
+1257:              "quotas": {
+1258-                "bourses": 52,
+1259-                "aides_fpp": 189
+--
+1278-            {
+1279-              "nom_filiere": "Philosophie",
+1280:              "quotas": {
+1281-                "bourses": 37,
+1282-                "aides_fpp": 176
+--
+1301-            {
+1302-              "nom_filiere": "Socio-Anthropologie",
+1303:              "quotas": {
+1304-                "bourses": 36,
+1305-                "aides_fpp": 649
+--
+1329-            {
+1330-              "nom_filiere": "Histoire et Archéologie",
+1331:              "quotas": {
+1332-                "bourses": 69,
+1333-                "aides_fpp": 151
+--
+1355-            {
+1356-              "nom_filiere": "Psychologie du travail et des Organisations",
+1357:              "quotas": {
+1358-                "bourses": 29,
+1359-                "aides_fpp": 0
+--
+1384-            {
+1385-              "nom_filiere": "Journalisme",
+1386:              "quotas": {
+1387-                "bourses": 16,
+1388-                "aides_fpp": 0
+--
+1412-            {
+1413-              "nom_filiere": "Métiers de l'Audiovisuel et du Multimédia",
+1414:              "quotas": {
+1415-                "bourses": 20,
+1416-                "aides_fpp": 0
+--
+1447-            {
+1448-              "nom_filiere": "Administration Générale",
+1449:              "quotas": {
+1450-                "bourses": 70,
+1451-                "aides_fpp": 0
+--
+1475-            {
+1476-              "nom_filiere": "Administration des Finances",
+1477:              "quotas": {
+1478-                "bourses": 69,
+1479-                "aides_fpp": 0
+--
+1500-            {
+1501-              "nom_filiere": "Secrétariat de Gestion",
+1502:              "quotas": {
+1503-                "bourses": 40,
+1504-                "aides_fpp": 0
+--
+1526-            {
+1527-              "nom_filiere": "Sciences et Techniques de l'Information documentaire",
+1528:              "quotas": {
+1529-                "bourses": 38,
+1530-                "aides_fpp": 0
+--
+1559-            {
+1560-              "nom_filiere": "Génie Logiciel",
+1561:              "quotas": {
+1562-                "bourses": 17,
+1563-                "aides_fpp": 0
+--
+1586-            {
+1587-              "nom_filiere": "Internet et Multimédia",
+1588:              "quotas": {
+1589-                "bourses": 14,
+1590-                "aides_fpp": 0
+--
+1613-            {
+1614-              "nom_filiere": "Intelligence Artificielle (IA)",
+1615:              "quotas": {
+1616-                "bourses": 19,
+1617-                "aides_fpp": 0
+--
+1637-            {
+1638-              "nom_filiere": "Systèmes embarqués et Internet des Objets (SEIoT)",
+1639:              "quotas": {
+1640-                "bourses": 15,
+1641-                "aides_fpp": 0
+--
+1662-            {
+1663-              "nom_filiere": "Sécurité Informatique",
+1664:              "quotas": {
+1665-                "bourses": 14,
+1666-                "aides_fpp": 0
+--
+1692-            {
+1693-              "nom_filiere": "Sciences et Techniques de Production Végétale",
+1694:              "quotas": {
+1695-                "bourses": 14,
+1696-                "aides_fpp": 0
+--
+1715-            {
+1716-              "nom_filiere": "Sciences et Techniques de Production Animale",
+1717:              "quotas": {
+1718-                "bourses": 14,
+1719-                "aides_fpp": 0
+--
+1738-            {
+1739-              "nom_filiere": "Aménagement et Gestion des Forêts et Parcours Naturels",
+1740:              "quotas": {
+1741-                "bourses": 20,
+1742-                "aides_fpp": 0
+--
+1760-            {
+1761-              "nom_filiere": "Génie Rural, Mécanisation Agricole, Pêche et Aquaculture",
+1762:              "quotas": {
+1763-                "bourses": 35,
+1764-                "aides_fpp": 0
+--
+1785-            {
+1786-              "nom_filiere": "Nutrition et Technologie Alimentaires",
+1787:              "quotas": {
+1788-                "bourses": 17,
+1789-                "aides_fpp": 0
+--
+1807-            {
+1808-              "nom_filiere": "Agroéconomie, Sociologie et Vulgarisation Rurales",
+1809:              "quotas": {
+1810-                "bourses": 12,
+1811-                "aides_fpp": 0
+--
+1829-            {
+1830-              "nom_filiere": "Entreprenariat Agricole",
+1831:              "quotas": {
+1832-                "bourses": 12,
+1833-                "aides_fpp": 0
+--
+1855-            {
+1856-              "nom_filiere": "Médecine Générale",
+1857:              "quotas": {
+1858-                "bourses": 150,
+1859-                "aides_fpp": 0
+--
+1876-            {
+1877-              "nom_filiere": "Pharmacie",
+1878:              "quotas": {
+1879-                "bourses": 16,
+1880-                "aides_fpp": 0
+--
+1897-            {
+1898-              "nom_filiere": "Kinésithérapie",
+1899:              "quotas": {
+1900-                "bourses": 15,
+1901-                "aides_fpp": 0
+--
+1918-            {
+1919-              "nom_filiere": "Assistance sociale",
+1920:              "quotas": {
+1921-                "bourses": 10,
+1922-                "aides_fpp": 0
+--
+1940-            {
+1941-              "nom_filiere": "Nutrition et Diététique",
+1942:              "quotas": {
+1943-                "bourses": 10,
+1944-                "aides_fpp": 0
+--
+1961-            {
+1962-              "nom_filiere": "Analyse Biomédicale",
+1963:              "quotas": {
+1964-                "bourses": 15,
+1965-                "aides_fpp": 0
+--
+1988-            {
+1989-              "nom_filiere": "Génie de Technologie Alimentaire",
+1990:              "quotas": {
+1991-                "bourses": 20,
+1992-                "aides_fpp": 0
+--
+2010-            {
+2011-              "nom_filiere": "Production et Santé animales",
+2012:              "quotas": {
+2013-                "bourses": 37,
+2014-                "aides_fpp": 0
+--
+2033-            {
+2034-              "nom_filiere": "Génie d'imagerie médicale et de Radiobiologie",
+2035:              "quotas": {
+2036-                "bourses": 0,
+2037-                "aides_fpp": 0
+--
+2054-            {
+2055-              "nom_filiere": "Génie Civil",
+2056:              "quotas": {
+2057-                "bourses": 25,
+2058-                "aides_fpp": 0
+--
+2080-            {
+2081-              "nom_filiere": "Génie de l'Environnement",
+2082:              "quotas": {
+2083-                "bourses": 28,
+2084-                "aides_fpp": 0
+--
+2103-            {
+2104-              "nom_filiere": "Génie Electrique",
+2105:              "quotas": {
+2106-                "bourses": 16,
+2107-                "aides_fpp": 0
+--
+2127-            {
+2128-              "nom_filiere": "Génie Mécanique et Energétique",
+2129:              "quotas": {
+2130-                "bourses": 16,
+2131-                "aides_fpp": 0
+--
+2151-            {
+2152-              "nom_filiere": "Génie Informatique et Télécom",
+2153:              "quotas": {
+2154-                "bourses": 16,
+2155-                "aides_fpp": 0
+--
+2175-            {
+2176-              "nom_filiere": "Génie Chimique procédés",
+2177:              "quotas": {
+2178-                "bourses": 15,
+2179-                "aides_fpp": 0
+--
+2199-            {
+2200-              "nom_filiere": "Maintenance Biomédicale et Hospitalière",
+2201:              "quotas": {
+2202-                "bourses": 12,
+2203-                "aides_fpp": 0
+--
+2223-            {
+2224-              "nom_filiere": "Machinisme Agricole",
+2225:              "quotas": {
+2226-                "bourses": 27,
+2227-                "aides_fpp": 0
+--
+2255-            {
+2256-              "nom_filiere": "Dynamique de Population et Planification Régionale",
+2257:              "quotas": {
+2258-                "bourses": 14,
+2259-                "aides_fpp": 0
+--
+2284-            {
+2285-              "nom_filiere": "Négoce International",
+2286:              "quotas": {
+2287-                "bourses": 7,
+2288-                "aides_fpp": 0
+--
+2310-            {
+2311-              "nom_filiere": "Gestion des Relations Maritimes Internationales",
+2312:              "quotas": {
+2313-                "bourses": 8,
+2314-                "aides_fpp": 0
+--
+2333-            {
+2334-              "nom_filiere": "Commerce International",
+2335:              "quotas": {
+2336-                "bourses": 7,
+2337-                "aides_fpp": 0
+--
+2364-            {
+2365-              "nom_filiere": "Education Physique et Sportive",
+2366:              "quotas": {
+2367-                "bourses": 40,
+2368-                "aides_fpp": 0
+--
+2387-            {
+2388-              "nom_filiere": "Entrainement Sportif",
+2389:              "quotas": {
+2390-                "bourses": 15,
+2391-                "aides_fpp": 0
+--
+2411-            {
+2412-              "nom_filiere": "Développement communautaire",
+2413:              "quotas": {
+2414-                "bourses": 8,
+2415-                "aides_fpp": 0
+--
+2436-            {
+2437-              "nom_filiere": "Andragogie",
+2438:              "quotas": {
+2439-                "bourses": 8,
+2440-                "aides_fpp": 0
+--
+2460-            {
+2461-              "nom_filiere": "Récréologie",
+2462:              "quotas": {
+2463-                "bourses": 9,
+2464-                "aides_fpp": 0
+--
+2484-            {
+2485-              "nom_filiere": "Entrepreneuriat social",
+2486:              "quotas": {
+2487-                "bourses": 14,
+2488-                "aides_fpp": 0
+--
+2513-            {
+2514-              "nom_filiere": "Histoire et Géographie",
+2515:              "quotas": {
+2516-                "bourses": 12,
+2517-                "aides_fpp": 0
+--
+2535-            {
+2536-              "nom_filiere": "Espagnol",
+2537:              "quotas": {
+2538-                "bourses": 12,
+2539-                "aides_fpp": 0
+--
+2558-            {
+2559-              "nom_filiere": "Allemand",
+2560:              "quotas": {
+2561-                "bourses": 11,
+2562-                "aides_fpp": 0
+--
+2581-            {
+2582-              "nom_filiere": "Anglais",
+2583:              "quotas": {
+2584-                "bourses": 17,
+2585-                "aides_fpp": 0
+--
+2604-            {
+2605-              "nom_filiere": "Français",
+2606:              "quotas": {
+2607-                "bourses": 22,
+2608-                "aides_fpp": 0
+--
+2626-            {
+2627-              "nom_filiere": "Philosophie",
+2628:              "quotas": {
+2629-                "bourses": 9,
+2630-                "aides_fpp": 0
+--
+2654-            {
+2655-              "nom_filiere": "Droit",
+2656:              "quotas": {
+2657-                "bourses": 104,
+2658-                "aides_fpp": 999
+--
+2681-            {
+2682-              "nom_filiere": "Sciences Politiques",
+2683:              "quotas": {
+2684-                "bourses": 38,
+2685-                "aides_fpp": 183
+--
+2714-            {
+2715-              "nom_filiere": "Econométrie et Statistiques Appliquées",
+2716:              "quotas": {
+2717-                "bourses": 18,
+2718-                "aides_fpp": 0
+--
+2735-            {
+2736-              "nom_filiere": "Sciences Economiques et de Gestion (Tronc commun)",
+2737:              "quotas": {
+2738-                "bourses": 207,
+2739-                "aides_fpp": 1407
+--
+2763-            {
+2764-              "nom_filiere": "Sciences et Techniques Comptables et Financières (STCF)",
+2765:              "quotas": {
+2766-                "bourses": 8,
+2767-                "aides_fpp": 0
+--
+2794-            {
+2795-              "nom_filiere": "Sciences de la Vie et de la Terre",
+2796:              "quotas": {
+2797-                "bourses": 65,
+2798-                "aides_fpp": 245
+--
+2816-            {
+2817-              "nom_filiere": "Physique-Chimie",
+2818:              "quotas": {
+2819-                "bourses": 254,
+2820-                "aides_fpp": 405
+--
+2838-            {
+2839-              "nom_filiere": "Mathématiques Informatique et Applications",
+2840:              "quotas": {
+2841-                "bourses": 247,
+2842-                "aides_fpp": 119
+--
+2859-            {
+2860-              "nom_filiere": "Energies Renouvelables et Systèmes Energétiques",
+2861:              "quotas": {
+2862-                "bourses": 27,
+2863-                "aides_fpp": 0
+--
+2882-            {
+2883-              "nom_filiere": "Génétique, Biotechnologies et Ressources Biologiques",
+2884:              "quotas": {
+2885-                "bourses": 12,
+2886-                "aides_fpp": 0
+--
+2903-            {
+2904-              "nom_filiere": "Microbiologie et Biotechnologie Alimentaire",
+2905:              "quotas": {
+2906-                "bourses": 17,
+2907-                "aides_fpp": 0
+--
+2926-            {
+2927-              "nom_filiere": "Hydrobiologie Appliquée",
+2928:              "quotas": {
+2929-                "bourses": 16,
+2930-                "aides_fpp": 0
+--
+2955-            {
+2956-              "nom_filiere": "Langue Chinoise",
+2957:              "quotas": {
+2958-                "bourses": 0,
+2959-                "aides_fpp": 0
+--
+2976-            {
+2977-              "nom_filiere": "Didactique du Chinois",
+2978:              "quotas": {
+2979-                "bourses": 0,
+2980-                "aides_fpp": 0
+--
+3000-            {
+3001-              "nom_filiere": "Langue Arabe",
+3002:              "quotas": {
+3003-                "bourses": 0,
+3004-                "aides_fpp": 0
+--
+3018-            {
+3019-              "nom_filiere": "Culture Islamique",
+3020:              "quotas": {
+3021-                "bourses": 0,
+3022-                "aides_fpp": 0
+--
+3047-            {
+3048-              "nom_filiere": "Sciences et Techniques de Production Végétale",
+3049:              "quotas": {
+3050-                "bourses": 22,
+3051-                "aides_fpp": 0
+--
+3071-            {
+3072-              "nom_filiere": "Sciences et Techniques de Production Animale et Halieutique",
+3073:              "quotas": {
+3074-                "bourses": 21,
+3075-                "aides_fpp": 0
+--
+3094-            {
+3095-              "nom_filiere": "Aménagement et Gestion des Ressources Naturelles",
+3096:              "quotas": {
+3097-                "bourses": 20,
+3098-                "aides_fpp": 0
+--
+3116-            {
+3117-              "nom_filiere": "Sociologie et Economie Rurales",
+3118:              "quotas": {
+3119-                "bourses": 22,
+3120-                "aides_fpp": 0
+--
+3138-            {
+3139-              "nom_filiere": "Nutrition et Sciences Agro-alimentaires",
+3140:              "quotas": {
+3141-                "bourses": 20,
+3142-                "aides_fpp": 0
+--
+3167-            {
+3168-              "nom_filiere": "Médecine Humaine",
+3169:              "quotas": {
+3170-                "bourses": 117,
+3171-                "aides_fpp": 0
+--
+3193-            {
+3194-              "nom_filiere": "Santé publique et surveillance épidémiologique",
+3195:              "quotas": {
+3196-                "bourses": 34,
+3197-                "aides_fpp": 0
+--
+3221-            {
+3222-              "nom_filiere": "Soins Infirmiers",
+3223:              "quotas": {
+3224-                "bourses": 31,
+3225-                "aides_fpp": 0
+--
+3240-            {
+3241-              "nom_filiere": "Soins obstétricaux",
+3242:              "quotas": {
+3243-                "bourses": 44,
+3244-                "aides_fpp": 0
+--
+3265-            {
+3266-              "nom_filiere": "Gestion des Banques",
+3267:              "quotas": {
+3268-                "bourses": 15,
+3269-                "aides_fpp": 0
+--
+3286-            {
+3287-              "nom_filiere": "Gestion Commerciale",
+3288:              "quotas": {
+3289-                "bourses": 4,
+3290-                "aides_fpp": 8
+--
+3311-            {
+3312-              "nom_filiere": "Gestion des Entreprises",
+3313:              "quotas": {
+3314-                "bourses": 8,
+3315-                "aides_fpp": 0
+--
+3334-            {
+3335-              "nom_filiere": "Gestion des Transports et Logistiques",
+3336:              "quotas": {
+3337-                "bourses": 14,
+3338-                "aides_fpp": 0
+--
+3357-            {
+3358-              "nom_filiere": "Informatique de Gestion",
+3359:              "quotas": {
+3360-                "bourses": 59,
+3361-                "aides_fpp": 0
+--
+3380-            {
+3381-              "nom_filiere": "Gestion des Ressources Humaines",
+3382:              "quotas": {
+3383-                "bourses": 8,
+3384-                "aides_fpp": 0
+--
+3411-            {
+3412-              "nom_filiere": "Statistiques Appliquées",
+3413:              "quotas": {
+3414-                "bourses": 22,
+3415-                "aides_fpp": 0
+--
+3432-            {
+3433-              "nom_filiere": "Planification et Suivi Evaluation",
+3434:              "quotas": {
+3435-                "bourses": 21,
+3436-                "aides_fpp": 0
+--
+3458-            {
+3459-              "nom_filiere": "Analyse et Politique Economiques (APE)",
+3460:              "quotas": {
+3461-                "bourses": 24,
+3462-                "aides_fpp": 42
+--
+3482-            {
+3483-              "nom_filiere": "Economie Agricole (EA)",
+3484:              "quotas": {
+3485-                "bourses": 62,
+3486-                "aides_fpp": 96
+--
+3506-            {
+3507-              "nom_filiere": "Economie et Finance des Collectivités Locales (EFCL)",
+3508:              "quotas": {
+3509-                "bourses": 23,
+3510-                "aides_fpp": 42
+--
+3529-            {
+3530-              "nom_filiere": "Economie et Finance Internationales (EFI)",
+3531:              "quotas": {
+3532-                "bourses": 29,
+3533-                "aides_fpp": 82
+--
+3552-            {
+3553-              "nom_filiere": "Entrepreneuriat et Gestion des Entreprises (EGE)",
+3554:              "quotas": {
+3555-                "bourses": 21,
+3556-                "aides_fpp": 57
+--
+3576-            {
+3577-              "nom_filiere": "Marketing et Management des Organisations (MMO)",
+3578:              "quotas": {
+3579-                "bourses": 13,
+3580-                "aides_fpp": 37
+--
+3601-            {
+3602-              "nom_filiere": "Finance et Comptabilité (FC)",
+3603:              "quotas": {
+3604-                "bourses": 76,
+3605-                "aides_fpp": 243
+--
+3631-            {
+3632-              "nom_filiere": "Droit Privé",
+3633:              "quotas": {
+3634-                "bourses": 99,
+3635-                "aides_fpp": 545
+--
+3660-            {
+3661-              "nom_filiere": "Droit Public",
+3662:              "quotas": {
+3663-                "bourses": 75,
+3664-                "aides_fpp": 341
+--
+3689-            {
+3690-              "nom_filiere": "Sciences Politiques et Relations Internationales",
+3691:              "quotas": {
+3692-                "bourses": 41,
+3693-                "aides_fpp": 129
+--
+3724-            {
+3725-              "nom_filiere": "Allemand",
+3726:              "quotas": {
+3727-                "bourses": 36,
+3728-                "aides_fpp": 195
+--
+3747-            {
+3748-              "nom_filiere": "Géographie et Aménagement du Territoire",
+3749:              "quotas": {
+3750-                "bourses": 101,
+3751-                "aides_fpp": 431
+--
+3773-            {
+3774-              "nom_filiere": "Espagnol",
+3775:              "quotas": {
+3776-                "bourses": 38,
+3777-                "aides_fpp": 244
+--
+3796-            {
+3797-              "nom_filiere": "Anglais",
+3798:              "quotas": {
+3799-                "bourses": 141,
+3800-                "aides_fpp": 424
+--
+3822-            {
+3823-              "nom_filiere": "Sociologie Anthropologie",
+3824:              "quotas": {
+3825-                "bourses": 115,
+3826-                "aides_fpp": 503
+--
+3848-            {
+3849-              "nom_filiere": "Lettres Modernes",
+3850:              "quotas": {
+3851-                "bourses": 230,
+3852-                "aides_fpp": 444
+--
+3882-            {
+3883-              "nom_filiere": "Comptabilité",
+3884:              "quotas": {
+3885-                "bourses": 9,
+3886-                "aides_fpp": 0
+--
+3905-            {
+3906-              "nom_filiere": "Economie",
+3907:              "quotas": {
+3908-                "bourses": 12,
+3909-                "aides_fpp": 0
+--
+3928-            {
+3929-              "nom_filiere": "Electrotechnique",
+3930:              "quotas": {
+3931-                "bourses": 30,
+3932-                "aides_fpp": 0
+--
+3951-            {
+3952-              "nom_filiere": "Génie Civil",
+3953:              "quotas": {
+3954-                "bourses": 34,
+3955-                "aides_fpp": 0
+--
+3972-            {
+3973-              "nom_filiere": "Secrétariat",
+3974:              "quotas": {
+3975-                "bourses": 6,
+3976-                "aides_fpp": 0
+--
+3993-            {
+3994-              "nom_filiere": "Mécanique Automobile",
+3995:              "quotas": {
+3996-                "bourses": 28,
+3997-                "aides_fpp": 0
+--
+4014-            {
+4015-              "nom_filiere": "Mécanique",
+4016:              "quotas": {
+4017-                "bourses": 22,
+4018-                "aides_fpp": 0
+--
+4036-            {
+4037-              "nom_filiere": "Economie Familiale et Sociale",
+4038:              "quotas": {
+4039-                "bourses": 5,
+4040-                "aides_fpp": 0
+--
+4059-            {
+4060-              "nom_filiere": "Hôtellerie-Restauration",
+4061:              "quotas": {
+4062-                "bourses": 36,
+4063-                "aides_fpp": 0
+--
+4084-            {
+4085-              "nom_filiere": "Electronique",
+4086:              "quotas": {
+4087-                "bourses": 14,
+4088-                "aides_fpp": 0
+--
+4105-            {
+4106-              "nom_filiere": "Froid et Climatisation",
+4107:              "quotas": {
+4108-                "bourses": 27,
+4109-                "aides_fpp": 0
+--
+4127-            {
+4128-              "nom_filiere": "Energies Renouvelables",
+4129:              "quotas": {
+4130-                "bourses": 34,
+4131-                "aides_fpp": 0
+--
+4150-            {
+4151-              "nom_filiere": "Production Animale",
+4152:              "quotas": {
+4153-                "bourses": 13,
+4154-                "aides_fpp": 0
+--
+4171-            {
+4172-              "nom_filiere": "Production végétale",
+4173:              "quotas": {
+4174-                "bourses": 8,
+4175-                "aides_fpp": 0
+--
+4198-            {
+4199-              "nom_filiere": "Génie Civil",
+4200:              "quotas": {
+4201-                "bourses": 68,
+4202-                "aides_fpp": 0
+--
+4225-            {
+4226-              "nom_filiere": "Génie Energétique (Energies Renouvelables et Systèmes Energétiques)",
+4227:              "quotas": {
+4228-                "bourses": 37,
+4229-                "aides_fpp": 0
+--
+4252-            {
+4253-              "nom_filiere": "Génie Energétique (Froid et climatisation)",
+4254:              "quotas": {
+4255-                "bourses": 30,
+4256-                "aides_fpp": 0
+--
+4277-            {
+4278-              "nom_filiere": "Génie Electrique et Informatique (Informatique et Télécommunications)",
+4279:              "quotas": {
+4280-                "bourses": 24,
+4281-                "aides_fpp": 0
+--
+4302-            {
+4303-              "nom_filiere": "Génie Electrique et Informatique (Electronique et Electrotechnique)",
+4304:              "quotas": {
+4305-                "bourses": 26,
+4306-                "aides_fpp": 0
+--
+4326-            {
+4327-              "nom_filiere": "Maintenance des Systèmes (Maintenance Industrielle)",
+4328:              "quotas": {
+4329-                "bourses": 21,
+4330-                "aides_fpp": 0
+--
+4350-            {
+4351-              "nom_filiere": "Maintenance des Systèmes (Maintenance Automobile)",
+4352:              "quotas": {
+4353-                "bourses": 25,
+4354-                "aides_fpp": 0
+--
+4373-            {
+4374-              "nom_filiere": "Génie Mécanique et productique",
+4375:              "quotas": {
+4376-                "bourses": 38,
+4377-                "aides_fpp": 0
+--
+4405-            {
+4406-              "nom_filiere": "Sciences et Techniques de l'Ingénieur",
+4407:              "quotas": {
+4408-                "bourses": 83,
+4409-                "aides_fpp": 0
+--
+4431-            {
+4432-              "nom_filiere": "Mathématiques et Informatique (MI)",
+4433:              "quotas": {
+4434-                "bourses": 29,
+4435-                "aides_fpp": 0
+--
+4450-            {
+4451-              "nom_filiere": "Physique, Chimie et Technologie (PCT)",
+4452:              "quotas": {
+4453-                "bourses": 17,
+4454-                "aides_fpp": 0
+--
+4469-            {
+4470-              "nom_filiere": "Sciences de la Vie et de la Terre (SVT)",
+4471:              "quotas": {
+4472-                "bourses": 12,
+4473-                "aides_fpp": 0
+--
+4494-            {
+4495-              "nom_filiere": "Biotechnologie Médicale",
+4496:              "quotas": {
+4497-                "bourses": 11,
+4498-                "aides_fpp": 0
+--
+4514-            {
+4515-              "nom_filiere": "Biotechnologie Pharmaceutique (BP)",
+4516:              "quotas": {
+4517-                "bourses": 10,
+4518-                "aides_fpp": 0
+--
+4534-            {
+4535-              "nom_filiere": "Génétique Biotechnologies et Applications",
+4536:              "quotas": {
+4537-                "bourses": 10,
+4538-                "aides_fpp": 0
+--
+4554-            {
+4555-              "nom_filiere": "Génie Biologique et Bioprocédés (GBB)",
+4556:              "quotas": {
+4557-                "bourses": 15,
+4558-                "aides_fpp": 0
+--
+4574-            {
+4575-              "nom_filiere": "Diététique des aliments et Nutrition",
+4576:              "quotas": {
+4577-                "bourses": 9,
+4578-                "aides_fpp": 0
+--
+4601-            {
+4602-              "nom_filiere": "Mathématiques Informatiques",
+4603:              "quotas": {
+4604-                "bourses": 83,
+4605-                "aides_fpp": 43
+--
+4623-            {
+4624-              "nom_filiere": "Physique Chimie",
+4625:              "quotas": {
+4626-                "bourses": 28,
+4627-                "aides_fpp": 66
+--
+4651-            {
+4652-              "nom_filiere": "Climatisation",
+4653:              "quotas": {
+4654-                "bourses": 25,
+4655-                "aides_fpp": 0
+--
+4672-            {
+4673-              "nom_filiere": "Equipements motorisés",
+4674:              "quotas": {
+4675-                "bourses": 24,
+4676-                "aides_fpp": 0
+--
+4703-            {
+4704-              "nom_filiere": "Génie Civil",
+4705:              "quotas": {
+4706-                "bourses": 21,
+4707-                "aides_fpp": 0
+--
+4729-            {
+4730-              "nom_filiere": "Génie Géomatique Appliquée",
+4731:              "quotas": {
+4732-                "bourses": 21,
+4733-                "aides_fpp": 0
+--
+4754-            {
+4755-              "nom_filiere": "Architecture et Urbanisme",
+4756:              "quotas": {
+4757-                "bourses": 26,
+4758-                "aides_fpp": 0
+--
+4778-            {
+4779-              "nom_filiere": "Hydraulique et Assainissement",
+4780:              "quotas": {
+4781-                "bourses": 25,
+4782-                "aides_fpp": 0
+--
+4815-            {
+4816-              "nom_filiere": "Aquaculture",
+4817:              "quotas": {
+4818-                "bourses": 31,
+4819-                "aides_fpp": 0
+--
+4845-            {
+4846-              "nom_filiere": "Horticulture et Aménagement des espaces Verts",
+4847:              "quotas": {
+4848-                "bourses": 55,
+4849-                "aides_fpp": 0
+--
+4874-            {
+4875-              "nom_filiere": "Gestion et Production Végétale et Semencière",
+4876:              "quotas": {
+4877-                "bourses": 60,
+4878-                "aides_fpp": 0
+--
+4903-            {
+4904-              "nom_filiere": "Industrie des Produits Agro-Alimentaires et Nutrition Humaine (IPA-NH)",
+4905:              "quotas": {
+4906-                "bourses": 23,
+4907-                "aides_fpp": 0
+--
+4925-            {
+4926-              "nom_filiere": "Industrie des Bio-Ressources (IBR)",
+4927:              "quotas": {
+4928-                "bourses": 22,
+4929-                "aides_fpp": 0
+--
+4947-            {
+4948-              "nom_filiere": "Génie de Conditionnement Emballage et Stockage des Produits Alimentaires (GCES)",
+4949:              "quotas": {
+4950-                "bourses": 24,
+4951-                "aides_fpp": 0
+--
+4974-            {
+4975-              "nom_filiere": "Electrification Rurale et Energies Renouvelables (ERER)",
+4976:              "quotas": {
+4977-                "bourses": 17,
+4978-                "aides_fpp": 0
+--
+5002-            {
+5003-              "nom_filiere": "Agroéquipement",
+5004:              "quotas": {
+5005-                "bourses": 16,
+5006-                "aides_fpp": 0
+--
+5032-            {
+5033-              "nom_filiere": "Infrastructures Rurales et Assainissement",
+5034:              "quotas": {
+5035-                "bourses": 16,
+5036-                "aides_fpp": 0
+--
+5067-            {
+5068-              "nom_filiere": "Productions et santé animales",
+5069:              "quotas": {
+5070-                "bourses": 57,
+5071-                "aides_fpp": 0
+--
+5096-            {
+5097-              "nom_filiere": "Finance Agricole (FA)",
+5098:              "quotas": {
+5099-                "bourses": 16,
+5100-                "aides_fpp": 0
+--
+5119-            {
+5120-              "nom_filiere": "Gestion des Exploitations Agricoles et Entreprises Agroalimentaires (GEAEA)",
+5121:              "quotas": {
+5122-                "bourses": 36,
+5123-                "aides_fpp": 0
+--
+5141-            {
+5142-              "nom_filiere": "Marketing des Intrants et Produits Agricoles (MIPA)",
+5143:              "quotas": {
+5144-                "bourses": 36,
+5145-                "aides_fpp": 0
+--
+5169-            {
+5170-              "nom_filiere": "Sociologie rurale et Vulgarisation Agricole",
+5171:              "quotas": {
+5172-                "bourses": 43,
+5173-                "aides_fpp": 0
+--
+5198-            {
+5199-              "nom_filiere": "Foresterie Tropicale",
+5200:              "quotas": {
+5201-                "bourses": 27,
+5202-                "aides_fpp": 0
+--
+5235-            {
+5236-              "nom_filiere": "Toutes les filières (Métiers de l'agriculture)",
+5237:              "quotas": {
+5238-                "bourses": 50,
+5239-                "aides_fpp": 0
+--
+5268-            {
+5269-              "nom_filiere": "Toutes les filières (Vétérinaires)",
+5270:              "quotas": {
+5271-                "bourses": 8,
+5272-                "aides_fpp": 0
+--
+5294-            {
+5295-              "nom_filiere": "Toutes les filières",
+5296:              "quotas": {
+5297-                "bourses": 5,
+5298-                "aides_fpp": 0
+--
+5317-            {
+5318-              "nom_filiere": "Toutes les filières",
+5319:              "quotas": {
+5320-                "bourses": 14,
+5321-                "aides_fpp": 0
+--
+5341-            {
+5342-              "nom_filiere": "Toutes les filières",
+5343:              "quotas": {
+5344-                "bourses": 5,
+5345-                "aides_fpp": 0
+--
+5358-            {
+5359-              "nom_filiere": "Toutes les filières",
+5360:              "quotas": {
+5361-                "bourses": 26,
+5362-                "aides_fpp": 0
+--
+5375-            {
+5376-              "nom_filiere": "Toutes les filières",
+5377:              "quotas": {
+5378-                "bourses": 6,
+5379-                "aides_fpp": 0
+--
+5399-            {
+5400-              "nom_filiere": "Entrepreneuriat et Gestion de Projets de l'Economie Sociale",
+5401:              "quotas": {
+5402-                "bourses": 0,
+5403-                "aides_fpp": 0
+--
+5427-            {
+5428-              "nom_filiere": "Economie et Gestion des Organisations Coopératives et Associatives",
+5429:              "quotas": {
+5430-                "bourses": 0,
+5431-                "aides_fpp": 0
+--
+5458-            {
+5459-              "nom_filiere": "Micro Finance",
+5460:              "quotas": {
+5461-                "bourses": 0,
+5462-                "aides_fpp": 0
+--
+5482-            {
+5483-              "nom_filiere": "Gestion des structures de Micro Assurance Santé",
+5484:              "quotas": {
+5485-                "bourses": 0,
+5486-                "aides_fpp": 0
+--
+5513-            {
+5514-              "nom_filiere": "Développement Local et Décentralisation",
+5515:              "quotas": {
+5516-                "bourses": 0,
+5517-                "aides_fpp": 0
+--
+5539-            {
+5540-              "nom_filiere": "Genre et Développement",
+5541:              "quotas": {
+5542-                "bourses": 0,
+5543-                "aides_fpp": 0
+--
+5578-            {
+5579-              "nom_filiere": "Licence en Design",
+5580:              "quotas": {
+5581-                "bourses": 0,
+5582-                "aides_fpp": 0
+--
+5597-            {
+5598-              "nom_filiere": "Licence en Métier de l'Informatique",
+5599:              "quotas": {
+5600-                "bourses": 0,
+5601-                "aides_fpp": 0

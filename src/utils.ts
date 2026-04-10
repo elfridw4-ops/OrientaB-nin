@@ -35,7 +35,10 @@ export const getAppData = (): AppData => {
     }
   }
 
-  // Fallback to JSON
+  return resetAppData();
+};
+
+export const resetAppData = (): AppData => {
   const guideData = guideDataRaw as GuideData;
   const filieres: FlattenedFiliere[] = [];
   
@@ -54,12 +57,13 @@ export const getAppData = (): AppData => {
           id: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2),
           ...fil,
           universite: uni.nom_universite,
+          type_universite: uni.type,
           etablissement: etab.nom_etablissement,
           sigle: etab.sigle,
           localisation: etab.localisation,
-          bourses: fil.quotas.bourses,
-          aides: fil.quotas.aides_partiellement_payant,
-          admisOfficiels: fil.quotas.bourses + fil.quotas.aides_partiellement_payant,
+          bourses: fil.quotas?.bourses || 0,
+          aides: fil.quotas?.aides_fpp || 0,
+          admisOfficiels: (fil.quotas?.bourses || 0) + (fil.quotas?.aides_fpp || 0),
           candidatsCount: 0,
           matieres
         });
