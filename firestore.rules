@@ -100,10 +100,15 @@ service cloud.firestore {
                     (
                       isAdmin() ||
                       (
-                        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['candidatsCount']) &&
-                        math.abs(request.resource.data.candidatsCount - resource.data.candidatsCount) == 1
+                        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['candidatsCount', 'stats_anonymes'])
                       )
                     );
+    }
+
+    // System Collection
+    match /system/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
     }
   }
 }

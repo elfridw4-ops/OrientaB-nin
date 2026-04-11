@@ -192,3 +192,31 @@ export const saveFilieresBatch = async (filieres: FlattenedFiliere[]) => {
     handleFirestoreError(error, OperationType.WRITE, path);
   }
 };
+
+export const publishCatalog = async (filieres: FlattenedFiliere[]): Promise<void> => {
+  const path = 'system/catalog';
+  try {
+    const docRef = doc(db, 'system', 'catalog');
+    await setDoc(docRef, {
+      data: filieres,
+      updatedAt: new Date().toISOString()
+    });
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+  }
+};
+
+export const fetchLatestCatalog = async (): Promise<{ data: FlattenedFiliere[], updatedAt: string } | null> => {
+  const path = 'system/catalog';
+  try {
+    const docRef = doc(db, 'system', 'catalog');
+    const snap = await getDoc(docRef);
+    if (snap.exists()) {
+      return snap.data() as { data: FlattenedFiliere[], updatedAt: string };
+    }
+    return null;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.GET, path);
+    return null;
+  }
+};

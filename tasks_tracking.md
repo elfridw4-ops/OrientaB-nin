@@ -44,10 +44,14 @@
 ## Bogues corrigés
 - [x] Correction du scroll horizontal causé par le footer full-width.
 - [x] Correction de l'espace vide sous le footer sombre.
+- [x] Erreur de connexion Firestore (client offline) résolue en retirant la dépendance pour les filières.
+- [x] Mise à jour du tableau de bord national corrigée (recalcul basé sur les données locales et ajout d'un bouton de rechargement).
 
 ## Problèmes survenus
 - Le PDF original ne contient pas les coefficients exacts pour chaque matière par filière, seulement les matières clés. Une logique de pondération générique a été implémentée en attendant les données complètes.
+- Conflit entre la volonté de l'utilisateur d'avoir des données locales et l'utilisation de Firestore pour le catalogue. Résolu par un découplage complet.
 
 ## Tâches en cours
 - [ ] Ajouter les coefficients exacts pour chaque matière dans le JSON si disponibles.
 - [ ] Tester l'application en conditions réelles avec plusieurs utilisateurs simultanés pour valider les transactions Firestore.
+- [ ] Création de la documentation complète (Architecture, SEO, Charte graphique).

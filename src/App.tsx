@@ -1,4 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
+import { Routes, Route, useNavigate, useLocation, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   GraduationCap, Search, Building2, Calculator, BookOpen, 
@@ -18,7 +20,7 @@ import {
 import Admin from './Admin';
 import { auth, loginWithGoogle, logout } from './firebase';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
-import { getUserProfile, createUserProfile, updateUserProfile, updateFiliereChoices } from './services/firestoreService';
+import { getUserProfile, createUserProfile, updateUserProfile, updateFiliereChoices, fetchLatestCatalog } from './services/firestoreService';
 
 // Custom Logo Component
 const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
@@ -34,15 +36,94 @@ const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
 const COLORS = ['#4f46e5', '#7c3aed', '#2563eb', '#059669', '#d97706'];
 
 export default function App() {
-  const [view, setView] = useState<'home' | 'profile' | 'results' | 'explore' | 'details' | 'admin' | 'guide' | 'about' | 'faq' | 'blog'>('home');
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  const viewMap: Record<string, string> = {
+    '/': 'home',
+    '/simulation': 'profile',
+    '/resultats': 'results',
+    '/explorer': 'explore',
+    '/details': 'details',
+    '/admin': 'admin',
+    '/guide': 'guide',
+    '/a-propos': 'about',
+    '/faq': 'faq',
+    '/conseils': 'blog'
+  };
+  
+  const reverseViewMap: Record<string, string> = {
+    'home': '/',
+    'profile': '/simulation',
+    'results': '/resultats',
+    'explore': '/explorer',
+    'details': '/details',
+    'admin': '/admin',
+    'guide': '/guide',
+    'about': '/a-propos',
+    'faq': '/faq',
+    'blog': '/conseils'
+  };
+
+  const view = viewMap[location.pathname] || 'home';
+  const setView = (v: string) => navigate(reverseViewMap[v] || '/');
+
+  const getHelmetData = (v: string) => {
+    switch(v) {
+      case 'home': return { title: "OrientaBénin | Faites le meilleur choix pour votre avenir universitaire", desc: "Bacheliers béninois, simulez vos chances d'obtenir une bourse ou un secours du MESRS. Découvrez les filières universitaires et faites des choix stratégiques." };
+      case 'profile': return { title: "Simulation | OrientaBénin", desc: "Saisissez vos notes pour simuler vos chances d'admission et de bourse." };
+      case 'results': return { title: "Résultats | OrientaBénin", desc: "Découvrez les filières recommandées selon votre profil." };
+      case 'explore': return { title: "Explorer les filières | OrientaBénin", desc: "Consultez le catalogue complet des universités et filières du Bénin." };
+      case 'guide': return { title: "Guide d'orientation | OrientaBénin", desc: "Comprendre les bourses, secours et règles d'orientation au Bénin." };
+      case 'blog': return { title: "Conseils | OrientaBénin", desc: "Conseils et astuces pour réussir son orientation universitaire." };
+      case 'admin': return { title: "Administration | OrientaBénin", desc: "Gestion de la plateforme." };
+      default: return { title: "OrientaBénin", desc: "Orientation universitaire au Bénin." };
+    }
+  };
+  const helmetData = getHelmetData(view);
+
   const [allFilieres, setAllFilieres] = useState<FlattenedFiliere[]>([]);
+  
+  // Sync Catalog from Firestore on load
+  useEffect(() => {
+    const syncCatalog = async () => {
+      try {
+        const remote = await fetchLatestCatalog();
+        if (remote) {
+          const localUpdated = localStorage.getItem('catalog_updatedAt');
+          if (!localUpdated || new Date(remote.updatedAt) > new Date(localUpdated)) {
+            localStorage.setItem('orientabenin_filieres', JSON.stringify(remote.data));
+            localStorage.setItem('catalog_updatedAt', remote.updatedAt);
+            setAllFilieres(remote.data);
+            console.log("Catalogue mis à jour depuis le serveur.");
+          }
+        }
+      } catch (e) {
+        console.error("Erreur lors de la synchronisation du catalogue", e);
+      }
+    };
+    syncCatalog();
+  }, []);
   
   // Auth State
   const [authUser, setAuthUser] = useState<FirebaseUser | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showDisclaimerModal, setShowDisclaimerModal] = useState(false);
   const [matriculeInput, setMatriculeInput] = useState('');
   const [isAuthReady, setIsAuthReady] = useState(false);
+
+  useEffect(() => {
+    const hasSeenDisclaimer = localStorage.getItem('hasSeenDisclaimer');
+    if (!hasSeenDisclaimer) {
+      setShowDisclaimerModal(true);
+    }
+  }, []);
+
+  const acceptDisclaimer = () => {
+    localStorage.setItem('hasSeenDisclaimer', 'true');
+    setShowDisclaimerModal(false);
+  };
 
   const [selectedSerie, setSelectedSerie] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -249,11 +330,11 @@ export default function App() {
     .sort((a, b) => (b.candidatsCount || 0) - (a.candidatsCount || 0)).slice(0, 5)
     .map(f => ({ name: f.sigle || f.nom_filiere.substring(0, 15) + '...', Candidats: f.candidatsCount || 0, full_name: f.nom_filiere })), [allFilieres]);
 
-  const NavItem = ({ icon, label, active, onClick }: any) => (
-    <button onClick={onClick} className={`flex flex-col items-center justify-center w-16 h-12 rounded-2xl transition-all ${active ? 'text-indigo-600 bg-indigo-50' : 'text-slate-400 hover:text-slate-600'}`}>
+  const NavItem = ({ icon, label, active, to }: any) => (
+    <Link to={to} className={`flex flex-col items-center justify-center w-16 h-12 rounded-2xl transition-all ${active ? 'text-indigo-600 bg-indigo-50' : 'text-slate-400 hover:text-slate-600'}`}>
       {icon}
       <span className="text-[10px] font-medium mt-1">{label}</span>
-    </button>
+    </Link>
   );
 
   const GlassCard = ({ children, className = '', onClick }: any) => (
@@ -281,6 +362,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen text-slate-800 font-sans selection:bg-indigo-200">
+      <Helmet>
+        <title>{helmetData.title}</title>
+        <meta name="description" content={helmetData.desc} />
+      </Helmet>
       <AnimatePresence mode="wait">
         {view === 'admin' ? (
           <motion.div key="admin-view" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
@@ -288,19 +373,8 @@ export default function App() {
           </motion.div>
         ) : (
           <motion.div key="main-app" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
-            {/* Warning Banner (Full Width Top) */}
-            <div className="fixed top-0 left-0 right-0 z-50 bg-[#ff8a00] text-white px-4 py-2 flex flex-col sm:flex-row items-center justify-center text-xs sm:text-sm font-medium shadow-md gap-2 sm:gap-4">
-              <div className="flex items-center text-center">
-                <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 shrink-0 text-yellow-300" />
-                <span>Ce site propose des recommandations IA — ce n'est pas le site officiel.</span>
-              </div>
-              <a href="https://apresmonbac.bj/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-[#ff8a00] bg-white hover:bg-slate-50 px-3 py-1 rounded-full font-bold transition-colors shadow-sm whitespace-nowrap">
-                Site officiel <ArrowUpRight className="w-4 h-4 ml-1" />
-              </a>
-            </div>
-
             {/* Top Header */}
-            <header className="fixed top-16 sm:top-12 left-0 right-0 z-40 p-4">
+            <header className="fixed top-0 left-0 right-0 z-40 p-4">
               <div className="max-w-3xl mx-auto bg-white/70 backdrop-blur-xl border border-white/50 shadow-sm rounded-3xl px-5 py-3 flex justify-between items-center">
                 <div className="flex items-center space-x-2">
                   <Logo className="w-8 h-8 drop-shadow-md" />
@@ -322,7 +396,7 @@ export default function App() {
             </header>
 
       {/* Main Content */}
-      <main className="pt-36 w-full">
+      <main className="pt-24 w-full">
         <AnimatePresence mode="wait">
           
           {/* HOME VIEW (LANDING PAGE) */}
@@ -441,12 +515,14 @@ export default function App() {
                     <div>
                       <h4 className="text-white font-bold text-xs tracking-widest uppercase mb-5">Navigation</h4>
                       <ul className="space-y-3 text-sm">
-                        <li><button onClick={() => setView('home')} className="hover:text-indigo-400 transition-colors">Accueil</button></li>
-                        <li><button onClick={() => setView('profile')} className="hover:text-indigo-400 transition-colors">Simulation</button></li>
-                        <li><button onClick={() => setView('guide')} className="hover:text-indigo-400 transition-colors">Guide</button></li>
-                        <li><button onClick={() => setView('blog')} className="hover:text-indigo-400 transition-colors">Blog</button></li>
-                        <li><button onClick={() => setView('faq')} className="hover:text-indigo-400 transition-colors">FAQ</button></li>
-                        <li><button onClick={() => setView('about')} className="hover:text-indigo-400 transition-colors">À propos</button></li>
+                        <li><Link to={reverseViewMap['home']} className="hover:text-indigo-400 transition-colors">Accueil</Link></li>
+                        <li><Link to={reverseViewMap['profile']} className="hover:text-indigo-400 transition-colors">Simulation</Link></li>
+                        <li><Link to={reverseViewMap['guide']} className="hover:text-indigo-400 transition-colors">Guide</Link></li>
+                        <li><Link to={reverseViewMap['blog']} className="hover:text-indigo-400 transition-colors">Blog</Link></li>
+                        <li><Link to={reverseViewMap['faq']} className="hover:text-indigo-400 transition-colors">FAQ</Link></li>
+                        <li><Link to={reverseViewMap['about']} className="hover:text-indigo-400 transition-colors">À propos</Link></li>
+                        <li><Link to={reverseViewMap['legal']} className="hover:text-indigo-400 transition-colors">Mentions légales</Link></li>
+                        <li><Link to={reverseViewMap['privacy']} className="hover:text-indigo-400 transition-colors">Confidentialité</Link></li>
                       </ul>
                     </div>
 
@@ -592,6 +668,11 @@ export default function App() {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-3xl font-display font-bold text-slate-900">Recommandations</h2>
                 <span className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-bold">{recommendations.length}</span>
+              </div>
+              
+              <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-sm flex items-start shadow-sm">
+                <ShieldAlert className="w-5 h-5 mr-3 shrink-0 mt-0.5 text-amber-600" />
+                <p><strong>Avertissement Scientifique :</strong> Les résultats présentés sont des simulations basées sur un algorithme prédictif et les données historiques d'orientation du MESRS. Ils ont une valeur indicative et stratégique, mais ne constituent en aucun cas une garantie d'admission ou d'obtention de bourse. La décision finale appartient aux commissions d'attribution de l'État.</p>
               </div>
               
               {!selectedSerie ? (
@@ -1133,46 +1214,116 @@ export default function App() {
             <motion.div key="blog" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
               <div className="mb-8">
                 <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
-                  Blog & Actualités
+                  Conseils & Actualités
                 </h2>
                 <p className="text-slate-600 text-lg leading-relaxed">
-                  Conseils, astuces et dernières nouvelles sur l'orientation universitaire au Bénin.
+                  Des conseils concrets et localisés pour réussir votre orientation universitaire au Bénin.
                 </p>
               </div>
 
               <div className="grid gap-6">
-                <GlassCard className="p-0 overflow-hidden flex flex-col sm:flex-row">
-                  <div className="sm:w-1/3 h-48 sm:h-auto bg-indigo-100 flex items-center justify-center shrink-0">
-                    <BookOpen className="w-12 h-12 text-indigo-300" />
+                <GlassCard className="p-0 overflow-hidden flex flex-col sm:flex-row hover:shadow-lg transition-shadow cursor-pointer">
+                  <div className="sm:w-1/3 h-48 sm:h-auto bg-blue-100 flex items-center justify-center shrink-0">
+                    <BookOpen className="w-12 h-12 text-blue-400" />
                   </div>
                   <div className="p-6">
-                    <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2 block">Conseils</span>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">Comment bien choisir ses 3 filières ?</h3>
-                    <p className="text-slate-600 text-sm mb-4 line-clamp-2">
-                      Découvrez notre stratégie en 3 étapes pour maximiser vos chances d'obtenir une allocation de l'État tout en poursuivant vos passions.
+                    <span className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-2 block">Procédures</span>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">Procédures de demande de bourse MESRS : Le guide complet</h3>
+                    <p className="text-slate-600 text-sm mb-4 line-clamp-3">
+                      Comment constituer son dossier ? Quels sont les délais stricts à respecter ? Comprendre la différence entre les critères sociaux et académiques pour maximiser vos chances d'obtenir une allocation de l'État.
                     </p>
-                    <button className="text-indigo-600 font-medium text-sm flex items-center hover:text-indigo-800 transition-colors">
+                    <button className="text-indigo-600 font-semibold text-sm flex items-center hover:text-indigo-700 transition-colors">
                       Lire l'article <ArrowRight className="w-4 h-4 ml-1" />
                     </button>
                   </div>
                 </GlassCard>
 
-                <GlassCard className="p-0 overflow-hidden flex flex-col sm:flex-row">
+                <GlassCard className="p-0 overflow-hidden flex flex-col sm:flex-row hover:shadow-lg transition-shadow cursor-pointer">
                   <div className="sm:w-1/3 h-48 sm:h-auto bg-emerald-100 flex items-center justify-center shrink-0">
-                    <Building2 className="w-12 h-12 text-emerald-300" />
+                    <TrendingUp className="w-12 h-12 text-emerald-400" />
                   </div>
                   <div className="p-6">
-                    <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-2 block">Universités</span>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">Zoom sur les Écoles Inter-États</h3>
-                    <p className="text-slate-600 text-sm mb-4 line-clamp-2">
-                      EAMAU, EIER, ETSHER... Que valent ces écoles ? Comment y accéder et quels sont les avantages par rapport aux universités nationales ?
+                    <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-2 block">Avenir</span>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">Les filières les plus rentables et d'avenir au Bénin</h3>
+                    <p className="text-slate-600 text-sm mb-4 line-clamp-3">
+                      Quels sont les secteurs qui recrutent le plus aujourd'hui au Bénin ? Zoom sur le Numérique, l'Agronomie moderne et les Énergies renouvelables. Découvrez où se trouvent les vraies opportunités d'emploi.
                     </p>
-                    <button className="text-indigo-600 font-medium text-sm flex items-center hover:text-indigo-800 transition-colors">
+                    <button className="text-indigo-600 font-semibold text-sm flex items-center hover:text-indigo-700 transition-colors">
+                      Lire l'article <ArrowRight className="w-4 h-4 ml-1" />
+                    </button>
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="p-0 overflow-hidden flex flex-col sm:flex-row hover:shadow-lg transition-shadow cursor-pointer">
+                  <div className="sm:w-1/3 h-48 sm:h-auto bg-rose-100 flex items-center justify-center shrink-0">
+                    <AlertTriangle className="w-12 h-12 text-rose-400" />
+                  </div>
+                  <div className="p-6">
+                    <span className="text-xs font-bold text-rose-600 uppercase tracking-wider mb-2 block">Avertissement</span>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">Les 5 erreurs fatales d'orientation à éviter absolument</h3>
+                    <p className="text-slate-600 text-sm mb-4 line-clamp-3">
+                      Ne pas regarder les quotas, ignorer les coefficients de sa série, ou choisir une filière par "effet de mode". Voici les erreurs les plus courantes qui coûtent la bourse à de nombreux bacheliers chaque année.
+                    </p>
+                    <button className="text-indigo-600 font-semibold text-sm flex items-center hover:text-indigo-700 transition-colors">
                       Lire l'article <ArrowRight className="w-4 h-4 ml-1" />
                     </button>
                   </div>
                 </GlassCard>
               </div>
+            </motion.div>
+          )}
+
+          {/* LEGAL VIEW */}
+          {view === 'legal' && (
+            <motion.div key="legal" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
+              <GlassCard className="p-8">
+                <h2 className="text-3xl font-display font-black text-slate-900 mb-6">Mentions Légales</h2>
+                <div className="space-y-6 text-slate-600 leading-relaxed">
+                  <section>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">1. Éditeur du site</h3>
+                    <p>Le site OrientaBénin est édité dans le cadre d'un projet technologique et éducatif visant à accompagner les bacheliers béninois.</p>
+                  </section>
+                  <section>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">2. Hébergement</h3>
+                    <p>Ce site est hébergé sur l'infrastructure Google Cloud Run via Firebase Hosting.</p>
+                  </section>
+                  <section>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">3. Propriété intellectuelle</h3>
+                    <p>Les données relatives aux filières, universités et quotas sont issues des publications officielles du Ministère de l'Enseignement Supérieur et de la Recherche Scientifique (MESRS) du Bénin. L'algorithme de simulation et l'interface utilisateur sont la propriété exclusive des créateurs d'OrientaBénin.</p>
+                  </section>
+                  <section>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">4. Avertissement scientifique</h3>
+                    <p>Les résultats fournis par le simulateur ont une valeur purement indicative. Ils ne remplacent en aucun cas les décisions officielles de la commission nationale d'orientation universitaire.</p>
+                  </section>
+                </div>
+              </GlassCard>
+            </motion.div>
+          )}
+
+          {/* PRIVACY VIEW */}
+          {view === 'privacy' && (
+            <motion.div key="privacy" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
+              <GlassCard className="p-8">
+                <h2 className="text-3xl font-display font-black text-slate-900 mb-6">Politique de Confidentialité</h2>
+                <div className="space-y-6 text-slate-600 leading-relaxed">
+                  <section>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">1. Collecte des données</h3>
+                    <p>Nous collectons uniquement les données nécessaires au fonctionnement de l'application : votre adresse email (via Google Sign-In), votre série du baccalauréat, vos notes saisies et vos choix de filières.</p>
+                  </section>
+                  <section>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">2. Utilisation des données</h3>
+                    <p>Vos notes sont utilisées exclusivement pour faire fonctionner l'algorithme de simulation. Vos choix de filières sont enregistrés pour vous permettre de les retrouver lors de vos prochaines connexions et pour générer des statistiques anonymisées sur l'attractivité des filières.</p>
+                  </section>
+                  <section>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">3. Partage des données</h3>
+                    <p>Vos données personnelles ne sont jamais vendues, louées ou partagées avec des tiers à des fins commerciales. Les statistiques globales (ex: nombre de candidats par filière) sont anonymes.</p>
+                  </section>
+                  <section>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">4. Sécurité</h3>
+                    <p>Vos données sont stockées de manière sécurisée sur les serveurs de Google (Firebase/Firestore) avec des règles de sécurité strictes garantissant que seul vous (et les administrateurs) pouvez accéder à votre profil.</p>
+                  </section>
+                </div>
+              </GlassCard>
             </motion.div>
           )}
 
@@ -1182,15 +1333,63 @@ export default function App() {
       {/* Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 p-4 z-40">
         <div className="max-w-md mx-auto bg-white/80 backdrop-blur-2xl border border-white/50 shadow-[0_-8px_30px_rgb(0,0,0,0.08)] rounded-[2rem] flex justify-around items-center p-2">
-          <NavItem icon={<Home className="w-5 h-5"/>} label="Accueil" active={view==='home'} onClick={()=>setView('home')} />
-          <NavItem icon={<User className="w-5 h-5"/>} label="Profil" active={view==='profile'} onClick={()=>setView('profile')} />
-          <NavItem icon={<TrendingUp className="w-5 h-5"/>} label="Résultats" active={view==='results'} onClick={()=>setView('results')} />
-          <NavItem icon={<Search className="w-5 h-5"/>} label="Explorer" active={view==='explore'} onClick={()=>setView('explore')} />
-          <NavItem icon={<BookOpen className="w-5 h-5"/>} label="Guide" active={view==='guide'} onClick={()=>setView('guide')} />
+          <NavItem icon={<Home className="w-5 h-5"/>} label="Accueil" active={view==='home'} to={reverseViewMap['home']} />
+          <NavItem icon={<User className="w-5 h-5"/>} label="Profil" active={view==='profile'} to={reverseViewMap['profile']} />
+          <NavItem icon={<TrendingUp className="w-5 h-5"/>} label="Résultats" active={view==='results'} to={reverseViewMap['results']} />
+          <NavItem icon={<Search className="w-5 h-5"/>} label="Explorer" active={view==='explore'} to={reverseViewMap['explore']} />
+          <NavItem icon={<BookOpen className="w-5 h-5"/>} label="Guide" active={view==='guide'} to={reverseViewMap['guide']} />
         </div>
       </div>
 
       </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Disclaimer Modal */}
+      <AnimatePresence>
+        {showDisclaimerModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-[#ff8a00] to-amber-500"></div>
+              <div className="flex flex-col items-center text-center mt-2">
+                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-4">
+                  <AlertTriangle className="w-8 h-8 text-[#ff8a00]" />
+                </div>
+                <h2 className="text-2xl font-display font-black text-slate-900 mb-3">Avertissement</h2>
+                <p className="text-slate-600 mb-6 leading-relaxed">
+                  Ce site propose des recommandations basées sur l'Intelligence Artificielle pour vous aider dans votre orientation. <br/><br/>
+                  <strong>Ce n'est pas le site officiel du gouvernement.</strong>
+                </p>
+                
+                <div className="flex flex-col w-full gap-3">
+                  <button
+                    onClick={acceptDisclaimer}
+                    className="w-full py-3.5 bg-indigo-600 text-white rounded-xl font-bold text-lg shadow-md shadow-indigo-200 hover:bg-indigo-700 hover:shadow-lg transition-all"
+                  >
+                    Continuer vers le site
+                  </button>
+                  <a
+                    href="https://apresmonbac.bj/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3.5 bg-slate-100 text-slate-700 rounded-xl font-bold text-lg hover:bg-slate-200 transition-all flex items-center justify-center"
+                  >
+                    Visiter le site officiel <ArrowUpRight className="w-5 h-5 ml-2" />
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
 

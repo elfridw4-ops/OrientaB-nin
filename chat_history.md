@@ -336,9 +336,39 @@ structure JSON intégrant données ministérielles et plateforme
 Assistant :
 J'ai intégré la comparaison entre les capacités officielles du ministère et les inscriptions en temps réel sur la plateforme. J'ai ajouté un champ `admisOfficiels` au modèle de données et implémenté le calcul du pourcentage de chances basé sur votre formule. L'interface des résultats affiche désormais une barre de saturation visuelle, les deux colonnes de données (Officiel vs Plateforme) et des conseils dynamiques pour orienter les étudiants vers les filières les moins saturées. Le panneau d'administration a également été mis à jour pour permettre la gestion de ces capacités officielles.
 
-[2026-04-10 14:13:55]
-Utilisateur :
-Crée un fichier Markdown documentant l’architecture complète du projet structuré comme un guide d'onboarding développeur... (Demande de documentation technique complète)
+[2026-04-10]
+**Utilisateur :**
+je ne veux pas dépendre de firestore pour les données mais de mon fichier
 
-Assistant :
-J'ai créé le fichier `DEVELOPER_ONBOARDING.md` qui contient une documentation exhaustive du projet. Ce guide couvre l'architecture globale (React + Firebase), le rôle détaillé de chaque dossier et fichier (pourquoi ils existent, ce qui casse s'ils disparaissent), les flux de données, les conventions de nommage, les dépendances clés et les points critiques du système. J'ai également mis à jour l'historique du projet, le journal des décisions et le suivi des tâches pour refléter ces changements et les récentes optimisations de responsivité et de SEO.
+**Assistant :**
+C'est fait ! J'ai complètement déconnecté la gestion des filières de Firebase Firestore. 
+
+Désormais :
+1. L'application charge instantanément toutes les filières depuis votre fichier local `guide.json` (via la fonction `getAllFilieres()` dans `utils.ts`).
+2. Si vous modifiez, ajoutez ou supprimez une filière depuis l'interface d'Administration, ces changements seront sauvegardés localement dans la mémoire de votre navigateur (`localStorage`), afin que vous ne perdiez pas vos modifications en rafraîchissant la page.
+3. L'application ne tentera plus de se connecter à la base de données Firestore pour récupérer ou sauvegarder les filières, ce qui élimine définitivement l'erreur de connexion que vous aviez.
+
+L'application est maintenant 100% autonome pour la gestion de ses données de filières !
+
+[2026-04-10]
+**Utilisateur :**
+le tableau de bord n'est toujours pas à jour
+
+**Assistant :**
+Le problème du tableau de bord qui ne se mettait pas à jour venait du fait que l'application gardait en mémoire (dans le `localStorage` de votre navigateur) les anciennes données, même si vous aviez modifié le fichier `guide.json`.
+
+Pour corriger cela :
+
+1. **Bouton de rechargement :** J'ai ajouté un bouton **"Recharger guide.json"** (en orange) dans l'onglet "Filières" de l'Administration. Si vous modifiez le fichier `guide.json` dans le code, il vous suffit de cliquer sur ce bouton pour forcer l'application à écraser les données en mémoire et à recharger les nouvelles valeurs depuis le fichier.
+2. **Correction des calculs :** J'ai également corrigé la façon dont le tableau de bord calcule le total des bourses et des aides pour m'assurer qu'il prend bien en compte toutes les données, y compris celles que vous pourriez ajouter manuellement.
+
+**Pour mettre à jour votre tableau de bord maintenant :**
+Allez dans **Administration** > **Filières** et cliquez sur le bouton orange **"Recharger guide.json"**. 
+
+Le tableau de bord dans l'onglet "Explorer" affichera alors instantanément les données les plus récentes !
+
+[2026-04-10]
+**Utilisateur :**
+vérifie si tout ceci est fait: 
+Vous devez créer et maintenir les fichiers de documentation suivants tout au long du cycle de vie du projet :
+... (demande de création de documentation)

@@ -42,9 +42,14 @@
 - **Alternatives envisagées** : Afficher uniquement le nombre de candidats sans comparaison.
 - **Conséquences** : Offre une aide à la décision stratégique beaucoup plus puissante. Les étudiants peuvent identifier les filières "peu saturées" où ils ont statistiquement plus de chances d'être admis, même avec un score moyen.
 
-## Titre de la décision : Refonte du Layout pour la Responsivité
+## Titre de la décision : Utilisation de LocalStorage pour le catalogue des filières
 - **Date** : 10/04/2026
-- **Contexte** : Le footer "full-width" causait des problèmes de scroll horizontal et d'espaces vides sur mobile et desktop.
-- **Décision** : Suppression de la marge globale (`pb-24`) sur le conteneur racine et passage du conteneur `<main>` en largeur totale (`w-full`). La largeur maximale (`max-w-3xl mx-auto`) est désormais appliquée individuellement à l'intérieur de chaque vue. Ajout de `overflow-x: hidden` sur le `body`.
-- **Alternatives envisagées** : Utilisation de marges négatives et `w-screen` (technique instable).
-- **Conséquences** : Le footer sombre s'étend désormais naturellement sur toute la largeur, le scroll horizontal est éliminé, et le contenu reste parfaitement centré et responsive sur tous les appareils.
+- **Contexte** : L'application utilisait initialement Firestore pour stocker et récupérer l'intégralité du catalogue des filières. L'utilisateur a souhaité ne plus dépendre de Firestore pour ces données spécifiques afin de garantir l'autonomie de l'application et faciliter les mises à jour via le fichier `guide.json`.
+- **Décision** : Remplacer les appels Firestore par des lectures/écritures dans le `localStorage` du navigateur, initialisé par le fichier `guide.json`. Ajout d'un bouton de réinitialisation dans l'administration.
+- **Alternatives envisagées** : 
+  - Garder Firestore avec un script d'import manuel (rejeté car dépendant du cloud).
+  - Utiliser IndexedDB (rejeté car trop complexe pour le besoin actuel).
+- **Conséquences** : 
+  - Le catalogue des filières est local à l'appareil de l'utilisateur (ou de l'administrateur).
+  - L'application est plus rapide, ne dépend plus des quotas Firebase pour la lecture du catalogue, et élimine les erreurs de connexion "client offline".
+  - Les profils utilisateurs et leurs choix restent gérés par Firestore.

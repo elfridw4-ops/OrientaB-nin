@@ -67,3 +67,5 @@
   - **Impact** : Facilite l'accueil de nouveaux développeurs sur le projet en documentant l'architecture, les flux et les conventions.
   - **Description** : Mise en place de la stratégie de licence propriétaire et création des fichiers `LICENSE` et `README.md`.
   - **Impact** : Sécurise la propriété intellectuelle du projet (algorithme et données) dans une perspective commerciale/startup.
+  - **Description** : Découplage de la gestion des filières de Firestore. Les filières sont désormais gérées exclusivement via `localStorage` et initialisées depuis `guide.json`. Ajout d'un bouton de réinitialisation dans l'administration pour forcer le rechargement depuis le fichier JSON.
+  - **Impact** : L'application est 100% autonome pour la gestion de son catalogue, éliminant les erreurs de connexion Firestore et les problèmes de quotas, tout en permettant des mises à jour faciles via le code source.

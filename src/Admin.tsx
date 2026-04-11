@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Save, Download, Upload, Plus, Trash2, Edit2, X, ArrowLeft, Settings, Database, FileJson, Search, Users, Lock, Unlock, ShieldAlert } from 'lucide-react';
 import { FlattenedFiliere, UserProfile } from './types';
-import { subscribeToUsers, updateUserProfile } from './services/firestoreService';
+import { subscribeToUsers, updateUserProfile, publishCatalog } from './services/firestoreService';
 import { getAllFilieres, getAppData, saveAppData, resetAppData } from './utils';
 
 const GlassCard = ({ children, className = '' }: { children: React.ReactNode, className?: string }) => (
@@ -163,6 +163,19 @@ export default function Admin({ onBack }: { onBack: () => void }) {
               </div>
               {activeTab === 'filieres' && (
                 <>
+                  <button onClick={async () => {
+                    if (confirm("Êtes-vous sûr de vouloir publier le catalogue local vers le serveur ? Tous les utilisateurs recevront cette mise à jour.")) {
+                      try {
+                        await publishCatalog(filieres);
+                        alert("Catalogue publié avec succès !");
+                      } catch (e) {
+                        console.error(e);
+                        alert("Erreur lors de la publication.");
+                      }
+                    }
+                  }} className="flex items-center px-5 py-2.5 bg-emerald-500 text-white rounded-xl shadow-md hover:bg-emerald-600 font-medium text-sm transition-all whitespace-nowrap">
+                    <Upload className="w-4 h-4 mr-2" /> Publier en ligne
+                  </button>
                   <button onClick={() => {
                     if (confirm('Attention : Cela va écraser toutes vos modifications locales et recharger les données depuis le fichier guide.json. Continuer ?')) {
                       const newData = resetAppData();

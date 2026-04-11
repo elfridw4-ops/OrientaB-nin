@@ -6,23 +6,25 @@ Ta mission est de concevoir une application d’orientation universitaire pour l
 
 ## Exigences fonctionnelles
 - **Fonctionnalités principales** :
-  - Fonctionner offline-first
+  - Fonctionner offline-first pour le catalogue des filières.
   - Permettre filtrage par série BAC
   - Intégrer un simulateur de classement basé sur une moyenne pondérée
   - Afficher les quotas (bourses, aides, FPP)
   - Proposer des recommandations intelligentes
-  - **NOUVEAU** : Afficher les règles d'allocations (Bourse, Secours, FPP) et les statistiques globales du guide 2025-2026.
-  - **NOUVEAU** : Comparer les capacités officielles (ministère) avec les inscriptions sur la plateforme pour estimer les chances de réussite.
+  - Afficher les règles d'allocations (Bourse, Secours, FPP) et les statistiques globales du guide 2025-2026.
+  - Comparer les capacités officielles (ministère) avec les inscriptions sur la plateforme pour estimer les chances de réussite.
+  - Espace utilisateur avec authentification Firebase (Google) pour sauvegarder les choix.
+  - Espace administration pour gérer les utilisateurs et forcer le rechargement du catalogue local.
 
 ## Exigences non fonctionnelles
-- **Performances** : Optimisation pour les appareils mobiles.
-- **Sécurité** : Pas de backend, données publiques, pas de risques de fuite de données personnelles.
+- **Performances** : Optimisation pour les appareils mobiles, chargement instantané du catalogue via `localStorage`.
+- **Sécurité** : Authentification sécurisée via Firebase Auth, règles Firestore pour protéger les données utilisateurs.
 - **Évolutivité** : Structure modulaire permettant l'ajout facile de nouvelles données dans le JSON.
 
 ## Contraintes
 - **Limitations techniques ou commerciales** :
-  - Frontend uniquement (HTML, CSS, JS)
-  - Aucune dépendance backend obligatoire
+  - Frontend React (Vite)
+  - Catalogue des filières 100% autonome (JSON + LocalStorage), pas de dépendance Firestore pour ces données.
   - Données dynamiques via JSON
 
 ## Règles Métier (Allocations)
