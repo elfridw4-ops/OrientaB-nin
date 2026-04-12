@@ -39,6 +39,11 @@ export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
   
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   const viewMap: Record<string, string> = {
     '/': 'home',
     '/simulation': 'profile',
