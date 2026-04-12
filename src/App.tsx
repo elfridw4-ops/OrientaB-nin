@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, useNavigate, useLocation, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'motion/react';
@@ -17,10 +17,12 @@ import {
   rechercherFilieres, 
   ResultatRecommandation 
 } from './engine';
-import Admin from './Admin';
 import { auth, loginWithGoogle, logout } from './firebase';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { getUserProfile, createUserProfile, updateUserProfile, updateFiliereChoices, fetchLatestCatalog } from './services/firestoreService';
+
+// Lazy load heavy components
+const Admin = React.lazy(() => import('./Admin'));
 
 // Custom Logo Component
 const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
@@ -359,32 +361,34 @@ export default function App() {
       <AnimatePresence mode="wait">
         {view === 'admin' ? (
           <motion.div key="admin-view" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
-            <Admin onBack={() => setView('home')} />
+            <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div></div>}>
+              <Admin onBack={() => setView('home')} />
+            </Suspense>
           </motion.div>
         ) : (
           <motion.div key="main-app" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
             {/* Top Header */}
-            <header className="fixed top-0 left-0 right-0 z-40 p-2 sm:p-4">
-              <div className="max-w-3xl mx-auto bg-white/70 backdrop-blur-xl border border-white/50 shadow-sm rounded-2xl sm:rounded-3xl px-3 py-2 sm:px-5 sm:py-3 flex justify-between items-center">
-                <div className="flex items-center space-x-1.5 sm:space-x-2">
+            <header className="fixed top-0 left-0 right-0 z-40 p-4">
+              <div className="max-w-3xl mx-auto bg-white/70 backdrop-blur-xl border border-white/50 shadow-sm rounded-3xl px-5 py-3 flex justify-between items-center">
+                <div className="flex items-center space-x-2">
                   {view !== 'home' && (
-                    <button onClick={() => navigate(-1)} className="p-1.5 sm:p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600" aria-label="Retour">
-                      <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <button onClick={() => navigate(-1)} className="p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600 mr-1" aria-label="Retour">
+                      <ArrowLeft className="w-5 h-5" />
                     </button>
                   )}
-                  <Logo className="w-6 h-6 sm:w-8 sm:h-8 drop-shadow-md" />
-                  <span className="font-display font-bold text-base sm:text-lg text-slate-900 hidden xs:block">OrientaBénin</span>
+                  <Logo className="w-8 h-8 drop-shadow-md hidden sm:block" />
+                  <span className="font-display font-bold text-lg text-slate-900">OrientaBénin</span>
                 </div>
-                <div className="flex space-x-1 sm:space-x-2 items-center">
+                <div className="flex space-x-2 items-center">
                   {userProfile && (userProfile.role === 'admin' || userProfile.role === 'super_admin') && (
-                    <button onClick={() => setView('admin')} className="p-1.5 sm:p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><Settings className="w-4 h-4 sm:w-5 sm:h-5"/></button>
+                    <button onClick={() => setView('admin')} className="p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><Settings className="w-5 h-5"/></button>
                   )}
-                  <button onClick={() => setShowStats(true)} className="p-1.5 sm:p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><BarChart3 className="w-4 h-4 sm:w-5 sm:h-5"/></button>
-                  <button onClick={() => setShowInfo(true)} className="p-1.5 sm:p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><Info className="w-4 h-4 sm:w-5 sm:h-5"/></button>
+                  <button onClick={() => setShowStats(true)} className="p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><BarChart3 className="w-5 h-5"/></button>
+                  <button onClick={() => setShowInfo(true)} className="p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><Info className="w-5 h-5"/></button>
                   {authUser ? (
-                    <button onClick={logout} className="p-1.5 sm:p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition-colors"><LogOut className="w-4 h-4 sm:w-5 sm:h-5"/></button>
+                    <button onClick={logout} className="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition-colors"><LogOut className="w-5 h-5"/></button>
                   ) : (
-                    <button onClick={handleLogin} className="px-3 py-1.5 sm:px-4 sm:py-2 bg-indigo-600 text-white rounded-lg sm:rounded-xl font-medium text-xs sm:text-sm hover:bg-indigo-700 transition-colors">Connexion</button>
+                    <button onClick={handleLogin} className="px-4 py-2 bg-indigo-600 text-white rounded-xl font-medium text-sm hover:bg-indigo-700 transition-colors">Connexion</button>
                   )}
                 </div>
               </div>
