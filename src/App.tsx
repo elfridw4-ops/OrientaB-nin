@@ -197,21 +197,6 @@ export default function App() {
   // Firestore Filieres Listener
   useEffect(() => {
     if (isAuthReady) {
-      // Connection test
-      const testConnection = async () => {
-        try {
-          const { getDocFromServer, doc } = await import('firebase/firestore');
-          const { db } = await import('./firebase');
-          await getDocFromServer(doc(db, 'test', 'connection'));
-          console.log("Firestore connection successful");
-        } catch (error) {
-          if (error instanceof Error && error.message.includes('the client is offline')) {
-            console.error("Please check your Firebase configuration. The client is offline.");
-          }
-        }
-      };
-      testConnection();
-
       // Load filieres from local storage / guide.json
       setAllFilieres(getAllFilieres());
     }
@@ -379,22 +364,27 @@ export default function App() {
         ) : (
           <motion.div key="main-app" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
             {/* Top Header */}
-            <header className="fixed top-0 left-0 right-0 z-40 p-4">
-              <div className="max-w-3xl mx-auto bg-white/70 backdrop-blur-xl border border-white/50 shadow-sm rounded-3xl px-5 py-3 flex justify-between items-center">
-                <div className="flex items-center space-x-2">
-                  <Logo className="w-8 h-8 drop-shadow-md" />
-                  <span className="font-display font-bold text-lg text-slate-900">OrientaBénin</span>
-                </div>
-                <div className="flex space-x-2 items-center">
-                  {userProfile && (userProfile.role === 'admin' || userProfile.role === 'super_admin') && (
-                    <button onClick={() => setView('admin')} className="p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><Settings className="w-5 h-5"/></button>
+            <header className="fixed top-0 left-0 right-0 z-40 p-2 sm:p-4">
+              <div className="max-w-3xl mx-auto bg-white/70 backdrop-blur-xl border border-white/50 shadow-sm rounded-2xl sm:rounded-3xl px-3 py-2 sm:px-5 sm:py-3 flex justify-between items-center">
+                <div className="flex items-center space-x-1.5 sm:space-x-2">
+                  {view !== 'home' && (
+                    <button onClick={() => navigate(-1)} className="p-1.5 sm:p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600" aria-label="Retour">
+                      <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </button>
                   )}
-                  <button onClick={() => setShowStats(true)} className="p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><BarChart3 className="w-5 h-5"/></button>
-                  <button onClick={() => setShowInfo(true)} className="p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><Info className="w-5 h-5"/></button>
+                  <Logo className="w-6 h-6 sm:w-8 sm:h-8 drop-shadow-md" />
+                  <span className="font-display font-bold text-base sm:text-lg text-slate-900 hidden xs:block">OrientaBénin</span>
+                </div>
+                <div className="flex space-x-1 sm:space-x-2 items-center">
+                  {userProfile && (userProfile.role === 'admin' || userProfile.role === 'super_admin') && (
+                    <button onClick={() => setView('admin')} className="p-1.5 sm:p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><Settings className="w-4 h-4 sm:w-5 sm:h-5"/></button>
+                  )}
+                  <button onClick={() => setShowStats(true)} className="p-1.5 sm:p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><BarChart3 className="w-4 h-4 sm:w-5 sm:h-5"/></button>
+                  <button onClick={() => setShowInfo(true)} className="p-1.5 sm:p-2 bg-white/50 hover:bg-white rounded-xl transition-colors text-slate-600"><Info className="w-4 h-4 sm:w-5 sm:h-5"/></button>
                   {authUser ? (
-                    <button onClick={logout} className="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition-colors"><LogOut className="w-5 h-5"/></button>
+                    <button onClick={logout} className="p-1.5 sm:p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition-colors"><LogOut className="w-4 h-4 sm:w-5 sm:h-5"/></button>
                   ) : (
-                    <button onClick={handleLogin} className="px-4 py-2 bg-indigo-600 text-white rounded-xl font-medium text-sm hover:bg-indigo-700 transition-colors">Connexion</button>
+                    <button onClick={handleLogin} className="px-3 py-1.5 sm:px-4 sm:py-2 bg-indigo-600 text-white rounded-lg sm:rounded-xl font-medium text-xs sm:text-sm hover:bg-indigo-700 transition-colors">Connexion</button>
                   )}
                 </div>
               </div>
@@ -975,6 +965,9 @@ export default function App() {
           {/* GUIDE VIEW */}
           {view === 'guide' && (
             <motion.div key="guide" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
+              <button onClick={() => navigate(-1)} className="mb-6 flex items-center text-slate-500 hover:text-slate-900 transition-colors font-medium">
+                <ArrowLeft className="w-4 h-4 mr-1" /> Retour
+              </button>
               <div className="mb-8">
                 <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold mb-4 inline-block">Guide complet 2025-2026</span>
                 <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
@@ -1131,6 +1124,9 @@ export default function App() {
           {/* ABOUT VIEW */}
           {view === 'about' && (
             <motion.div key="about" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
+              <button onClick={() => navigate(-1)} className="mb-6 flex items-center text-slate-500 hover:text-slate-900 transition-colors font-medium">
+                <ArrowLeft className="w-4 h-4 mr-1" /> Retour
+              </button>
               <div className="mb-8">
                 <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
                   À propos d'OrientaBénin
@@ -1173,6 +1169,9 @@ export default function App() {
           {/* FAQ VIEW */}
           {view === 'faq' && (
             <motion.div key="faq" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
+              <button onClick={() => navigate(-1)} className="mb-6 flex items-center text-slate-500 hover:text-slate-900 transition-colors font-medium">
+                <ArrowLeft className="w-4 h-4 mr-1" /> Retour
+              </button>
               <div className="mb-8">
                 <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
                   Foire Aux Questions
@@ -1217,6 +1216,9 @@ export default function App() {
           {/* BLOG VIEW */}
           {view === 'blog' && (
             <motion.div key="blog" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
+              <button onClick={() => navigate(-1)} className="mb-6 flex items-center text-slate-500 hover:text-slate-900 transition-colors font-medium">
+                <ArrowLeft className="w-4 h-4 mr-1" /> Retour
+              </button>
               <div className="mb-8">
                 <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
                   Conseils & Actualités
@@ -1281,6 +1283,9 @@ export default function App() {
           {/* LEGAL VIEW */}
           {view === 'legal' && (
             <motion.div key="legal" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
+              <button onClick={() => navigate(-1)} className="mb-6 flex items-center text-slate-500 hover:text-slate-900 transition-colors font-medium">
+                <ArrowLeft className="w-4 h-4 mr-1" /> Retour
+              </button>
               <GlassCard className="p-8">
                 <h2 className="text-3xl font-display font-black text-slate-900 mb-6">Mentions Légales</h2>
                 <div className="space-y-6 text-slate-600 leading-relaxed">
@@ -1308,6 +1313,9 @@ export default function App() {
           {/* PRIVACY VIEW */}
           {view === 'privacy' && (
             <motion.div key="privacy" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
+              <button onClick={() => navigate(-1)} className="mb-6 flex items-center text-slate-500 hover:text-slate-900 transition-colors font-medium">
+                <ArrowLeft className="w-4 h-4 mr-1" /> Retour
+              </button>
               <GlassCard className="p-8">
                 <h2 className="text-3xl font-display font-black text-slate-900 mb-6">Politique de Confidentialité</h2>
                 <div className="space-y-6 text-slate-600 leading-relaxed">
