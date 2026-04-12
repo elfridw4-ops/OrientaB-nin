@@ -33,6 +33,7 @@ export interface ResultatRecommandation<T> {
   isLessCrowded?: boolean;
   chances?: number;
   saturation?: number;
+  formule?: string;
 }
 
 // --- 1. CALCUL DU SCORE ---
@@ -50,19 +51,28 @@ export function calculerScore(notes: NotesUtilisateur, matieres: MatierePonderee
   let totalCoefficients = 0;
 
   for (const matiere of matieres) {
-    // Si l'utilisateur n'a pas saisi de note pour cette matière, on considère 0
-    // (ou on pourrait ignorer, mais pour un concours, une note manquante est pénalisante)
     const note = notes[matiere.nom] || 0;
-    
     totalPoints += note * matiere.coeff;
     totalCoefficients += matiere.coeff;
   }
 
-  // Évite la division par zéro si aucune matière n'est définie
   if (totalCoefficients === 0) return 0;
   
   const moyenne = totalPoints / totalCoefficients;
   return Number(moyenne.toFixed(2));
+}
+
+/**
+ * Génère la chaîne de caractères représentant la formule de calcul.
+ */
+export function genererFormule(notes: NotesUtilisateur, matieres: MatierePonderee[]): string {
+  if (!matieres || matieres.length === 0) return '';
+  
+  const parts = matieres.map(m => `${m.nom}×${m.coeff}`);
+  const values = matieres.map(m => `${(notes[m.nom] || 0) * m.coeff}`);
+  const totalCoeff = matieres.reduce((sum, m) => sum + m.coeff, 0);
+  
+  return `(${parts.join(' + ')})/${totalCoeff} = (${values.join('+')})/${totalCoeff}`;
 }
 
 // --- 2. FILTRAGE INTELLIGENT ---
@@ -128,6 +138,7 @@ export function genererRecommandations<T extends FiliereBase>(
 
   const resultats = filieres.map(filiere => {
     const score = calculerScore(notes, filiere.matieres);
+    const formule = genererFormule(notes, filiere.matieres);
     let niveau: NiveauRecommandation = 'Risquée';
     
     if (score >= 14) {
@@ -143,7 +154,7 @@ export function genererRecommandations<T extends FiliereBase>(
     const saturation = calculerSaturation(candidats, admisOfficiels);
     const isLessCrowded = saturation < 50 && score >= 12;
 
-    return { filiere, score, niveau, isLessCrowded, chances, saturation };
+    return { filiere, score, niveau, isLessCrowded, chances, saturation, formule };
   });
 
   // Utilisation de la fonction de classement

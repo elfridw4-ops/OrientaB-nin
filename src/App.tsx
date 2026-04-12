@@ -37,6 +37,19 @@ const Logo = ({ className = "w-8 h-8" }: { className?: string }) => (
 
 const COLORS = ['#4f46e5', '#7c3aed', '#2563eb', '#059669', '#d97706'];
 
+const NavItem = ({ icon, label, active, to }: any) => (
+  <Link to={to} className={`flex flex-col items-center justify-center w-16 h-12 rounded-2xl transition-all ${active ? 'text-indigo-600 bg-indigo-50' : 'text-slate-400 hover:text-slate-600'}`}>
+    {icon}
+    <span className="text-[10px] font-medium mt-1">{label}</span>
+  </Link>
+);
+
+const GlassCard = ({ children, className = '', onClick }: any) => (
+  <div onClick={onClick} className={`bg-white/60 backdrop-blur-xl border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-3xl ${onClick ? 'cursor-pointer hover:scale-[1.02] transition-transform' : ''} ${className}`}>
+    {children}
+  </div>
+);
+
 export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -56,7 +69,8 @@ export default function App() {
     '/guide': 'guide',
     '/a-propos': 'about',
     '/faq': 'faq',
-    '/conseils': 'blog'
+    '/conseils': 'blog',
+    '/conseils/metiers-avenir': 'article-metiers'
   };
   
   const reverseViewMap: Record<string, string> = {
@@ -69,7 +83,8 @@ export default function App() {
     'guide': '/guide',
     'about': '/a-propos',
     'faq': '/faq',
-    'blog': '/conseils'
+    'blog': '/conseils',
+    'article-metiers': '/conseils/metiers-avenir'
   };
 
   const view = viewMap[location.pathname] || 'home';
@@ -83,6 +98,7 @@ export default function App() {
       case 'explore': return { title: "Explorer les filières | OrientaBénin", desc: "Consultez le catalogue complet des universités et filières du Bénin." };
       case 'guide': return { title: "Guide d'orientation | OrientaBénin", desc: "Comprendre les bourses, secours et règles d'orientation au Bénin." };
       case 'blog': return { title: "Conseils | OrientaBénin", desc: "Conseils et astuces pour réussir son orientation universitaire." };
+      case 'article-metiers': return { title: "Les métiers les plus recherchés au Bénin | OrientaBénin", desc: "Découvrez la liste détaillée et dynamique des métiers les plus recherchés au Bénin par secteur." };
       case 'admin': return { title: "Administration | OrientaBénin", desc: "Gestion de la plateforme." };
       default: return { title: "OrientaBénin", desc: "Orientation universitaire au Bénin." };
     }
@@ -322,19 +338,6 @@ export default function App() {
     .sort((a, b) => (b.candidatsCount || 0) - (a.candidatsCount || 0)).slice(0, 5)
     .map(f => ({ name: f.sigle || f.nom_filiere.substring(0, 15) + '...', Candidats: f.candidatsCount || 0, full_name: f.nom_filiere })), [allFilieres]);
 
-  const NavItem = ({ icon, label, active, to }: any) => (
-    <Link to={to} className={`flex flex-col items-center justify-center w-16 h-12 rounded-2xl transition-all ${active ? 'text-indigo-600 bg-indigo-50' : 'text-slate-400 hover:text-slate-600'}`}>
-      {icon}
-      <span className="text-[10px] font-medium mt-1">{label}</span>
-    </Link>
-  );
-
-  const GlassCard = ({ children, className = '', onClick }: any) => (
-    <div onClick={onClick} className={`bg-white/60 backdrop-blur-xl border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-3xl ${onClick ? 'cursor-pointer hover:scale-[1.02] transition-transform' : ''} ${className}`}>
-      {children}
-    </div>
-  );
-
   if (!isAuthReady) {
     return <div className="min-h-screen flex items-center justify-center bg-slate-50"><div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div></div>;
   }
@@ -411,7 +414,7 @@ export default function App() {
                   Trouvez votre voie <br/>
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">universitaire au Bénin</span>
                 </h2>
-                <p className="text-slate-600 mb-10 text-lg max-w-lg mx-auto leading-relaxed">
+                <p className="text-slate-600 mb-10 text-lg max-w-lg mx-auto leading-relaxed pl-1">
                   Découvrez les filières, simulez vos chances d'obtenir une bourse et faites le meilleur choix stratégique pour votre avenir grâce aux données officielles du MESRS.
                 </p>
                 <button onClick={() => setView('profile')} className="bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xl shadow-indigo-200/50 hover:shadow-indigo-300/50 hover:-translate-y-1 transition-all rounded-2xl px-8 py-4 font-bold text-lg flex items-center mx-auto">
@@ -673,6 +676,29 @@ export default function App() {
                 <ShieldAlert className="w-5 h-5 mr-3 shrink-0 mt-0.5 text-amber-600" />
                 <p><strong>Avertissement Scientifique :</strong> Les résultats présentés sont des simulations basées sur un algorithme prédictif et les données historiques d'orientation du MESRS. Ils ont une valeur indicative et stratégique, mais ne constituent en aucun cas une garantie d'admission ou d'obtention de bourse. La décision finale appartient aux commissions d'attribution de l'État.</p>
               </div>
+
+              {selectedSerie && recommendations.length > 0 && (
+                <div className="mb-8 p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                  <h3 className="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Résumé de vos résultats (Série {selectedSerie})</h3>
+                  <div className="space-y-3 text-sm text-slate-700">
+                    <p><strong>Total des filières admissibles :</strong> {recommendations.length}</p>
+                    <p><strong>Meilleure moyenne :</strong> {Math.max(...recommendations.map(r => r.score)).toFixed(2)}</p>
+                    <div className="mt-4">
+                      <p className="font-bold mb-2">Répartition par université :</p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        {Object.entries(
+                          recommendations.reduce((acc, rec) => {
+                            acc[rec.filiere.universite] = (acc[rec.filiere.universite] || 0) + 1;
+                            return acc;
+                          }, {} as Record<string, number>)
+                        ).sort((a, b) => b[1] - a[1]).map(([uni, count]) => (
+                          <li key={uni}>{uni} : <strong>{count} filière{count > 1 ? 's' : ''}</strong></li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
               
               {!selectedSerie ? (
                 <GlassCard className="p-8 text-center">
@@ -754,6 +780,14 @@ export default function App() {
                             </p>
                           )}
                         </div>
+
+                        {/* Calculation Details */}
+                        {rec.formule && (
+                          <div className="mb-4 p-3 bg-indigo-50/50 rounded-xl border border-indigo-100/50">
+                            <p className="text-[10px] text-indigo-400 uppercase font-bold mb-1">Détail du calcul</p>
+                            <p className="text-xs font-mono text-indigo-700/80 break-words">{rec.formule}</p>
+                          </div>
+                        )}
 
                         <div className="flex justify-between items-end mt-2">
                           <div className="text-sm text-slate-500">
@@ -986,24 +1020,24 @@ export default function App() {
               <GlassCard className="p-6 mb-8">
                 <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Sommaire</h3>
                 <div className="grid sm:grid-cols-2 gap-y-4 gap-x-8">
-                  <a href="#systeme" className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
-                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3">1</span>
-                    Le système universitaire béninois
+                  <a href="#systeme" onClick={(e) => { e.preventDefault(); document.getElementById('systeme')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
+                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3 shrink-0">1</span>
+                    Qu'est-ce qu'une allocation ?
                   </a>
-                  <a href="#universites" className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
-                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3">2</span>
-                    Les universités publiques
+                  <a href="#universites" onClick={(e) => { e.preventDefault(); document.getElementById('universites')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
+                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3 shrink-0">2</span>
+                    Répartition des filières
                   </a>
-                  <a href="#bourses" className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
-                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3">3</span>
-                    Bourse, Secours, FPP et FEP
+                  <a href="#bourses" onClick={(e) => { e.preventDefault(); document.getElementById('bourses')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
+                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3 shrink-0">3</span>
+                    Bourses, Secours et FPP
                   </a>
-                  <a href="#mentions" className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
-                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3">4</span>
-                    Le mythe des mentions
+                  <a href="#mentions" onClick={(e) => { e.preventDefault(); document.getElementById('mentions')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
+                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3 shrink-0">4</span>
+                    Le Mythe des Mentions
                   </a>
-                  <a href="#choisir" className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
-                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3">5</span>
+                  <a href="#choisir" onClick={(e) => { e.preventDefault(); document.getElementById('choisir')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
+                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3 shrink-0">5</span>
                     Comment bien choisir sa filière
                   </a>
                 </div>
@@ -1118,6 +1152,38 @@ export default function App() {
                     <div className="bg-white p-4 rounded-xl border border-rose-100 text-sm text-slate-600 italic">
                       "Il vaut mieux choisir stratégiquement une filière moins demandée où ses notes fortes correspondent aux matières clés, plutôt que de viser aveuglément les filières saturées."
                     </div>
+                  </div>
+                </section>
+
+                <section id="choisir">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-4 flex items-center"><Target className="w-6 h-6 mr-2 text-indigo-600"/> 5. Comment bien choisir sa filière</h3>
+                  <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <p className="text-slate-700 mb-4 leading-relaxed">
+                      Le choix de votre filière ne doit pas se faire au hasard. Voici les étapes clés pour optimiser vos chances :
+                    </p>
+                    <ul className="space-y-4">
+                      <li className="flex items-start">
+                        <span className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">1</span>
+                        <div>
+                          <strong className="text-slate-900 block mb-1">Analysez vos notes</strong>
+                          <span className="text-sm text-slate-600">Identifiez vos points forts. Les matières où vous avez les meilleures notes doivent correspondre aux matières à fort coefficient de la filière visée.</span>
+                        </div>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">2</span>
+                        <div>
+                          <strong className="text-slate-900 block mb-1">Vérifiez la saturation</strong>
+                          <span className="text-sm text-slate-600">Utilisez notre simulateur pour voir le nombre de candidats déjà inscrits par rapport aux places disponibles. Une filière moins demandée augmente vos chances.</span>
+                        </div>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3 shrink-0 mt-0.5">3</span>
+                        <div>
+                          <strong className="text-slate-900 block mb-1">Diversifiez vos choix</strong>
+                          <span className="text-sm text-slate-600">Ne mettez pas uniquement des filières très prisées (comme la médecine ou le droit). Gardez des choix de sécurité dans des domaines connexes.</span>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </section>
 
@@ -1249,13 +1315,13 @@ export default function App() {
                   </div>
                 </GlassCard>
 
-                <GlassCard className="p-0 overflow-hidden flex flex-col sm:flex-row hover:shadow-lg transition-shadow cursor-pointer">
+                <GlassCard onClick={() => setView('article-metiers')} className="p-0 overflow-hidden flex flex-col sm:flex-row hover:shadow-lg transition-shadow cursor-pointer">
                   <div className="sm:w-1/3 h-48 sm:h-auto bg-emerald-100 flex items-center justify-center shrink-0">
                     <TrendingUp className="w-12 h-12 text-emerald-400" />
                   </div>
                   <div className="p-6">
                     <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-2 block">Avenir</span>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">Les filières les plus rentables et d'avenir au Bénin</h3>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">Les métiers les plus recherchés au Bénin</h3>
                     <p className="text-slate-600 text-sm mb-4 line-clamp-3">
                       Quels sont les secteurs qui recrutent le plus aujourd'hui au Bénin ? Zoom sur le Numérique, l'Agronomie moderne et les Énergies renouvelables. Découvrez où se trouvent les vraies opportunités d'emploi.
                     </p>
@@ -1280,6 +1346,172 @@ export default function App() {
                     </button>
                   </div>
                 </GlassCard>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ARTICLE METIERS VIEW */}
+          {view === 'article-metiers' && (
+            <motion.div key="article-metiers" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
+              <button onClick={() => navigate(-1)} className="mb-6 flex items-center text-slate-500 hover:text-slate-900 transition-colors font-medium">
+                <ArrowLeft className="w-4 h-4 mr-1" /> Retour aux conseils
+              </button>
+              
+              <div className="mb-8">
+                <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold mb-4 inline-block">Avenir & Débouchés</span>
+                <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
+                  Les métiers les plus recherchés au Bénin en 2024
+                </h2>
+                <p className="text-slate-600 text-lg leading-relaxed">
+                  Découvrez les secteurs qui recrutent le plus aujourd'hui au Bénin et les métiers d'avenir pour bien orienter vos études.
+                </p>
+              </div>
+
+              <div className="space-y-8">
+                <GlassCard className="p-6 sm:p-8">
+                  <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center"><span className="text-2xl mr-2">🌱</span> 1. Secteur Agricole & Agroalimentaire</h3>
+                  <p className="text-slate-600 mb-4">Le Bénin mise sur l'agriculture durable et la transformation locale.</p>
+                  <ul className="space-y-2 mb-4 text-slate-700">
+                    <li><strong className="text-slate-900">Ingénieur agronome 🌾</strong> (spécialisé en cultures comme le coton, l'anacarde, le soja)</li>
+                    <li><strong className="text-slate-900">Technicien agricole 🚜</strong> (utilisation d'engrais bio, irrigation)</li>
+                    <li><strong className="text-slate-900">Expert en agro-transformation 🥫</strong> (fabrication de jus, farines, huiles)</li>
+                    <li><strong className="text-slate-900">Vétérinaire / Éleveur moderne 🐄</strong> (développement de l'élevage bovin et avicole)</li>
+                  </ul>
+                  <div className="bg-emerald-50 p-3 rounded-lg text-sm text-emerald-800">
+                    💡 <strong>Pourquoi ?</strong> Le Bénin veut réduire les importations alimentaires et exporter plus de produits transformés.
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="p-6 sm:p-8">
+                  <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center"><span className="text-2xl mr-2">💻</span> 2. Secteur des TIC & Numérique</h3>
+                  <p className="text-slate-600 mb-4">Le gouvernement encourage les startups et la digitalisation.</p>
+                  <ul className="space-y-2 mb-4 text-slate-700">
+                    <li><strong className="text-slate-900">Développeur Full-Stack 👨‍💻</strong> (JavaScript, Python, PHP)</li>
+                    <li><strong className="text-slate-900">Spécialiste Cybersécurité 🔐</strong> (protection des données bancaires et gouvernementales)</li>
+                    <li><strong className="text-slate-900">Data Analyst 📊</strong> (analyse des données pour entreprises et agriculture intelligente)</li>
+                    <li><strong className="text-slate-900">Technicien réseaux & télécoms 📶</strong> (fibre optique, 4G/5G)</li>
+                  </ul>
+                  <div className="bg-blue-50 p-3 rounded-lg text-sm text-blue-800">
+                    🚀 <strong>Opportunités :</strong> Les incubateurs comme <strong>Sèmè City</strong> forment et financent des talents tech.
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="p-6 sm:p-8">
+                  <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center"><span className="text-2xl mr-2">🏗️</span> 3. BTP, Infrastructures & Énergie</h3>
+                  <p className="text-slate-600 mb-4">Avec les grands chantiers routiers et immobiliers, les besoins explosent !</p>
+                  <ul className="space-y-2 mb-4 text-slate-700">
+                    <li><strong className="text-slate-900">Ingénieur civil 🏢</strong> (construction de routes, ponts, logements)</li>
+                    <li><strong className="text-slate-900">Technicien en énergie solaire ☀️</strong> (installation de panneaux photovoltaïques)</li>
+                    <li><strong className="text-slate-900">Chauffeur d'engins lourds 🚜</strong> (pour les travaux publics)</li>
+                    <li><strong className="text-slate-900">Électricien industriel ⚡</strong> (maintenance des réseaux électriques)</li>
+                  </ul>
+                  <div className="bg-amber-50 p-3 rounded-lg text-sm text-amber-800">
+                    💼 <strong>Débouchés :</strong> Le Bénin mise sur les <strong>énergies vertes</strong> et l'amélioration des infrastructures.
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="p-6 sm:p-8">
+                  <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center"><span className="text-2xl mr-2">🏥</span> 4. Santé & Bien-Être</h3>
+                  <p className="text-slate-600 mb-4">Manque criard de personnel médical, surtout en zones rurales.</p>
+                  <ul className="space-y-2 mb-4 text-slate-700">
+                    <li><strong className="text-slate-900">Médecin généraliste 👨‍⚕️</strong> (urgent en campagnes)</li>
+                    <li><strong className="text-slate-900">Infirmier / Sage-femme 👩‍⚕️</strong> (besoin dans les maternités)</li>
+                    <li><strong className="text-slate-900">Pharmacien 💊</strong> (gestion des médicaments essentiels)</li>
+                    <li><strong className="text-slate-900">Technicien de laboratoire 🧪</strong> (analyses médicales)</li>
+                  </ul>
+                  <div className="bg-rose-50 p-3 rounded-lg text-sm text-rose-800">
+                    ⚠️ <strong>Priorité :</strong> Le gouvernement recrute massivement via le <strong>PNDS</strong> (Plan National de Développement Sanitaire).
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="p-6 sm:p-8">
+                  <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center"><span className="text-2xl mr-2">📦</span> 5. Commerce, Logistique & Transport</h3>
+                  <p className="text-slate-600 mb-4">Avec le <strong>Port de Cotonou</strong> (2e plus grand d'Afrique de l'Ouest), les métiers logistiques sont en hausse.</p>
+                  <ul className="space-y-2 mb-4 text-slate-700">
+                    <li><strong className="text-slate-900">Agent de transit 🚢</strong> (gestion des import/export)</li>
+                    <li><strong className="text-slate-900">Responsable supply chain 📦</strong> (optimisation des flux)</li>
+                    <li><strong className="text-slate-900">Commercial export 🌍</strong> (vente de produits béninois à l'international)</li>
+                  </ul>
+                  <div className="bg-indigo-50 p-3 rounded-lg text-sm text-indigo-800">
+                    🌐 <strong>Atout :</strong> La maîtrise de l'<strong>anglais</strong> et du <strong>chinois</strong> est un plus pour ce secteur.
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="p-6 sm:p-8">
+                  <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center"><span className="text-2xl mr-2">💰</span> 6. Finance, Banque & Audit</h3>
+                  <p className="text-slate-600 mb-4">Les banques et fintechs recrutent pour sécuriser les transactions.</p>
+                  <ul className="space-y-2 mb-4 text-slate-700">
+                    <li><strong className="text-slate-900">Comptable certifié 📉</strong> (normes OHADA)</li>
+                    <li><strong className="text-slate-900">Analyste financier 📈</strong> (gestion des risques)</li>
+                    <li><strong className="text-slate-900">Conseiller en microfinance 🏦</strong> (accès au crédit pour les PME)</li>
+                  </ul>
+                  <div className="bg-violet-50 p-3 rounded-lg text-sm text-violet-800">
+                    🔐 <strong>Tendance :</strong> La finance digitale (<strong>mobile money</strong>) crée de nouveaux emplois.
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="p-6 sm:p-8">
+                  <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center"><span className="text-2xl mr-2">🎓</span> 7. Éducation & Formation</h3>
+                  <p className="text-slate-600 mb-4">Besoin d'enseignants qualifiés et de formateurs professionnels.</p>
+                  <ul className="space-y-2 mb-4 text-slate-700">
+                    <li><strong className="text-slate-900">Prof de maths/physique ✖️🔬</strong> (lycées et universités)</li>
+                    <li><strong className="text-slate-900">Formateur en métiers techniques 🛠️</strong> (électricité, plomberie, soudure)</li>
+                    <li><strong className="text-slate-900">Expert en e-learning 💻</strong> (numérisation de l'éducation)</li>
+                  </ul>
+                  <div className="bg-slate-100 p-3 rounded-lg text-sm text-slate-800">
+                    📚 <strong>Enjeu :</strong> Le Bénin veut améliorer l'enseignement technique (lycées agricoles et industriels).
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="p-6 sm:p-8">
+                  <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center"><span className="text-2xl mr-2">🎨</span> 8. Artisanat, Tourisme & Création</h3>
+                  <p className="text-slate-600 mb-4">Le Bénin mise sur son patrimoine culturel et l'artisanat local.</p>
+                  <ul className="space-y-2 mb-4 text-slate-700">
+                    <li><strong className="text-slate-900">Designer textile 👗</strong> (valorisation du tissu <strong>"Danfani"</strong>)</li>
+                    <li><strong className="text-slate-900">Guide touristique 🗺️</strong> (pour les sites historiques comme Ouidah et Abomey)</li>
+                    <li><strong className="text-slate-900">Manager hôtelier 🏨</strong> (développement des éco-lodges)</li>
+                  </ul>
+                  <div className="bg-orange-50 p-3 rounded-lg text-sm text-orange-800">
+                    🌟 <strong>Potentiel :</strong> Le tourisme culturel et religieux (<strong>vodoun</strong>) attire de plus en plus.
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="p-6 sm:p-8">
+                  <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center"><span className="text-2xl mr-2">🏛️</span> 9. Secteur Public & Juridique</h3>
+                  <p className="text-slate-600 mb-4">L'État recrute pour moderniser l'administration.</p>
+                  <ul className="space-y-2 mb-4 text-slate-700">
+                    <li><strong className="text-slate-900">Juriste en droit des affaires ⚖️</strong> (OHADA, investissements)</li>
+                    <li><strong className="text-slate-900">Fonctionnaire spécialisé 📑</strong> (fiscalité, douanes)</li>
+                    <li><strong className="text-slate-900">Urbaniste 🏙️</strong> (aménagement des villes)</li>
+                  </ul>
+                  <div className="bg-slate-100 p-3 rounded-lg text-sm text-slate-800">
+                    📜 <strong>Concours :</strong> Beaucoup d'offres via <strong>le gouvernement et les communes</strong>.
+                  </div>
+                </GlassCard>
+
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <GlassCard className="p-6 bg-gradient-to-br from-indigo-50 to-violet-50 border-indigo-100">
+                    <h3 className="text-lg font-bold text-indigo-900 mb-4 flex items-center"><span className="text-xl mr-2">🔥</span> Top 5 Métiers "Coup de Cœur"</h3>
+                    <ol className="space-y-3 text-sm text-indigo-800 font-medium">
+                      <li>1️⃣ Développeur d'applications locales 📱</li>
+                      <li>2️⃣ Ingénieur en énergie solaire ☀️</li>
+                      <li>3️⃣ Expert en agro-business 🌱</li>
+                      <li>4️⃣ Infirmier urgentiste 🚑</li>
+                      <li>5️⃣ Manager logistique portuaire 🚢</li>
+                    </ol>
+                  </GlassCard>
+
+                  <GlassCard className="p-6 bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-100">
+                    <h3 className="text-lg font-bold text-emerald-900 mb-4 flex items-center"><span className="text-xl mr-2">🎯</span> Conseils pour l'emploi</h3>
+                    <ul className="space-y-3 text-sm text-emerald-800 font-medium">
+                      <li>✔️ <strong>Se former :</strong> Sèmè City, centres agréés</li>
+                      <li>✔️ <strong>Maîtriser l'anglais 🌍</strong> (secteurs internationaux)</li>
+                      <li>✔️ <strong>Suivre les appels d'offres</strong> (ANPE, PND)</li>
+                      <li>✔️ <strong>Entrepreneuriat 💡</strong> (startups encouragées)</li>
+                    </ul>
+                    <p className="mt-4 text-xs text-emerald-700 italic">💬 Motivation : Le Bénin est en plein boom économique, c'est le moment de saisir les opportunités !</p>
+                  </GlassCard>
+                </div>
               </div>
             </motion.div>
           )}
