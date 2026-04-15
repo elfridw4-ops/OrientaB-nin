@@ -1,12 +1,12 @@
 CONTRAT DE LICENCE LOGICIELLE PROPRIÉTAIRE - ORIENTABÉNIN
 
-Copyright (c) 2026 OrientaBénin. Tous droits réservés.
+Copyright (c) 2026 Aurion Labs-G. All rights reserved.
 
 1. DÉFINITION DU LOGICIEL
-Le terme "Logiciel" désigne l'application OrientaBénin, incluant son code source, son moteur de calcul (engine.ts), ses bases de données (guide.json), ses interfaces graphiques et sa documentation.
+Le terme "Logiciel" désigne l'application OrientaBénin, incluant son code source, son moteur de calcul (engine.ts), ses bases de données (guide.json), ses interfaces graphiques et sa documentation. OrientaBénin is a product of Aurion Labs-G.
 
 2. OCTROI DE LICENCE
-Ce logiciel est la propriété exclusive de OrientaBénin. Aucune licence d'utilisation, de copie, de modification ou de distribution n'est accordée par le présent document, sauf autorisation écrite expresse du détenteur du copyright.
+Ce logiciel est la propriété exclusive d'Aurion Labs-G. Aucune licence d'utilisation, de copie, de modification ou de distribution n'est accordée par le présent document, sauf autorisation écrite expresse du détenteur du copyright.
 
 3. RESTRICTIONS
 Il est strictement interdit de :
@@ -16,7 +16,7 @@ Il est strictement interdit de :
 - Héberger une instance publique du Logiciel sans accord préalable.
 
 4. PROPRIÉTÉ INTELLECTUELLE
-Tous les titres, droits de propriété et droits de propriété intellectuelle relatifs au Logiciel (y compris, mais sans s'y limiter, les images, photographies, animations, vidéos, musique, texte et "applets" incorporés dans le Logiciel) sont la propriété de OrientaBénin.
+Tous les titres, droits de propriété et droits de propriété intellectuelle relatifs au Logiciel (y compris, mais sans s'y limiter, les images, photographies, animations, vidéos, musique, texte et "applets" incorporés dans le Logiciel) sont la propriété d'Aurion Labs-G. All rights reserved by Aurion Labs-G.
 
 5. ABSENCE DE GARANTIE
 LE LOGICIEL EST FOURNI "EN L'ÉTAT", SANS GARANTIE D'AUCUNE SORTE, EXPRESSE OU IMPLICITE. EN AUCUN CAS LES AUTEURS OU TITULAIRES DU DROIT D'AUTEUR NE SERONT RESPONSABLES DE TOUTE RÉCLAMATION, DOMMAGE OU AUTRE RESPONSABILITÉ.

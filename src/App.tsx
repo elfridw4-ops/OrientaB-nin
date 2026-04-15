@@ -70,7 +70,10 @@ export default function App() {
     '/a-propos': 'about',
     '/faq': 'faq',
     '/conseils': 'blog',
-    '/conseils/metiers-avenir': 'article-metiers'
+    '/conseils/metiers-avenir': 'article-metiers',
+    '/cgu': 'cgu',
+    '/confidentialite': 'privacy',
+    '/mentions-legales': 'legal'
   };
   
   const reverseViewMap: Record<string, string> = {
@@ -84,7 +87,10 @@ export default function App() {
     'about': '/a-propos',
     'faq': '/faq',
     'blog': '/conseils',
-    'article-metiers': '/conseils/metiers-avenir'
+    'article-metiers': '/conseils/metiers-avenir',
+    'cgu': '/cgu',
+    'privacy': '/confidentialite',
+    'legal': '/mentions-legales'
   };
 
   const view = viewMap[location.pathname] || 'home';
@@ -99,6 +105,9 @@ export default function App() {
       case 'guide': return { title: "Guide d'orientation | OrientaBénin", desc: "Comprendre les bourses, secours et règles d'orientation au Bénin." };
       case 'blog': return { title: "Conseils | OrientaBénin", desc: "Conseils et astuces pour réussir son orientation universitaire." };
       case 'article-metiers': return { title: "Les métiers les plus recherchés au Bénin | OrientaBénin", desc: "Découvrez la liste détaillée et dynamique des métiers les plus recherchés au Bénin par secteur." };
+      case 'cgu': return { title: "CGU | OrientaBénin", desc: "Conditions Générales d'Utilisation d'OrientaBénin." };
+      case 'privacy': return { title: "Confidentialité | OrientaBénin", desc: "Politique de confidentialité d'OrientaBénin." };
+      case 'legal': return { title: "Mentions Légales | OrientaBénin", desc: "Mentions légales d'OrientaBénin." };
       case 'admin': return { title: "Administration | OrientaBénin", desc: "Gestion de la plateforme." };
       default: return { title: "OrientaBénin", desc: "Orientation universitaire au Bénin." };
     }
@@ -360,6 +369,8 @@ export default function App() {
       <Helmet>
         <title>{helmetData.title}</title>
         <meta name="description" content={helmetData.desc} />
+        <meta name="author" content="Aurion Labs-G" />
+        <meta name="publisher" content="Aurion Labs-G" />
       </Helmet>
       <AnimatePresence mode="wait">
         {view === 'admin' ? (
@@ -537,7 +548,12 @@ export default function App() {
                     </div>
                   </div>
                   <div className="border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center text-xs">
-                    <p>© 2026 OrientaBénin — Tous droits réservés.</p>
+                    <p>© 2026 OrientaBénin. A product of Aurion Labs-G. All rights reserved.</p>
+                    <div className="flex space-x-4 mt-4 sm:mt-0">
+                      <button onClick={() => setView('legal')} className="hover:text-white transition-colors">Mentions Légales</button>
+                      <button onClick={() => setView('privacy')} className="hover:text-white transition-colors">Confidentialité</button>
+                      <button onClick={() => setView('cgu')} className="hover:text-white transition-colors">CGU</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1207,6 +1223,13 @@ export default function App() {
               </div>
 
               <div className="space-y-6">
+                <GlassCard className="p-6 bg-indigo-50/50 border-indigo-100">
+                  <h3 className="text-xl font-bold text-slate-900 mb-3 flex items-center"><span className="text-2xl mr-2">🚀</span> Propulsé par Aurion Labs-G</h3>
+                  <p className="text-slate-600 leading-relaxed">
+                    OrientaBénin est un produit fièrement développé et maintenu par <strong>Aurion Labs-G</strong>. Notre entreprise s'engage à créer des solutions technologiques innovantes pour résoudre les défis locaux. Tous les droits, logiciels et services liés à OrientaBénin sont la propriété exclusive d'Aurion Labs-G.
+                  </p>
+                </GlassCard>
+
                 <GlassCard className="p-6">
                   <h3 className="text-xl font-bold text-slate-900 mb-3 flex items-center"><Target className="w-5 h-5 mr-2 text-indigo-600"/> Notre Vision</h3>
                   <p className="text-slate-600 leading-relaxed">
@@ -1526,8 +1549,8 @@ export default function App() {
                 <h2 className="text-3xl font-display font-black text-slate-900 mb-6">Mentions Légales</h2>
                 <div className="space-y-6 text-slate-600 leading-relaxed">
                   <section>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">1. Éditeur du site</h3>
-                    <p>Le site OrientaBénin est édité dans le cadre d'un projet technologique et éducatif visant à accompagner les bacheliers béninois.</p>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">1. Éditeur du service</h3>
+                    <p>L'application OrientaBénin est éditée et exploitée par <strong>Aurion Labs-G</strong>.</p>
                   </section>
                   <section>
                     <h3 className="text-xl font-bold text-slate-900 mb-2">2. Hébergement</h3>
@@ -1535,7 +1558,9 @@ export default function App() {
                   </section>
                   <section>
                     <h3 className="text-xl font-bold text-slate-900 mb-2">3. Propriété intellectuelle</h3>
-                    <p>Les données relatives aux filières, universités et quotas sont issues des publications officielles du Ministère de l'Enseignement Supérieur et de la Recherche Scientifique (MESRS) du Bénin. L'algorithme de simulation et l'interface utilisateur sont la propriété exclusive des créateurs d'OrientaBénin.</p>
+                    <p><strong>OrientaBénin is a product of Aurion Labs-G. All rights reserved by Aurion Labs-G.</strong></p>
+                    <p className="mt-2">L'ensemble de cette application (structure, design, textes, algorithmes de calcul, bases de données) appartient exclusivement à Aurion Labs-G. Toute reproduction totale ou partielle est strictement interdite sans autorisation préalable.</p>
+                    <p className="mt-2">Les données relatives aux filières, universités et quotas sont issues des publications officielles du Ministère de l'Enseignement Supérieur et de la Recherche Scientifique (MESRS) du Bénin.</p>
                   </section>
                   <section>
                     <h3 className="text-xl font-bold text-slate-900 mb-2">4. Avertissement scientifique</h3>
@@ -1556,20 +1581,54 @@ export default function App() {
                 <h2 className="text-3xl font-display font-black text-slate-900 mb-6">Politique de Confidentialité</h2>
                 <div className="space-y-6 text-slate-600 leading-relaxed">
                   <section>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">1. Collecte des données</h3>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">1. Responsable du traitement</h3>
+                    <p><strong>Aurion Labs-G</strong> est le responsable du traitement des données collectées sur l'application OrientaBénin.</p>
+                  </section>
+                  <section>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">2. Collecte des données</h3>
                     <p>Nous collectons uniquement les données nécessaires au fonctionnement de l'application : votre adresse email (via Google Sign-In), votre série du baccalauréat, vos notes saisies et vos choix de filières.</p>
                   </section>
                   <section>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">2. Utilisation des données</h3>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">3. Utilisation des données</h3>
                     <p>Vos notes sont utilisées exclusivement pour faire fonctionner l'algorithme de simulation. Vos choix de filières sont enregistrés pour vous permettre de les retrouver lors de vos prochaines connexions et pour générer des statistiques anonymisées sur l'attractivité des filières.</p>
                   </section>
                   <section>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">3. Partage des données</h3>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">4. Partage des données</h3>
                     <p>Vos données personnelles ne sont jamais vendues, louées ou partagées avec des tiers à des fins commerciales. Les statistiques globales (ex: nombre de candidats par filière) sont anonymes.</p>
                   </section>
                   <section>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">4. Sécurité</h3>
-                    <p>Vos données sont stockées de manière sécurisée sur les serveurs de Google (Firebase/Firestore) avec des règles de sécurité strictes garantissant que seul vous (et les administrateurs) pouvez accéder à votre profil.</p>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">5. Sécurité</h3>
+                    <p>Vos données sont stockées de manière sécurisée sur les serveurs de Google (Firebase/Firestore) avec des règles de sécurité strictes garantissant que seul vous (et les administrateurs) pouvez accéder à votre profil. <em>OrientaBénin is a product of Aurion Labs-G. All rights reserved by Aurion Labs-G.</em></p>
+                  </section>
+                </div>
+              </GlassCard>
+            </motion.div>
+          )}
+
+          {/* CGU VIEW */}
+          {view === 'cgu' && (
+            <motion.div key="cgu" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
+              <button onClick={() => navigate(-1)} className="mb-6 flex items-center text-slate-500 hover:text-slate-900 transition-colors font-medium">
+                <ArrowLeft className="w-4 h-4 mr-1" /> Retour
+              </button>
+              <GlassCard className="p-8">
+                <h2 className="text-3xl font-display font-black text-slate-900 mb-6">Conditions Générales d'Utilisation</h2>
+                <div className="space-y-6 text-slate-600 leading-relaxed">
+                  <section>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">1. Acceptation</h3>
+                    <p>En utilisant l'application OrientaBénin, vous acceptez pleinement et sans réserve les présentes conditions définies par <strong>Aurion Labs-G</strong>.</p>
+                  </section>
+                  <section>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">2. Service fourni</h3>
+                    <p>OrientaBénin est un outil d'aide à la décision. Les résultats de simulation sont purement indicatifs et basés sur les données officielles disponibles. Aurion Labs-G ne garantit en aucun cas l'obtention d'une bourse, d'un secours ou d'une admission dans une filière.</p>
+                  </section>
+                  <section>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">3. Propriété intellectuelle</h3>
+                    <p>Le code source, la marque, le design, les algorithmes et le service dans son ensemble sont la propriété exclusive d'Aurion Labs-G. <em>OrientaBénin is a product of Aurion Labs-G. All rights reserved by Aurion Labs-G.</em></p>
+                  </section>
+                  <section>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">4. Responsabilité de l'utilisateur</h3>
+                    <p>L'utilisateur s'engage à fournir des informations exactes (notes, série) pour garantir la pertinence des simulations. Toute utilisation abusive ou tentative de piratage entraînera la suppression immédiate du compte.</p>
                   </section>
                 </div>
               </GlassCard>
