@@ -197,8 +197,12 @@ export const publishCatalog = async (filieres: FlattenedFiliere[]): Promise<void
   const path = 'system/catalog';
   try {
     const docRef = doc(db, 'system', 'catalog');
+    // Firestore ne supporte pas les valeurs 'undefined'. 
+    // On utilise JSON.parse(JSON.stringify()) pour nettoyer l'objet de toute valeur undefined.
+    const sanitizedFilieres = JSON.parse(JSON.stringify(filieres));
+    
     await setDoc(docRef, {
-      data: filieres,
+      data: sanitizedFilieres,
       updatedAt: new Date().toISOString()
     });
   } catch (error) {

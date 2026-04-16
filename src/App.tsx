@@ -20,6 +20,7 @@ import {
 import { auth, loginWithGoogle, logout } from './firebase';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { getUserProfile, createUserProfile, updateUserProfile, updateFiliereChoices, fetchLatestCatalog } from './services/firestoreService';
+import seriesBacData from './data/series_bac.json';
 
 // Lazy load heavy components
 const Admin = React.lazy(() => import('./Admin'));
@@ -167,6 +168,14 @@ export default function App() {
 
   const requiredSubjects = useMemo(() => {
     if (!selectedSerie) return [];
+    
+    // Find the selected series in the BAC data
+    const serieData = seriesBacData.series.find(s => s.code === selectedSerie);
+    if (serieData && serieData.epreuves.premier_groupe.ecrit) {
+      return serieData.epreuves.premier_groupe.ecrit.map(e => e.matiere).sort();
+    }
+    
+    // Fallback to the old method if series not found in JSON
     const filieres = allFilieres.filter(f => f.baccalaureats_recommandes.includes(selectedSerie));
     const subjects = new Set<string>();
     filieres.forEach(f => {
@@ -174,6 +183,32 @@ export default function App() {
     });
     return Array.from(subjects).sort();
   }, [selectedSerie, allFilieres]);
+
+  const bacAverage = useMemo(() => {
+    if (!selectedSerie) return null;
+    const serieData = seriesBacData.series.find(s => s.code === selectedSerie);
+    if (!serieData || !serieData.epreuves.premier_groupe.ecrit) return null;
+    
+    let totalPoints = 0;
+    let totalCoeffs = 0;
+    let hasAllGrades = true;
+
+    serieData.epreuves.premier_groupe.ecrit.forEach(epreuve => {
+      const grade = grades[epreuve.matiere];
+      if (grade === undefined || grade === null || isNaN(grade)) {
+        hasAllGrades = false;
+      } else {
+        totalPoints += grade * epreuve.coefficient;
+        totalCoeffs += epreuve.coefficient;
+      }
+    });
+
+    if (totalCoeffs === 0) return null;
+    return {
+      average: (totalPoints / totalCoeffs).toFixed(2),
+      isComplete: hasAllGrades
+    };
+  }, [selectedSerie, grades]);
 
   // Firebase Auth Listener
   useEffect(() => {
@@ -619,23 +654,44 @@ export default function App() {
                     </div>
                     {selectedSerie ? (
                       <div className="space-y-3">
-                        {requiredSubjects.map(subject => (
-                          <div key={subject} className="flex items-center justify-between bg-white/40 border border-slate-100 p-3 rounded-xl hover:bg-white/60 transition-colors">
-                            <label className="text-sm font-bold text-slate-700 flex-1">{subject}</label>
-                            <div className="w-24 relative">
-                              <input 
-                                type="number" 
-                                min="0" 
-                                max="20" 
-                                step="0.25"
-                                placeholder="--"
-                                value={grades[subject] || ''} 
-                                onChange={e => setGrades({...grades, [subject]: parseFloat(e.target.value) || 0})} 
-                                className="w-full bg-white border border-slate-200 rounded-lg py-2 px-3 text-center focus:ring-2 focus:ring-violet-500 outline-none transition-all font-black text-slate-800 shadow-inner" 
-                              />
+                        {requiredSubjects.map(subject => {
+                          const serieData = seriesBacData.series.find(s => s.code === selectedSerie);
+                          const epreuve = serieData?.epreuves.premier_groupe.ecrit?.find(e => e.matiere === subject);
+                          const coeff = epreuve ? epreuve.coefficient : null;
+                          
+                          return (
+                            <div key={subject} className="flex items-center justify-between bg-white/40 border border-slate-100 p-3 rounded-xl hover:bg-white/60 transition-colors">
+                              <div className="flex-1">
+                                <label className="text-sm font-bold text-slate-700 block">{subject}</label>
+                                {coeff && <span className="text-xs text-slate-400 font-medium">Coeff. {coeff}</span>}
+                              </div>
+                              <div className="w-24 relative">
+                                <input 
+                                  type="number" 
+                                  min="0" 
+                                  max="20" 
+                                  step="0.25"
+                                  placeholder="--"
+                                  value={grades[subject] || ''} 
+                                  onChange={e => setGrades({...grades, [subject]: parseFloat(e.target.value) || 0})} 
+                                  className="w-full bg-white border border-slate-200 rounded-lg py-2 px-3 text-center focus:ring-2 focus:ring-violet-500 outline-none transition-all font-black text-slate-800 shadow-inner" 
+                                />
+                              </div>
+                            </div>
+                          );
+                        })}
+                        
+                        {bacAverage && (
+                          <div className={`mt-6 p-4 rounded-xl border flex items-center justify-between ${bacAverage.isComplete ? 'bg-emerald-50 border-emerald-200' : 'bg-slate-50 border-slate-200'}`}>
+                            <div>
+                              <p className="text-sm font-bold text-slate-800">Moyenne estimée au BAC</p>
+                              {!bacAverage.isComplete && <p className="text-xs text-slate-500">Saisissez toutes les notes pour un calcul précis.</p>}
+                            </div>
+                            <div className={`text-2xl font-black ${bacAverage.isComplete ? 'text-emerald-600' : 'text-slate-400'}`}>
+                              {bacAverage.average}
                             </div>
                           </div>
-                        ))}
+                        )}
                       </div>
                     ) : (
                       <div className="bg-slate-50 border border-slate-100 rounded-xl p-6 text-center">
@@ -693,11 +749,19 @@ export default function App() {
                 <p><strong>Avertissement Scientifique :</strong> Les résultats présentés sont des simulations basées sur un algorithme prédictif et les données historiques d'orientation du MESRS. Ils ont une valeur indicative et stratégique, mais ne constituent en aucun cas une garantie d'admission ou d'obtention de bourse. La décision finale appartient aux commissions d'attribution de l'État.</p>
               </div>
 
+              {selectedSerie && recommendations.length === 0 && Object.keys(grades).length > 0 && (
+                <GlassCard className="p-8 text-center mb-8 border-amber-200 bg-amber-50/50">
+                  <AlertTriangle className="w-12 h-12 text-amber-500 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">Aucune filière admissible</h3>
+                  <p className="text-slate-600 font-medium">D'après vos notes, aucune filière n'atteint la moyenne requise de 10/20. Veuillez vérifier vos notes ou envisager d'autres options d'orientation.</p>
+                </GlassCard>
+              )}
+
               {selectedSerie && recommendations.length > 0 && (
                 <div className="mb-8 p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
                   <h3 className="text-lg font-bold text-slate-900 mb-4 border-b border-slate-100 pb-2">Résumé de vos résultats (Série {selectedSerie})</h3>
                   <div className="space-y-3 text-sm text-slate-700">
-                    <p><strong>Total des filières admissibles :</strong> {recommendations.length}</p>
+                    <p><strong>Total des filières admissibles (Moyenne &ge; 10) :</strong> {recommendations.length}</p>
                     <p><strong>Meilleure moyenne :</strong> {Math.max(...recommendations.map(r => r.score)).toFixed(2)}</p>
                     <div className="mt-4">
                       <p className="font-bold mb-2">Répartition par université :</p>

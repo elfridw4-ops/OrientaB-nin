@@ -1,0 +1,265 @@
+{
+  "metadata": {
+    "titre_document": "Liste des épreuves à l'examen du Baccalauréat",
+    "pays": "Bénin",
+    "source": "Office du Baccalauréat du Bénin"
+  },
+  "series": [
+    {
+      "code": "A1",
+      "nom_complet": "Série A1 - Lettres et Langues",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Français", "coefficient": 5 },
+            { "matiere": "Philosophie", "coefficient": 4 },
+            { "matiere": "Histoire-Géographie", "coefficient": 3 },
+            { "matiere": "Langue vivante 1", "coefficient": 3 },
+            { "matiere": "Langue vivante 2", "coefficient": 2 },
+            { "matiere": "Mathématiques", "coefficient": 2 },
+            { "matiere": "SVT", "coefficient": 2 }
+          ]
+        }
+      }
+    },
+    {
+      "code": "A2",
+      "nom_complet": "Série A2 - Lettres et Sciences Humaines",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Français", "coefficient": 4 },
+            { "matiere": "Philosophie", "coefficient": 3 },
+            { "matiere": "Histoire-Géographie", "coefficient": 5 },
+            { "matiere": "Langue vivante 1", "coefficient": 3 },
+            { "matiere": "Langue vivante 2", "coefficient": 2 },
+            { "matiere": "Mathématiques", "coefficient": 2 },
+            { "matiere": "SVT", "coefficient": 2 }
+          ]
+        }
+      }
+    },
+    {
+      "code": "B",
+      "nom_complet": "Série B - Sciences Économiques et Sociales",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Français", "coefficient": 4 },
+            { "matiere": "Philosophie", "coefficient": 3 },
+            { "matiere": "Histoire-Géographie", "coefficient": 4 },
+            { "matiere": "Langue vivante 1", "coefficient": 2 },
+            { "matiere": "Economie", "coefficient": 4 },
+            { "matiere": "Mathématiques", "coefficient": 2 },
+            { "matiere": "SVT", "coefficient": 2 }
+          ]
+        }
+      }
+    },
+    {
+      "code": "C",
+      "nom_complet": "Série C - Mathématiques et Sciences Physiques",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Mathématiques", "coefficient": 6 },
+            { "matiere": "PCT", "coefficient": 5 },
+            { "matiere": "Français", "coefficient": 2 },
+            { "matiere": "Anglais", "coefficient": 2 },
+            { "matiere": "SVT", "coefficient": 2 },
+            { "matiere": "Histoire-Géographie", "coefficient": 2 },
+            { "matiere": "Philosophie", "coefficient": 2 }
+          ]
+        }
+      }
+    },
+    {
+      "code": "D",
+      "nom_complet": "Série D - Sciences de la Vie et de la Terre",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Mathématiques", "coefficient": 4 },
+            { "matiere": "PCT", "coefficient": 4 },
+            { "matiere": "Français", "coefficient": 2 },
+            { "matiere": "Anglais", "coefficient": 2 },
+            { "matiere": "SVT", "coefficient": 5 },
+            { "matiere": "Histoire-Géographie", "coefficient": 2 },
+            { "matiere": "Philosophie", "coefficient": 2 }
+          ]
+        }
+      }
+    },
+    {
+      "code": "E",
+      "nom_complet": "Série E - Mathématiques et Technique",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Français", "coefficient": 2 },
+            { "matiere": "Mathématiques", "coefficient": 5 },
+            { "matiere": "PCT", "coefficient": 4 },
+            { "matiere": "Construction Mécanique", "coefficient": 3 },
+            { "matiere": "Etude de Fabrication ou Technologie", "coefficient": 2 }
+          ],
+          "pratique": [
+            { "matiere": "Manipulation (Travaux Pratiques)", "coefficient": 3 }
+          ]
+        }
+      }
+    },
+    {
+      "code": "G1",
+      "nom_complet": "Série G1 - Techniques Administratives (Secrétariat)",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Français", "coefficient": 3 },
+            { "matiere": "Etude de Cas", "coefficient": 4 },
+            { "matiere": "Economie", "coefficient": 3 },
+            { "matiere": "Anglais", "coefficient": 2 },
+            { "matiere": "Compte-Rendu PV + Rapport", "coefficient": 3 },
+            { "matiere": "Droit Administratif et Droit du Travail", "coefficient": 2 }
+          ],
+          "pratique": [
+            { "matiere": "Techniques de base de secrétariat", "coefficient": 3 }
+          ]
+        }
+      }
+    },
+    {
+      "code": "G2",
+      "nom_complet": "Série G2 - Techniques Quantitatives de Gestion (Comptabilité)",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Français", "coefficient": 3 },
+            { "matiere": "Etude de Cas", "coefficient": 6 },
+            { "matiere": "Economie", "coefficient": 3 },
+            { "matiere": "Anglais", "coefficient": 2 },
+            { "matiere": "Mathématiques Appliquées", "coefficient": 3 },
+            { "matiere": "Droit (TBAD-Finances Publiques)", "coefficient": 2 }
+          ]
+        }
+      }
+    },
+    {
+      "code": "G3",
+      "nom_complet": "Série G3 - Techniques Commerciales",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Français", "coefficient": 3 },
+            { "matiere": "Etude de Cas", "coefficient": 6 },
+            { "matiere": "Economie", "coefficient": 3 },
+            { "matiere": "Anglais", "coefficient": 2 },
+            { "matiere": "Mathématiques Appliquées", "coefficient": 3 },
+            { "matiere": "Droit (TBAD-Finances Publiques)", "coefficient": 2 }
+          ]
+        }
+      }
+    },
+    {
+      "code": "F1",
+      "nom_complet": "Série F1 - Fabrication Mécanique",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Français", "coefficient": 2 },
+            { "matiere": "Mathématiques", "coefficient": 3 },
+            { "matiere": "PCT", "coefficient": 2 },
+            { "matiere": "Construction Mécanique", "coefficient": 3 },
+            { "matiere": "Mécanique", "coefficient": 2 },
+            { "matiere": "Automatique", "coefficient": 2 },
+            { "matiere": "Etude d'Outillage", "coefficient": 2 },
+            { "matiere": "Analyse de Fabrication", "coefficient": 3 }
+          ],
+          "pratique": [
+            { "matiere": "Travaux Pratiques", "coefficient": 3 }
+          ]
+        }
+      }
+    },
+    {
+      "code": "F2",
+      "nom_complet": "Série F2 - Electronique",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Français", "coefficient": 2 },
+            { "matiere": "Mathématiques", "coefficient": 3 },
+            { "matiere": "PCT", "coefficient": 2 },
+            { "matiere": "Construction Mécanique", "coefficient": 2 },
+            { "matiere": "Etude d'un Système Technique", "coefficient": 4 }
+          ],
+          "pratique": [
+            { "matiere": "Informatique (T.P.)", "coefficient": 2 },
+            { "matiere": "Réalisation de Maquette (T.P.)", "coefficient": 4 },
+            { "matiere": "Mesures et Essais de Laboratoire (T.P.)", "coefficient": 3 }
+          ]
+        }
+      }
+    },
+    {
+      "code": "F3",
+      "nom_complet": "Série F3 - Electrotechnique",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Français", "coefficient": 2 },
+            { "matiere": "Mathématiques", "coefficient": 3 },
+            { "matiere": "PCT", "coefficient": 2 },
+            { "matiere": "Electrotechnique", "coefficient": 3 },
+            { "matiere": "Etude de Système Technique", "coefficient": 5 }
+          ],
+          "pratique": [
+            { "matiere": "Construction (T.P.)", "coefficient": 4 },
+            { "matiere": "Mesure et Essai de Laboratoire (T.P.)", "coefficient": 3 }
+          ]
+        }
+      }
+    },
+    {
+      "code": "F4",
+      "nom_complet": "Série F4 - Génie Civil",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Français", "coefficient": 2 },
+            { "matiere": "Mathématiques", "coefficient": 3 },
+            { "matiere": "PCT", "coefficient": 2 },
+            { "matiere": "Résistance des Matériaux", "coefficient": 3 },
+            { "matiere": "Béton Armé", "coefficient": 2 },
+            { "matiere": "Métré et Etude de Prix", "coefficient": 2 },
+            { "matiere": "Procédé de Construction", "coefficient": 2 }
+          ],
+          "pratique": [
+            { "matiere": "Projet d'Exploitation (T.P.)", "coefficient": 3 },
+            { "matiere": "Dessin Technique (T.P.)", "coefficient": 3 }
+          ]
+        }
+      }
+    },
+    {
+      "code": "EA",
+      "nom_complet": "Filière Eau et Assainissement",
+      "epreuves": {
+        "premier_groupe": {
+          "ecrit": [
+            { "matiere": "Français", "coefficient": 2 },
+            { "matiere": "Assainissement", "coefficient": 2 },
+            { "matiere": "Mathématiques", "coefficient": 3 },
+            { "matiere": "Anglais", "coefficient": 1 },
+            { "matiere": "PCT", "coefficient": 2 },
+            { "matiere": "Mobilisation des ressources en eau", "coefficient": 4 },
+            { "matiere": "Projet d'exploitation", "coefficient": 4 }
+          ],
+          "pratique": [
+            { "matiere": "Traitement de l'eau (T.P.)", "coefficient": 4 },
+            { "matiere": "Réseaux hydrauliques (T.P.)", "coefficient": 3 }
+          ]
+        }
+      }
+    }
+  ]
+}

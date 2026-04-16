@@ -39,6 +39,40 @@ export interface ResultatRecommandation<T> {
 // --- 1. CALCUL DU SCORE ---
 
 /**
+ * Récupère la meilleure note possible pour une matière donnée, en gérant
+ * les équivalences (PCT = SPCT) et les choix multiples (ex: "PCT/RDM").
+ */
+export function getNoteForMatiere(notes: NotesUtilisateur, matiereNom: string): number {
+  // Correspondance directe
+  if (notes[matiereNom] !== undefined) return notes[matiereNom];
+  
+  // Équivalence PCT / SPCT
+  if (matiereNom === 'SPCT' && notes['PCT'] !== undefined) return notes['PCT'];
+  if (matiereNom === 'PCT' && notes['SPCT'] !== undefined) return notes['SPCT'];
+  
+  // Gestion des matières composées (ex: "PCT/RDM" ou "Maths/Economie")
+  // On prend la meilleure note parmi les options disponibles
+  if (matiereNom.includes('/')) {
+    const parts = matiereNom.split('/');
+    let bestNote = 0;
+    for (let part of parts) {
+      part = part.trim();
+      let note = notes[part] || 0;
+      if (part === 'SPCT' && notes['PCT'] !== undefined) note = notes['PCT'];
+      if (part === 'PCT' && notes['SPCT'] !== undefined) note = notes['SPCT'];
+      if (note > bestNote) bestNote = note;
+    }
+    return bestNote;
+  }
+
+  // Gestion des noms partiels (ex: "Enseignement des PCT")
+  if (matiereNom.includes('PCT') && notes['PCT'] !== undefined) return notes['PCT'];
+  if (matiereNom.includes('SPCT') && notes['PCT'] !== undefined) return notes['PCT'];
+
+  return 0;
+}
+
+/**
  * Calcule la moyenne pondérée pour une filière donnée.
  * Formule : M = (m1*x + m2*y + m3*z) / (x+y+z)
  * 
@@ -51,7 +85,7 @@ export function calculerScore(notes: NotesUtilisateur, matieres: MatierePonderee
   let totalCoefficients = 0;
 
   for (const matiere of matieres) {
-    const note = notes[matiere.nom] || 0;
+    const note = getNoteForMatiere(notes, matiere.nom);
     totalPoints += note * matiere.coeff;
     totalCoefficients += matiere.coeff;
   }
@@ -69,10 +103,10 @@ export function genererFormule(notes: NotesUtilisateur, matieres: MatierePondere
   if (!matieres || matieres.length === 0) return '';
   
   const parts = matieres.map(m => `${m.nom}×${m.coeff}`);
-  const values = matieres.map(m => `${(notes[m.nom] || 0) * m.coeff}`);
+  const values = matieres.map(m => `${getNoteForMatiere(notes, m.nom)}×${m.coeff}`);
   const totalCoeff = matieres.reduce((sum, m) => sum + m.coeff, 0);
   
-  return `(${parts.join(' + ')})/${totalCoeff} = (${values.join('+')})/${totalCoeff}`;
+  return `(${parts.join(' + ')})/${totalCoeff} = (${values.join(' + ')})/${totalCoeff}`;
 }
 
 // --- 2. FILTRAGE INTELLIGENT ---
@@ -155,7 +189,7 @@ export function genererRecommandations<T extends FiliereBase>(
     const isLessCrowded = saturation < 50 && score >= 12;
 
     return { filiere, score, niveau, isLessCrowded, chances, saturation, formule };
-  });
+  }).filter(r => r.score >= 10);
 
   // Utilisation de la fonction de classement
   return classerParScore(resultats) as ResultatRecommandation<T>[];
@@ -207,13 +241,19 @@ export function rechercherFilieres<T extends FiliereBase>(filieres: T[], requete
   
   return filieres.filter(filiere => {
     // Vérifie si le nom de la filière contient la requête
-    const correspondNom = filiere.nom_filiere.toLowerCase().includes(requeteMinuscule);
+    const correspondNom = filiere.nom_filiere?.toLowerCase().includes(requeteMinuscule);
     
     // Vérifie si au moins un des débouchés contient la requête
-    const correspondMetier = filiere.debouches.some(debouche => 
+    const correspondMetier = filiere.debouches?.some(debouche => 
       debouche.toLowerCase().includes(requeteMinuscule)
     );
+
+    // Nouveaux champs de recherche (établissement, sigle, université, localisation)
+    const correspondEtablissement = filiere.etablissement?.toLowerCase().includes(requeteMinuscule);
+    const correspondSigle = filiere.sigle?.toLowerCase().includes(requeteMinuscule);
+    const correspondUniversite = filiere.universite?.toLowerCase().includes(requeteMinuscule);
+    const correspondLocalisation = filiere.localisation?.toLowerCase().includes(requeteMinuscule);
     
-    return correspondNom || correspondMetier;
+    return correspondNom || correspondMetier || correspondEtablissement || correspondSigle || correspondUniversite || correspondLocalisation;
   });
 }

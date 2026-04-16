@@ -18,6 +18,21 @@ export default function Admin({ onBack }: { onBack: () => void }) {
   const [editingFiliere, setEditingFiliere] = useState<FlattenedFiliere | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [dialog, setDialog] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    type: 'confirm' | 'alert';
+    onConfirm?: () => void;
+  }>({ isOpen: false, title: '', message: '', type: 'alert' });
+
+  const showAlert = (title: string, message: string) => {
+    setDialog({ isOpen: true, title, message, type: 'alert' });
+  };
+
+  const showConfirm = (title: string, message: string, onConfirm: () => void) => {
+    setDialog({ isOpen: true, title, message, type: 'confirm', onConfirm });
+  };
 
   useEffect(() => {
     setFilieres(getAllFilieres());
@@ -35,24 +50,24 @@ export default function Admin({ onBack }: { onBack: () => void }) {
   };
 
   const handleDeleteFiliere = async (id: string) => {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette filière ?')) {
+    showConfirm('Supprimer la filière', 'Êtes-vous sûr de vouloir supprimer cette filière ?', () => {
       const newFilieres = filieres.filter(f => f.id !== id);
       saveFilieresLocal(newFilieres);
-    }
+    });
   };
 
   const handleToggleUserLock = async (user: UserProfile) => {
     const action = user.isLocked ? 'déverrouiller' : 'verrouiller';
-    if (confirm(`Voulez-vous vraiment ${action} le compte de ${user.nomComplet} ?`)) {
+    showConfirm('Modifier l\'accès', `Voulez-vous vraiment ${action} le compte de ${user.nomComplet} ?`, async () => {
       await updateUserProfile(user.uid, { isLocked: !user.isLocked });
-    }
+    });
   };
 
   const handleToggleUserDelete = async (user: UserProfile) => {
     const action = user.isDeleted ? 'restaurer' : 'supprimer (bloquer)';
-    if (confirm(`Voulez-vous vraiment ${action} le compte de ${user.nomComplet} ?`)) {
+    showConfirm('Modifier le statut', `Voulez-vous vraiment ${action} le compte de ${user.nomComplet} ?`, async () => {
       await updateUserProfile(user.uid, { isDeleted: !user.isDeleted });
-    }
+    });
   };
 
   const openModal = (filiere?: FlattenedFiliere) => {
@@ -87,7 +102,7 @@ export default function Admin({ onBack }: { onBack: () => void }) {
   const saveFiliere = async () => {
     if (!editingFiliere) return;
     if (!editingFiliere.nom_filiere || !editingFiliere.universite) {
-      alert('Le nom et l\'université sont obligatoires.');
+      showAlert('Erreur', 'Le nom et l\'université sont obligatoires.');
       return;
     }
 
@@ -104,9 +119,11 @@ export default function Admin({ onBack }: { onBack: () => void }) {
   };
 
   const filteredFilieres = filieres.filter(f => 
-    f.nom_filiere.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    f.sigle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    f.universite.toLowerCase().includes(searchTerm.toLowerCase())
+    f.nom_filiere?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    f.sigle?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    f.universite?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    f.etablissement?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    f.localisation?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const filteredUsers = users.filter(u => 
@@ -163,24 +180,24 @@ export default function Admin({ onBack }: { onBack: () => void }) {
               </div>
               {activeTab === 'filieres' && (
                 <>
-                  <button onClick={async () => {
-                    if (confirm("Êtes-vous sûr de vouloir publier le catalogue local vers le serveur ? Tous les utilisateurs recevront cette mise à jour.")) {
+                  <button onClick={() => {
+                    showConfirm("Publier le catalogue", "Êtes-vous sûr de vouloir publier le catalogue local vers le serveur ? Tous les utilisateurs recevront cette mise à jour.", async () => {
                       try {
                         await publishCatalog(filieres);
-                        alert("Catalogue publié avec succès !");
+                        showAlert("Succès", "Catalogue publié avec succès !");
                       } catch (e) {
                         console.error(e);
-                        alert("Erreur lors de la publication.");
+                        showAlert("Erreur", "Erreur lors de la publication.");
                       }
-                    }
+                    });
                   }} className="flex items-center px-5 py-2.5 bg-emerald-500 text-white rounded-xl shadow-md hover:bg-emerald-600 font-medium text-sm transition-all whitespace-nowrap">
                     <Upload className="w-4 h-4 mr-2" /> Publier en ligne
                   </button>
                   <button onClick={() => {
-                    if (confirm('Attention : Cela va écraser toutes vos modifications locales et recharger les données depuis le fichier guide.json. Continuer ?')) {
+                    showConfirm('Recharger les données', 'Attention : Cela va écraser toutes vos modifications locales et recharger les données depuis le fichier guide.json. Continuer ?', () => {
                       const newData = resetAppData();
                       setFilieres(newData.filieres);
-                    }
+                    });
                   }} className="flex items-center px-5 py-2.5 bg-amber-500 text-white rounded-xl shadow-md hover:bg-amber-600 font-medium text-sm transition-all whitespace-nowrap">
                     <Download className="w-4 h-4 mr-2" /> Recharger guide.json
                   </button>
@@ -443,6 +460,40 @@ export default function Admin({ onBack }: { onBack: () => void }) {
                 <button onClick={() => setIsModalOpen(false)} className="px-6 py-3 text-slate-600 font-medium hover:bg-slate-100 rounded-xl transition-colors">Annuler</button>
                 <button onClick={saveFiliere} className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-violet-500 text-white font-medium hover:shadow-lg hover:shadow-indigo-300 hover:-translate-y-0.5 rounded-xl transition-all flex items-center">
                   <Save className="w-5 h-5 mr-2" /> Enregistrer la filière
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Custom Dialog */}
+      <AnimatePresence>
+        {dialog.isOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4"
+          >
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0, y: 10 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.95, opacity: 0, y: 10 }}
+              className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-100"
+            >
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-slate-900 mb-2">{dialog.title}</h3>
+                <p className="text-slate-600">{dialog.message}</p>
+              </div>
+              <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end gap-3">
+                {dialog.type === 'confirm' && (
+                  <button onClick={() => setDialog({ ...dialog, isOpen: false })} className="px-4 py-2 text-slate-600 font-medium hover:bg-slate-200 rounded-xl transition-colors">Annuler</button>
+                )}
+                <button 
+                  onClick={() => {
+                    setDialog({ ...dialog, isOpen: false });
+                    if (dialog.onConfirm) dialog.onConfirm();
+                  }} 
+                  className="px-4 py-2 bg-indigo-600 text-white font-medium hover:bg-indigo-700 rounded-xl transition-colors"
+                >
+                  {dialog.type === 'confirm' ? 'Confirmer' : 'OK'}
                 </button>
               </div>
             </motion.div>
