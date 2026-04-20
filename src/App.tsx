@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   GraduationCap, Search, Building2, Calculator, BookOpen, 
   Info, X, AlertTriangle, CheckCircle2, BarChart3, ChevronRight, 
-  ArrowLeft, Star, TrendingUp, Compass, User, Home, MapPin, ArrowRight, Settings, HelpCircle, Target, Zap, Lock, LogOut, Users, ShieldAlert, Shield, ShieldCheck, ArrowUpRight, Mail
+  ArrowLeft, Star, TrendingUp, Compass, User, Home, MapPin, ArrowRight, Settings, HelpCircle, Target, Zap, Lock, LogOut, Users, ShieldAlert, Shield, ShieldCheck, ArrowUpRight, Mail, Rocket, Heart, Sparkles, Code2
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { getAllFilieres, getAppData } from './utils';
@@ -861,13 +861,7 @@ export default function App() {
                           )}
                         </div>
 
-                        {/* Calculation Details */}
-                        {rec.formule && (
-                          <div className="mb-4 p-3 bg-indigo-50/50 rounded-xl border border-indigo-100/50">
-                            <p className="text-[10px] text-indigo-400 uppercase font-bold mb-1">Détail du calcul</p>
-                            <p className="text-xs font-mono text-indigo-700/80 break-words">{rec.formule}</p>
-                          </div>
-                        )}
+                        {/* Calculation Details Removed from here */}
 
                         <div className="flex justify-between items-end mt-2">
                           <div className="text-sm text-slate-500">
@@ -1054,6 +1048,28 @@ export default function App() {
                       <span key={m} className="bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-xl text-sm font-semibold border border-indigo-100">{m}</span>
                     ))}
                   </div>
+
+                  {(() => {
+                    const matchRec = recommendations.find(r => r.filiere.id === selectedFiliere?.id);
+                    if (matchRec && matchRec.formule) {
+                      return (
+                        <div className="mt-6 pt-6 border-t border-slate-100">
+                          <details className="group">
+                            <summary className="text-sm text-indigo-600 font-bold cursor-pointer hover:text-indigo-700 transition-colors flex items-center select-none">
+                              <Calculator className="w-4 h-4 mr-2" />
+                              Votre Score : {matchRec.score}/20
+                              <span className="ml-auto text-xs font-normal text-slate-400 group-open:hidden">Voir le détail du calcul</span>
+                            </summary>
+                            <div className="mt-4 p-4 bg-indigo-50/50 rounded-xl border border-indigo-100/50">
+                              <p className="text-[10px] text-indigo-400 uppercase font-bold mb-2 tracking-wider">Formule appliquée</p>
+                              <p className="text-sm font-mono text-indigo-800 break-words leading-relaxed">{matchRec.formule}</p>
+                            </div>
+                          </details>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })()}
                 </GlassCard>
 
                 <GlassCard className="p-6">
@@ -1274,52 +1290,133 @@ export default function App() {
           {/* ABOUT VIEW */}
           {view === 'about' && (
             <motion.div key="about" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-20}} className="pb-32 max-w-3xl mx-auto px-4 w-full">
-              <button onClick={() => navigate(-1)} className="mb-6 flex items-center text-slate-500 hover:text-slate-900 transition-colors font-medium">
-                <ArrowLeft className="w-4 h-4 mr-1" /> Retour
+              <button onClick={() => navigate(-1)} className="mb-8 flex items-center text-slate-500 hover:text-indigo-600 transition-colors font-semibold group">
+                <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" /> 
+                Retour
               </button>
-              <div className="mb-8">
-                <h2 className="text-3xl sm:text-4xl font-display font-black text-slate-900 mb-4 tracking-tight">
-                  À propos d'OrientaBénin
+              
+              <div className="mb-10 text-center max-w-2xl mx-auto">
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-sm font-bold mb-5"
+                >
+                  <Sparkles className="w-4 h-4" /> Notre Histoire
+                </motion.div>
+                <h2 className="text-4xl sm:text-5xl font-display font-black text-slate-900 mb-5 tracking-tight leading-tight">
+                  Construire <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-500">votre avenir</span> sereinement
                 </h2>
-                <p className="text-slate-600 text-lg leading-relaxed">
-                  Notre mission est de démocratiser l'accès à l'information d'orientation pour tous les bacheliers béninois.
+                <p className="text-slate-600 text-lg leading-relaxed font-medium">
+                  Fini le stress post-BAC. OrientaBénin vous accompagne de manière simple et humaine dans le choix de votre future filière universitaire.
                 </p>
               </div>
 
-              <div className="space-y-6">
-                <GlassCard className="p-6 bg-indigo-50/50 border-indigo-100">
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 flex items-center"><span className="text-2xl mr-2">🚀</span> Propulsé par Aurion Labs-G</h3>
-                  <p className="text-slate-600 leading-relaxed">
-                    OrientaBénin est un produit fièrement développé et maintenu par <strong>Aurion Labs-G</strong>. Notre entreprise s'engage à créer des solutions technologiques innovantes pour résoudre les défis locaux. Tous les droits, logiciels et services liés à OrientaBénin sont la propriété exclusive d'Aurion Labs-G.
-                  </p>
-                </GlassCard>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                {/* Highlight/Propulsé par - Bento Large */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                  className="lg:col-span-2 group"
+                >
+                  <GlassCard className="h-full p-8 bg-gradient-to-br from-indigo-900 to-violet-900 border-transparent text-white overflow-hidden relative transition-transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-indigo-900/20">
+                    <div className="absolute top-0 right-0 -mr-8 -mt-8 w-40 h-40 bg-white/10 rounded-full blur-3xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute bottom-0 right-0 p-6 opacity-10">
+                      <Heart className="w-32 h-32" />
+                    </div>
+                    
+                    <div className="relative z-10">
+                      <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6">
+                        <Rocket className="w-6 h-6 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-3 tracking-tight">Une initiative d'Aurion Labs-G</h3>
+                      <p className="text-indigo-100/90 text-lg leading-relaxed max-w-lg font-medium">
+                        Nous sommes une jeune équipe passionnée, convaincue que l'orientation scolaire au Bénin mérite d'être simplifiée. Notre objectif avec OrientaBénin est de vous donner toutes les clés en main pour réussir vos études.
+                      </p>
+                      <div className="mt-8 inline-flex items-center text-sm font-bold text-white uppercase tracking-widest border-b border-indigo-400 pb-1">
+                        Tous droits réservés
+                      </div>
+                    </div>
+                  </GlassCard>
+                </motion.div>
 
-                <GlassCard className="p-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 flex items-center"><Target className="w-5 h-5 mr-2 text-indigo-600"/> Notre Vision</h3>
-                  <p className="text-slate-600 leading-relaxed">
-                    Chaque année, des milliers de bacheliers font des choix d'orientation par défaut ou par manque d'information, ce qui conduit à des échecs ou des réorientations tardives. OrientaBénin vise à résoudre ce problème en fournissant un outil intelligent, transparent et basé sur les données officielles du Ministère de l'Enseignement Supérieur et de la Recherche Scientifique (MESRS).
-                  </p>
-                </GlassCard>
-
-                <GlassCard className="p-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 flex items-center"><Zap className="w-5 h-5 mr-2 text-amber-500"/> Comment ça marche ?</h3>
-                  <p className="text-slate-600 leading-relaxed mb-4">
-                    Notre algorithme de recommandation utilise la formule officielle de calcul de la moyenne pondérée pour chaque filière. Il croise vos notes du BAC avec les exigences spécifiques (matières clés) et les quotas disponibles pour vous donner une estimation réaliste de vos chances d'obtenir une bourse ou un secours.
-                  </p>
-                  <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
-                    <p className="text-sm text-indigo-800 font-medium">
-                      <strong>Important :</strong> Nous ne sommes pas affiliés au gouvernement. Notre outil est une aide à la décision. Les résultats finaux dépendent du classement officiel national.
+                {/* Vision - Bento Square */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                  className="group"
+                >
+                  <GlassCard className="h-full p-8 hover:-translate-y-1 transition-transform hover:shadow-xl hover:shadow-slate-200/50">
+                    <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                      <Target className="w-6 h-6 text-emerald-600" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-3 tracking-tight">Notre Mission</h3>
+                    <p className="text-slate-600 leading-relaxed font-medium">
+                      Faire les bons choix après le BAC n'est pas toujours évidents. Nous voulons fournir à chaque élève les bonnes informations pour choisir une filière qui correspond à ses talents.
                     </p>
-                  </div>
-                </GlassCard>
+                  </GlassCard>
+                </motion.div>
 
-                <GlassCard className="p-6">
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 flex items-center"><ShieldCheck className="w-5 h-5 mr-2 text-emerald-500"/> 100% Béninois</h3>
-                  <p className="text-slate-600 leading-relaxed">
-                    Conçu par et pour des Béninois, OrientaBénin comprend les réalités locales (Bourses, Secours, Titre Partiellement Payant) et s'adapte aux spécificités de notre système éducatif.
-                  </p>
-                </GlassCard>
+                {/* 100% Béninois - Bento Square */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+                  className="group"
+                >
+                  <GlassCard className="h-full p-8 hover:-translate-y-1 transition-transform hover:shadow-xl hover:shadow-slate-200/50">
+                    <div className="w-12 h-12 bg-rose-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                      <MapPin className="w-6 h-6 text-rose-500" />
+                    </div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-3 tracking-tight">Adapté à notre réalité</h3>
+                    <p className="text-slate-600 leading-relaxed font-medium">
+                      L'application comprend comment fonctionne notre système universitaire : elle fait la distinction entre les Bourses, les Secours (aides) et le Titre Partiellement Payant.
+                    </p>
+                  </GlassCard>
+                </motion.div>
+
+                {/* Mécanique & Disclaimer - Bento Large */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+                  className="md:col-span-2 group"
+                >
+                  <GlassCard className="h-full p-8 hover:-translate-y-1 transition-transform hover:shadow-xl hover:shadow-slate-200/50 flex flex-col justify-between">
+                    <div>
+                      <div className="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform">
+                        <Zap className="w-6 h-6 text-amber-500" />
+                      </div>
+                      <h3 className="text-xl font-bold text-slate-900 mb-3 tracking-tight">Comment ça marche concrètement ?</h3>
+                      <p className="text-slate-600 leading-relaxed font-medium mb-6">
+                        Pas de magie ! Nous utilisons exactement les mêmes calculs que l'État. L'application compare vos notes avec les matières exigées par chaque faculté pour vous dire où vous avez de vraies chances d'être retenu.
+                      </p>
+                    </div>
+                    
+                    <div className="bg-slate-50 border border-slate-100 p-5 rounded-2xl flex items-start">
+                      <div className="p-2 bg-white rounded-lg shadow-sm border border-slate-100 mr-4 mt-0.5">
+                        <Info className="w-5 h-5 text-indigo-500" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-900 mb-1 text-sm tracking-tight">Petit rappel amical</h4>
+                        <p className="text-sm text-slate-500 font-medium leading-relaxed">
+                          OrientaBénin est une initiative citoyenne pour vous aider. Gardez en tête que la liste définitive des admis reste la décision finale du Ministère de l'Enseignement Supérieur (MESRS).
+                        </p>
+                      </div>
+                    </div>
+                  </GlassCard>
+                </motion.div>
               </div>
+
+              {/* CTA Section */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+                className="mt-12 text-center"
+              >
+                <div className="inline-block p-1 bg-white border border-slate-200 rounded-full shadow-sm">
+                  <button 
+                    onClick={() => setView('profile')}
+                    className="flex items-center px-8 py-4 bg-slate-900 text-white rounded-full font-bold shadow-lg shadow-slate-900/20 hover:bg-indigo-600 hover:shadow-indigo-600/30 transition-all hover:scale-105 active:scale-95 group"
+                  >
+                    Faire ma simulation gratuite
+                    <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                </div>
+              </motion.div>
             </motion.div>
           )}
 
