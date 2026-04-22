@@ -21,6 +21,7 @@ import { auth, loginWithGoogle, logout } from './firebase';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { getUserProfile, createUserProfile, updateUserProfile, updateFiliereChoices, fetchLatestCatalog } from './services/firestoreService';
 import seriesBacData from './data/series_bac.json';
+import demarchesData from './data/demarches.json';
 
 // Lazy load heavy components
 const Admin = React.lazy(() => import('./Admin'));
@@ -1136,6 +1137,10 @@ export default function App() {
                     <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3 shrink-0">5</span>
                     Comment bien choisir sa filière
                   </a>
+                  <a href="#demarches" onClick={(e) => { e.preventDefault(); document.getElementById('demarches')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex items-center text-sm font-medium text-slate-700 hover:text-indigo-600 transition-colors">
+                    <span className="w-6 h-6 rounded bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold mr-3 shrink-0">6</span>
+                    Démarches & Vie Pratique
+                  </a>
                 </div>
               </GlassCard>
 
@@ -1280,6 +1285,86 @@ export default function App() {
                         </div>
                       </li>
                     </ul>
+                  </div>
+                </section>
+
+                <section id="demarches" className="pt-4 border-t border-slate-200">
+                  <div className="mb-6">
+                    <span className="bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-xs font-bold inline-block mb-3">Nouveau ! Vécu Étudiant</span>
+                    <h3 className="text-2xl font-bold text-slate-900 flex items-center"><Users className="w-6 h-6 mr-2 text-indigo-600"/> 6. Démarches & Vie Pratique</h3>
+                    <p className="text-slate-600 mt-2">Démarches administratives, astuces terrain et résolution de problèmes tirés des retours d'expérience communautaires.</p>
+                  </div>
+                  
+                  <div className="space-y-8">
+                    {/* Checklists - Procédures Administratives */}
+                    <div>
+                      <h4 className="text-xl font-bold text-slate-800 mb-4 flex items-center">
+                        <CheckCircle2 className="w-5 h-5 mr-2 text-emerald-500" />
+                        Procédures Pas-à-Pas
+                      </h4>
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        {demarchesData.checklists_procedures.map((proc, index) => (
+                          <GlassCard key={proc.id || index} className="p-5 flex flex-col h-full bg-white hover:shadow-lg transition-shadow">
+                            <h5 className="font-bold text-slate-900 mb-2 leading-tight">{proc.nom_procedure}</h5>
+                            <p className="text-xs text-slate-500 font-medium mb-4 flex-1">{proc.objectif}</p>
+                            
+                            <details className="group">
+                              <summary className="text-sm font-bold text-indigo-600 cursor-pointer flex items-center select-none py-2 hover:text-indigo-800 transition-colors">
+                                <span className="group-open:hidden">Voir les étapes</span>
+                                <span className="hidden group-open:inline">Masquer les étapes</span>
+                                <ChevronRight className="w-4 h-4 ml-1 group-open:rotate-90 transition-transform" />
+                              </summary>
+                              <div className="mt-3 pt-3 border-t border-slate-100 space-y-4">
+                                {proc.etapes && proc.etapes.length > 0 && (
+                                  <div>
+                                    <h6 className="text-xs font-bold text-slate-800 uppercase tracking-widest mb-2">Étapes</h6>
+                                    <ul className="space-y-2">
+                                      {proc.etapes.map((etape, i) => (
+                                        <li key={i} className="flex text-sm text-slate-600 leading-snug">
+                                          <span className="text-indigo-400 font-bold mr-2">{i+1}.</span>
+                                          {etape}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                                {proc.pieces_requises && proc.pieces_requises.length > 0 && (
+                                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 mt-3">
+                                    <h6 className="text-xs font-bold text-slate-800 uppercase tracking-widest mb-2">Pièces requises</h6>
+                                    <ul className="text-xs text-slate-600 list-disc list-inside space-y-1">
+                                      {proc.pieces_requises.map((piece, i) => (
+                                        <li key={i}>{piece}</li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+                              </div>
+                            </details>
+                          </GlassCard>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* FAQ Base de connaissances */}
+                    <div>
+                      <h4 className="text-xl font-bold text-slate-800 mb-4 flex items-center">
+                        <HelpCircle className="w-5 h-5 mr-2 text-amber-500" />
+                        Foire Aux Questions (FAQ)
+                      </h4>
+                      <div className="space-y-3">
+                        {demarchesData.faq_base_connaissances.map((faq, index) => (
+                          <details key={faq.id || index} className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm [&_summary::-webkit-details-marker]:hidden">
+                            <summary className="cursor-pointer p-4 font-bold text-slate-800 hover:bg-slate-50 transition-colors flex justify-between items-center select-none">
+                              <span className="pr-4 leading-tight">{faq.question}</span>
+                              <ChevronRight className="w-5 h-5 text-slate-400 shrink-0 group-open:rotate-90 transition-transform" />
+                            </summary>
+                            <div className="p-4 pt-0 text-slate-600 leading-relaxed border-t border-slate-100 bg-slate-50/50">
+                              <p className="mt-3">{faq.reponse_synthese}</p>
+                            </div>
+                          </details>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </section>
 

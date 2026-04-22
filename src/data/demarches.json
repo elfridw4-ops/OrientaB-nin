@@ -1,0 +1,167 @@
+{
+  "metadata": {
+    "titre": "Base exploitable issue d'un export WhatsApp étudiant béninois",
+    "source_fichier": "Discussion WhatsApp avec Actualités-infos groupe.zip",
+    "type_source": "discussion_groupe_whatsapp",
+    "contexte": "entraide administrative pour étudiants et nouveaux bacheliers au Bénin",
+    "periode_analysee": {
+      "date_debut": "2025-10-02",
+      "date_fin": "2026-04-17"
+    },
+    "langue_principale": "fr",
+    "pays": "Bénin",
+    "urls_officielles_detectees": [
+      "https://bourses.enseignementsuperieur.bj",
+      "https://etudiant.uac.bj/",
+      "https://www.choixfaculte.uac.bj/",
+      "https://www.services.bac.bj/#/"
+    ]
+  },
+  "faq_base_connaissances": [
+    {
+      "id": "faq_001",
+      "theme": "allocation",
+      "question": "Faut-il refaire l'inscription avant de déposer une demande d'allocation quand on entre en première année ?",
+      "reponse_synthese": "Il n'est pas nécessaire de refaire une inscription supplémentaire avant de déposer la demande d'allocation. L'étudiant devra simplement finaliser l'inscription de la nouvelle année académique en temps voulu.",
+      "confiance": "moyenne"
+    },
+    {
+      "id": "faq_002",
+      "theme": "banque_allocation",
+      "question": "Quel type de compte bancaire faut-il choisir pour recevoir son allocation ?",
+      "reponse_synthese": "Il est fortement recommandé d'ouvrir un compte épargne étudiant spécialement conçu pour recevoir les allocations. Il faut éviter les comptes Xpress ou comptes courants inadaptés, et bien préciser à la banque la nature de la démarche lors de l'ouverture.",
+      "confiance": "moyenne"
+    },
+    {
+      "id": "faq_003",
+      "theme": "banque_uba",
+      "question": "Quelles pièces sont demandées pour ouvrir un compte étudiant à UBA ?",
+      "reponse_synthese": "Les pièces généralement requises sont : l'attestation IFU, la carte CIP, l'attestation ou relevé du baccalauréat, deux photos d'identité, un acte de naissance, un justificatif de résidence, et parfois la fiche de préinscription. Un dépôt initial (souvent de 5 000 F CFA) est demandé. Si l'étudiant est mineur, une autorisation parentale et la copie de la CIP du signataire sont exigées.",
+      "confiance": "moyenne"
+    },
+    {
+      "id": "faq_004",
+      "theme": "ecobank_allocation",
+      "question": "Que faire si l'allocation est liée à un compte Xpress Ecobank inadapté ?",
+      "reponse_synthese": "Les comptes rapides de type Xpress posent souvent problème de synchronisation. Dans ce cas de figure, il peut être nécessaire de se rendre à la Direction générale du Trésor public à Cotonou pour récupérer la référence de virement de la première tranche, puis la transmettre à la direction de la banque pour débloquer les fonds restants.",
+      "confiance": "faible"
+    },
+    {
+      "id": "faq_005",
+      "theme": "inscription_uac",
+      "question": "Que se passe-t-il après l'inscription universitaire en ligne ?",
+      "reponse_synthese": "Après la validation de l'inscription en ligne, il n'y a généralement aucun dossier physique à déposer immédiatement. L'étape suivante consistera à prendre un rendez-vous sur la plateforme pour la prise de photo afin d'établir la carte d'étudiant.",
+      "confiance": "moyenne"
+    },
+    {
+      "id": "faq_006",
+      "theme": "ifu",
+      "question": "Peut-on refaire un IFU si on l'a oublié ?",
+      "reponse_synthese": "Non, un numéro IFU est unique et ne peut pas être recréé. Il faut utiliser la fonction 'Rechercher mon IFU' sur le site de la DGI en renseignant son Numéro Personnel d'Identification (NPI) pour télécharger l'attestation. Notez que le document sera envoyé à l'adresse e-mail originellement renseignée.",
+      "confiance": "moyenne"
+    },
+    {
+      "id": "faq_007",
+      "theme": "certificat_nationalite",
+      "question": "Le certificat de nationalité peut-il être remplacé temporairement ?",
+      "reponse_synthese": "Oui. En attendant son établissement officiel, vous pouvez généralement présenter un certificat de résidence (ou attestation de résidence). Un passeport valide ou une copie certifiée de l'acte de naissance ou une facture récente peuvent parfois être acceptés exceptionnellement.",
+      "confiance": "faible"
+    },
+    {
+      "id": "faq_008",
+      "theme": "certificat_nationalite",
+      "question": "Où se fait le certificat de nationalité et quels sont les délais mentionnés ?",
+      "reponse_synthese": "Le certificat de nationalité s'établit auprès d'un Tribunal avec un délai moyen de traitement de deux semaines environ. Quant à la carte biométrique (CIP), elle s'obtient auprès de l'ANIP pour un coût administratif de 3 200 F CFA pour un délai similaire.",
+      "confiance": "moyenne"
+    },
+    {
+      "id": "faq_009",
+      "theme": "choix_faculte",
+      "question": "À qui s'adresse la plateforme de choix de faculté classique UAC ?",
+      "reponse_synthese": "Elle est destinée prioritairement aux bacheliers « non classés » désirant s'inscrire dans une faculté classique (cycle gratuit), ainsi qu'aux bacheliers « classés » qui souhaiteraient initier une double inscription. À noter qu'une double inscription n'a pas d'impact négatif sur vos droits d'allocation ou de bourse.",
+      "confiance": "moyenne"
+    },
+    {
+      "id": "faq_010",
+      "theme": "attestation_bac",
+      "question": "Comment retirer une attestation du bac ?",
+      "reponse_synthese": "Il faut d'abord initier la demande en ligne sur la plateforme services.bac.bj et télécharger le bordereau de dépôt généré. Ensuite, il faudra se présenter physiquement à l'Office du Baccalauréat à Cotonou trois jours ouvrés plus tard environ pour retirer le document final.",
+      "confiance": "faible"
+    },
+    {
+      "id": "faq_011",
+      "theme": "dbau_problemes",
+      "question": "Que faire si la demande d'allocation ne passe pas malgré une inscription validée ?",
+      "reponse_synthese": "Vérifiez d'abord activement auprès de la scolarité que votre inscription universitaire a bien été validée et transmise à la base centrale. Si le blocage persiste, il est vivement recommandé de se rapprocher directement de la DBAU (ou de mandater un proche avec une procuration si vous n'êtes pas sur place) pour dénouer le dossier.",
+      "confiance": "moyenne"
+    },
+    {
+      "id": "faq_012",
+      "theme": "liste_complementaire",
+      "question": "Que déposer à la DBAU en liste complémentaire quand un dossier reste bloqué ?",
+      "reponse_synthese": "Pour la première année universitaire : réunissez obligatoirement une lettre manuscrite adressée à la Direction décrivant l'anomalie, une photocopie de la carte CIP, une photocopie de votre RIB et la carte d'étudiant. Pour les années supérieures : il vous faudra ajouter formellement le Procès-Verbal (PV) de réussite de l'année précédente à cette lettre exlicative.",
+      "confiance": "moyenne"
+    }
+  ],
+  "checklists_procedures": [
+    {
+      "id": "proc_001",
+      "nom_procedure": "Ouvrir un compte bancaire étudiant pour allocation",
+      "objectif": "Disposer d'un compte compatible avec le versement de l'allocation",
+      "etapes": [
+        "Choisir une banque et préciser qu'il s'agit d'un compte épargne étudiant destiné à recevoir une allocation.",
+        "Se présenter à l'agence avec les pièces demandées.",
+        "Déposer les éventuels frais initiaux si exigés.",
+        "Récupérer le RIB pour l'utiliser ensuite dans la demande d'allocation."
+      ],
+      "pieces_requises": [
+        "IFU",
+        "CIP",
+        "Attestation ou relevé du bac",
+        "2 photos d'identité",
+        "Acte de naissance"
+      ]
+    },
+    {
+      "id": "proc_002",
+      "nom_procedure": "Faire sa demande d'allocation en ligne",
+      "objectif": "Créer et soumettre une demande d'allocation sur la plateforme officielle",
+      "url_officielle": "https://bourses.enseignementsuperieur.bj/nouvelle-demande-allocation",
+      "etapes": [
+        "Créer un compte sur bourses.enseignementsuperieur.bj avec Chrome.",
+        "Cliquer sur INSCRIVEZ-VOUS puis remplir le formulaire.",
+        "Se connecter à l'espace membre, ouvrir DEMANDE EN LIGNE.",
+        "Remplir les formulaires, valider les contacts et infos bancaires.",
+        "Payer les frais d'étude et télécharger la fiche de demande."
+      ],
+      "pieces_requises": [
+        "CIP",
+        "Fiche de préinscription validée",
+        "RIB 24 caractères"
+      ]
+    },
+    {
+      "id": "proc_003",
+      "nom_procedure": "Récupérer un numéro IFU oublié",
+      "objectif": "Retrouver un IFU déjà créé sans en redemander un autre",
+      "etapes": [
+        "Aller sur la plateforme IFU (service en ligne).",
+        "Utiliser l'option 'Rechercher mon IFU'.",
+        "Saisir le numéro NPI de sa carte CIP.",
+        "Télécharger l'attestation IFU (un e-mail est généralement envoyé)."
+      ],
+      "pieces_requises": ["NPI"]
+    },
+    {
+      "id": "proc_004",
+      "nom_procedure": "Finaliser son inscription à l'UAC en ligne",
+      "objectif": "Finaliser l'inscription universitaire en ligne à l'UAC",
+      "etapes": [
+        "Se connecter à la plateforme etudiant.uac.bj.",
+        "Suivre les indications de préinscription et paiement des frais.",
+        "Obtenir la fiche d'attestation d'inscription.",
+        "Prendre ensuite rendez-vous pour la prise de photo de la carte d'étudiant."
+      ]
+    }
+  ]
+}
