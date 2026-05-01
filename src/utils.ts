@@ -2,8 +2,6 @@ import { GuideData, FlattenedFiliere } from './types';
 import guideDataRaw from './data/guide.json';
 import { MatierePonderee } from './engine';
 
-const STORAGE_KEY = 'orientabenin_data';
-
 export interface AppData {
   metadata: {
     titre_document: string;
@@ -25,20 +23,7 @@ export interface AppData {
   filieres: FlattenedFiliere[];
 }
 
-export const getAppData = (): AppData => {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored) {
-    try {
-      return JSON.parse(stored);
-    } catch (e) {
-      console.error("Erreur lecture LocalStorage", e);
-    }
-  }
-
-  return resetAppData();
-};
-
-export const resetAppData = (): AppData => {
+export const getFallbackAppData = (): AppData => {
   const guideData = guideDataRaw as GuideData;
   const filieres: FlattenedFiliere[] = [];
   
@@ -71,16 +56,11 @@ export const resetAppData = (): AppData => {
     });
   });
 
-  const appData = { metadata: guideData.metadata, filieres };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
-  return appData;
+  return { metadata: guideData.metadata, filieres };
 };
 
-export const saveAppData = (data: AppData) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-};
-
-export const getAllFilieres = (): FlattenedFiliere[] => {
-  return getAppData().filieres;
-};
+export const getAppData = (): AppData => getFallbackAppData();
+export const resetAppData = (): AppData => getFallbackAppData();
+export const saveAppData = (data: AppData) => {};
+export const getAllFilieres = (): FlattenedFiliere[] => getFallbackAppData().filieres;
 

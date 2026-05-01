@@ -74,87 +74,41 @@ export const subscribeToFilieres = (callback: (filieres: FlattenedFiliere[]) => 
 
 export const updateFiliereChoices = async (userId: string, oldChoices: string[], newChoices: string[]) => {
   try {
-    await runTransaction(db, async (transaction) => {
-      // 1. Read user profile to ensure they are not locked
-      const userRef = doc(db, `users/${userId}`);
-      const userSnap = await transaction.get(userRef);
-      if (!userSnap.exists()) throw new Error("User not found");
-      
-      const userData = userSnap.data() as UserProfile;
-      if (userData.isLocked) throw new Error("Account is locked");
+    const userRef = doc(db, `users/${userId}`);
+    const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) throw new Error("User not found");
+    
+    const userData = userSnap.data() as UserProfile;
+    if (userData.isLocked) throw new Error("Account is locked");
 
-      // 2. Calculate user average and mention
-      const calculateUserAverage = (grades: Record<string, number> = {}) => {
-        const values = Object.values(grades);
-        if (values.length === 0) return 0;
-        return values.reduce((a, b) => a + b, 0) / values.length;
-      };
+    const calculateUserAverage = (grades: Record<string, number> = {}) => {
+      const values = Object.values(grades);
+      if (values.length === 0) return 0;
+      return values.reduce((a, b) => a + b, 0) / values.length;
+    };
 
-      const getMention = (avg: number) => {
-        if (avg >= 16) return 'tres_bien';
-        if (avg >= 14) return 'bien';
-        if (avg >= 12) return 'assez_bien';
-        return 'passable';
-      };
+    const userAvg = calculateUserAverage(userData.grades);
 
-      const userAvg = calculateUserAverage(userData.grades);
-      const userMention = getMention(userAvg);
+    const idToken = await auth.currentUser?.getIdToken();
+    if (!idToken) throw new Error("Not authenticated");
 
-      // 3. Calculate added and removed choices
-      const added = newChoices.filter(c => !oldChoices.includes(c));
-      const removed = oldChoices.filter(c => !newChoices.includes(c));
-
-      // 4. Update filieres candidatsCount and stats_anonymes
-      for (const filiereId of added) {
-        const filiereRef = doc(db, `filieres/${filiereId}`);
-        const filiereSnap = await transaction.get(filiereRef);
-        if (filiereSnap.exists()) {
-          const data = filiereSnap.data() as FlattenedFiliere;
-          const currentCount = data.candidatsCount || 0;
-          const currentStats = data.stats_anonymes || { moyenne_generale: 0, mentions: { tres_bien: 0, bien: 0, assez_bien: 0, passable: 0 } };
-          
-          const newCount = currentCount + 1;
-          const newMoyenne = ((currentStats.moyenne_generale * currentCount) + userAvg) / newCount;
-          const newMentions = { ...currentStats.mentions };
-          newMentions[userMention] = (newMentions[userMention] || 0) + 1;
-
-          transaction.update(filiereRef, { 
-            candidatsCount: newCount,
-            stats_anonymes: {
-              moyenne_generale: newMoyenne,
-              mentions: newMentions
-            }
-          });
-        }
-      }
-
-      for (const filiereId of removed) {
-        const filiereRef = doc(db, `filieres/${filiereId}`);
-        const filiereSnap = await transaction.get(filiereRef);
-        if (filiereSnap.exists()) {
-          const data = filiereSnap.data() as FlattenedFiliere;
-          const currentCount = data.candidatsCount || 0;
-          if (currentCount > 0) {
-            const currentStats = data.stats_anonymes || { moyenne_generale: 0, mentions: { tres_bien: 0, bien: 0, assez_bien: 0, passable: 0 } };
-            const newCount = currentCount - 1;
-            const newMoyenne = newCount === 0 ? 0 : ((currentStats.moyenne_generale * currentCount) - userAvg) / newCount;
-            const newMentions = { ...currentStats.mentions };
-            newMentions[userMention] = Math.max(0, (newMentions[userMention] || 0) - 1);
-
-            transaction.update(filiereRef, { 
-              candidatsCount: newCount,
-              stats_anonymes: {
-                moyenne_generale: newMoyenne,
-                mentions: newMentions
-              }
-            });
-          }
-        }
-      }
-
-      // 5. Update user choices
-      transaction.update(userRef, { choices: newChoices });
+    const response = await fetch('/api/choices', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`
+      },
+      body: JSON.stringify({
+        newChoices,
+        oldChoices,
+        newAverage: userAvg
+      })
     });
+
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(err.error || 'Failed to update choices');
+    }
   } catch (error) {
     handleFirestoreError(error, OperationType.UPDATE, 'filieres/transaction');
   }

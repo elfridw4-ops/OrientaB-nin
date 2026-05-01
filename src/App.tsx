@@ -8,7 +8,7 @@ import {
   ArrowLeft, Star, TrendingUp, Compass, User, Home, MapPin, ArrowRight, Settings, HelpCircle, Target, Zap, Lock, LogOut, Users, ShieldAlert, Shield, ShieldCheck, ArrowUpRight, Mail, Rocket, Heart, Sparkles, Code2
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
-import { getAllFilieres, getAppData } from './utils';
+import { getFallbackAppData, getAllFilieres } from './utils';
 import { FlattenedFiliere, UserProfile, GuideData } from './types';
 import { 
   calculerScore, 
@@ -116,24 +116,41 @@ export default function App() {
   };
   const helmetData = getHelmetData(view);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "OrientaBénin",
+    "url": "https://orientabenin.com",
+    "description": "Simulation d'orientation et de bourses pour les bacheliers du Bénin."
+  };
+
   const [allFilieres, setAllFilieres] = useState<FlattenedFiliere[]>([]);
   
   // Sync Catalog from Firestore on load
   useEffect(() => {
     const syncCatalog = async () => {
       try {
+        const TTL_MS = 60 * 60 * 1000; // 1 hour
+        const cachedStr = localStorage.getItem('catalog_cache');
+        const cachedTime = localStorage.getItem('catalog_cache_time');
+        
+        if (cachedStr && cachedTime && (Date.now() - parseInt(cachedTime)) < TTL_MS) {
+          setAllFilieres(JSON.parse(cachedStr));
+          return;
+        }
+
         const remote = await fetchLatestCatalog();
-        if (remote) {
-          const localUpdated = localStorage.getItem('catalog_updatedAt');
-          if (!localUpdated || new Date(remote.updatedAt) > new Date(localUpdated)) {
-            localStorage.setItem('orientabenin_filieres', JSON.stringify(remote.data));
-            localStorage.setItem('catalog_updatedAt', remote.updatedAt);
-            setAllFilieres(remote.data);
-            console.log("Catalogue mis à jour depuis le serveur.");
-          }
+        if (remote && remote.data) {
+          localStorage.setItem('catalog_cache', JSON.stringify(remote.data));
+          localStorage.setItem('catalog_cache_time', Date.now().toString());
+          setAllFilieres(remote.data);
+          console.log("Catalogue mis à jour depuis le serveur.");
+        } else {
+          setAllFilieres(getAllFilieres()); // fallback to local mock
         }
       } catch (e) {
         console.error("Erreur lors de la synchronisation du catalogue", e);
+        setAllFilieres(getAllFilieres()); // fallback
       }
     };
     syncCatalog();
@@ -255,15 +272,7 @@ export default function App() {
       setIsAuthReady(true);
     });
     return () => unsubscribe();
-  }, [view]);
-
-  // Firestore Filieres Listener
-  useEffect(() => {
-    if (isAuthReady) {
-      // Load filieres from local storage / guide.json
-      setAllFilieres(getAllFilieres());
-    }
-  }, [isAuthReady, view]);
+  }, []);
 
   const handleLogin = async () => {
     try {
@@ -334,7 +343,7 @@ export default function App() {
     setUserProfile({ ...userProfile, allocationStatus: status });
   };
 
-  const appData = useMemo(() => getAppData(), []);
+  const appData = useMemo(() => getFallbackAppData(), []);
   const stats = useMemo(() => {
     const total_filieres = allFilieres.length;
     const bourses = allFilieres.reduce((sum, f) => sum + (f.bourses || f.quotas?.bourses || 0), 0);
@@ -407,6 +416,9 @@ export default function App() {
         <meta name="description" content={helmetData.desc} />
         <meta name="author" content="Aurion Labs-G" />
         <meta name="publisher" content="Aurion Labs-G" />
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLd)}
+        </script>
       </Helmet>
       <AnimatePresence mode="wait">
         {view === 'admin' ? (
